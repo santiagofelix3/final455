@@ -34,7 +34,7 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
         self.odometerStart = odometerStart
         self.vehicleMaxAccel = vehicleMaxAccel
     }
-    
+        
     // MARK: GPS
     
     //Starts the trip
@@ -101,7 +101,7 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
             tempLocation.instAccel = tempLocation.instSpeed - self.tripLocationData[tripLocationData.count-1].instSpeed
         }
         //Getting the effRatio
-        tempLocation.efficiencyRatio = tempLocation.instAccel/(vehicleMaxAccel!/2)
+        tempLocation.efficiencyRatio = abs(tempLocation.instAccel/(vehicleMaxAccel!/2))+1
         
         self.tripLocationData.append(tempLocation)
     }
@@ -253,4 +253,11 @@ class Location {
     
     init(){}
     
+}
+
+struct GlobalTripDataInstance {
+    static var globalTrip: TripData?
+    init (){
+        GlobalTripDataInstance.globalTrip = TripData.init(vehicleID: 1, name: "", odometerStart: 0, vehicleMaxAccel: 4.8)
+    }
 }

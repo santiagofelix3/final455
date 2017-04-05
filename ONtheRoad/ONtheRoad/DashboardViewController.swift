@@ -20,8 +20,7 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var selectVehicleView: UIView!
     @IBOutlet weak var testView: UIView!
     @IBOutlet weak var selectVehicleImage: UIImageView!
-    
-    var newTrip: TripData?
+
     lazy var stopWatch = Timer()
     var startTime = TimeInterval()
     var seconds = 0
@@ -51,15 +50,18 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
             
             transitionAnimationShow()
             
-            newTrip = TripData.init(vehicleID: 1, name: "", odometerStart: 0, vehicleMaxAccel: 4.8)
-            newTrip?.startTrip()
+            GlobalTripDataInstance.init()
+            GlobalTripDataInstance.globalTrip?.startTrip()
+            
+            //newTrip = TripData.init(vehicleID: 1, name: "", odometerStart: 0, vehicleMaxAccel: 4.8)
+            //newTrip?.startTrip()
             
             stopWatch = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(DashboardViewController.updateTime(_stopWatch:)), userInfo: nil, repeats: true)
             startTime = Date.timeIntervalSinceReferenceDate
             
         } else {
             startStopButton.setTitle("Start", for: .normal)
-            newTrip?.endTrip()
+            GlobalTripDataInstance.globalTrip?.endTrip()
             stopWatch.invalidate()
             transitionAnimationHide()
         }
@@ -100,7 +102,8 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
         
         UIView.transition(with: graphsView, duration: 1.0, options: transitionOptions, animations: {
             self.selectVehicleView.isHidden = true
-            //self.graphsView.isHidden = false
+            self.testView.isHidden = true
+
         })
         //selectVehicleView.backgroundColor = UIColor.clear
     }
@@ -110,7 +113,7 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
         
         UIView.transition(with: graphsView, duration: 1.0, options: transitionOptions, animations: {
             self.selectVehicleView.isHidden = false
-            //self.graphsView.isHidden = true
+            self.testView.isHidden = false
         })
         //selectVehicleView.backgroundColor = UIColor.clear
     }

@@ -9,9 +9,10 @@
 import UIKit
 
 class GraphOneViewController: UIViewController {
-    
-    var currentCount: Float = 0.0
-    var maxCount: Float = 10.0
+   
+    var currentCount: Double = 0.0
+    //Fuel Consumption * MaxAccel
+    var maxCount: Double = 6.2 * 4.8
     
     @IBOutlet weak var circleAnimation: KDCircularProgress!
     @IBOutlet weak var circleBackground: KDCircularProgress!
@@ -29,35 +30,24 @@ class GraphOneViewController: UIViewController {
     }
     
     func newAngle() -> Float {
-        return Float(360 * (currentCount / maxCount))
+        return Float(360 * (currentCount * 6.2 / maxCount))
     }
     
     func updateCircle() {
-        
-        currentCount = generateRandomNumbers()
-        
+        currentCount = (GlobalTripDataInstance.globalTrip?.tripLocationData[(GlobalTripDataInstance.globalTrip?.tripLocationData.count)!-1].efficiencyRatio)!
+        print("e: ", currentCount)
         if currentCount == 0 {
             currentCount = 0.5
         }
         
         if currentCount != maxCount {
             let newAngleValue = newAngle()
-            
-            //circleAnimation.animate(toAngle: Double(newAngleValue), duration: 0.5, completion: nil)
             circularProgress.animate(toAngle: Double(newAngleValue), duration: 0.5, completion: nil)
-            
-            efficiencyNumberLabel.text = "\((newAngleValue/10))"
+            efficiencyNumberLabel.text = String(format: "%.02f", (newAngleValue/10))
         }
     }
     
     // MARK: Functions
-    
-    func generateRandomNumbers() -> Float {
-        let rand = Float(arc4random_uniform(UInt32(7.5)))
-        print(rand)
-        return rand
-    }
-    
     func setBackground() {
         let topColor = UIColor(red: 99/255.0, green: 175/255.0, blue: 213/255.0, alpha: 1.0)
         let bottomColor = UIColor(red: 5/255.0, green: 54/255.0, blue: 106/255.0, alpha: 1.0)
