@@ -22,7 +22,7 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
     var endTime: Date?
     var tripLength: Double?
     var tripDistance: Double = 0
-
+    
     var tripLocationData = [Location]()
     
     lazy var locations = [CLLocation]()
@@ -34,7 +34,7 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
         self.odometerStart = odometerStart
         self.vehicleMaxAccel = vehicleMaxAccel
     }
-        
+    
     // MARK: GPS
     
     //Starts the trip

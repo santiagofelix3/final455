@@ -20,19 +20,21 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var selectVehicleView: UIView!
     @IBOutlet weak var testView: UIView!
     @IBOutlet weak var selectVehicleImage: UIImageView!
-
+    @IBOutlet weak var selectVehicleName: UILabel!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
+    var vehicles: VehicleProfile?
+    //var newTrip: TripData?
     lazy var stopWatch = Timer()
     var startTime = TimeInterval()
     var seconds = 0
     var index = 0
+    var flag = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupView()
-        
-        //newTrip?.tripLocationData.append(Location.init(timeStamp: Date.init(), latitude: 0, longitude: 0, distance: 0)!)
-
     }
     
     override func didReceiveMemoryWarning() {
@@ -40,7 +42,28 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "selectVehicleSegue" {
+            flag = 1
+            let nav = segue.destination as! UINavigationController
+            let controller = nav.topViewController as! GarageTableViewController
+            controller.activeFlag = flag
+        }
+    }
     
+    // MARK: Navigation
+    
+    @IBAction func unwindToDashboard(sender: UIStoryboardSegue) {
+        if let sourceViewController = sender.source as? GarageTableViewController, let vehicle = sourceViewController.selectVehicle {
+            print("***********************************************************************************HOLAHOLAHOLAHOLA")
+            print(vehicle)
+            vehicles = vehicle
+        }
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+        setupVehicle()
+    }
+            
     // MARK: Actions
     
     @IBAction func startStopButton(_ sender: UIButton) {
@@ -53,11 +76,9 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
             GlobalTripDataInstance.init()
             GlobalTripDataInstance.globalTrip?.startTrip()
             
-            //newTrip = TripData.init(vehicleID: 1, name: "", odometerStart: 0, vehicleMaxAccel: 4.8)
-            //newTrip?.startTrip()
-            
             stopWatch = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(DashboardViewController.updateTime(_stopWatch:)), userInfo: nil, repeats: true)
             startTime = Date.timeIntervalSinceReferenceDate
+            
         } else {
             startStopButton.setTitle("Start", for: .normal)
             GlobalTripDataInstance.globalTrip?.endTrip()
@@ -65,6 +86,12 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
             transitionAnimationHide()
         }
     }
+    
+    @IBAction func selectVehicleAction(_ sender: UITapGestureRecognizer) {
+        performSegue(withIdentifier: "selectVehicleSegue", sender: nil)
+
+    }
+    
     
     // MARK: Functions
     
@@ -76,6 +103,7 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
         // Border for image
         self.selectVehicleImage.layer.borderWidth = 2.0
         self.selectVehicleImage.layer.borderColor = UIColor.white.cgColor
+        activityIndicator.isHidden = true
     }
     
     func updateTime(_stopWatch: Timer) {
@@ -90,11 +118,7 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
         }
         
         distanceLabel.text = String(format: "%.02f", (GlobalTripDataInstance.globalTrip?.tripDistance)!/1000)
-        //distanceLabel.text = String(Int((GlobalTripDataInstance.globalTrip?.tripDistance)!)/1000)
         velocityLabel.text = String(Int(3.6*(GlobalTripDataInstance.globalTrip?.tripLocationData[(GlobalTripDataInstance.globalTrip?.tripLocationData.count)! - 1].instSpeed)!))
-
-        
-        // print(newTrip?.tripLocationData[(newTrip?.tripLocationData.count)!-1].instAcceleration)
     }
     
     func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
@@ -107,7 +131,7 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
         UIView.transition(with: graphsView, duration: 1.0, options: transitionOptions, animations: {
             self.selectVehicleView.isHidden = true
             self.testView.isHidden = true
-
+            //self.graphsView.isHidden = false
         })
         //selectVehicleView.backgroundColor = UIColor.clear
     }
@@ -118,8 +142,18 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
         UIView.transition(with: graphsView, duration: 1.0, options: transitionOptions, animations: {
             self.selectVehicleView.isHidden = false
             self.testView.isHidden = false
+            //self.graphsView.isHidden = true
         })
         //selectVehicleView.backgroundColor = UIColor.clear
+    }
+    
+    func setupVehicle() {
+        selectVehicleImage.image = vehicles?.photo
+        selectVehicleName.text = vehicles?.name
+        if selectVehicleImage.image == vehicles?.photo {
+            activityIndicator.stopAnimating()
+            activityIndicator.isHidden = true
+        }
     }
 }
 

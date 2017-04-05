@@ -10,6 +10,8 @@ import UIKit
 
 class LogsViewController: UIViewController {
 
+    //var trips = TripData.init(vehicleID: <#T##Int#>, name: <#T##String?#>, odometerStart: <#T##Int?#>, vehicleMaxAccel: <#T##Double?#>)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

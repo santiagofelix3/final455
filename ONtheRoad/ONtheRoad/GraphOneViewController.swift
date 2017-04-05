@@ -9,9 +9,8 @@
 import UIKit
 
 class GraphOneViewController: UIViewController {
-   
+    
     var currentCount: Double = 0.0
-    //Fuel Consumption * MaxAccel
     var maxCount: Double = ((6.2 * 100) / 37.5)
     
     @IBOutlet weak var circleAnimation: KDCircularProgress!
@@ -40,22 +39,19 @@ class GraphOneViewController: UIViewController {
         if (currentCount > maxCount) {
             currentCount = maxCount
         }
-        
-
         if currentCount == 0 {
             currentCount = 0.5
         }
+        print("e: ", currentCount)
         
-         print("e: ", currentCount)
+        let newAngleValue = newAngle()
         
- //       if currentCount <= maxCount {
-            let newAngleValue = newAngle()
-            circularProgress.animate(toAngle: Double(newAngleValue), duration: 0.5, completion: nil)
-            efficiencyNumberLabel.text = String(format: "%.02f", (newAngleValue/10))
- //       }
+        circularProgress.animate(toAngle: Double(newAngleValue), duration: 0.5, completion: nil)
+        efficiencyNumberLabel.text = String(format: "%.02f", (newAngleValue/10))
     }
     
     // MARK: Functions
+    
     func setBackground() {
         let topColor = UIColor(red: 99/255.0, green: 175/255.0, blue: 213/255.0, alpha: 1.0)
         let bottomColor = UIColor(red: 5/255.0, green: 54/255.0, blue: 106/255.0, alpha: 1.0)

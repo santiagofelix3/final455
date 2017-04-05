@@ -11,19 +11,30 @@ import os.log
 
 class GarageTableViewController: UITableViewController {
     
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
+    
     var vehicles = VehicleProfile.init()
     var garage = [VehicleProfile]()
+    var activeFlag = 0
+    var selectVehicle: VehicleProfile?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationItem.leftBarButtonItem = editButtonItem
         
         loadVehicleFromArray()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if activeFlag == 0 {
+            navigationItem.leftBarButtonItem = editButtonItem
+        } else {
+            navigationItem.leftBarButtonItem = cancelButton
+            navigationItem.rightBarButtonItem = nil
+        }
     }
     
     // MARK: - Table view data source
@@ -76,6 +87,16 @@ class GarageTableViewController: UITableViewController {
             print(garage)
         }
     }
+    
+    @IBAction func cancel(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    /*@IBAction func returnToDashboard(_ sender: UITapGestureRecognizer) {
+     if activeFlag == 0 {
+     performSegue(withIdentifier: "returnToDashboard", sender: nil)
+     }
+     }*/
     
     // MARK: Private Methods
     
@@ -155,32 +176,50 @@ class GarageTableViewController: UITableViewController {
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         super.prepare(for: segue, sender: sender)
         
-        switch(segue.identifier ?? "") {
-            
-        case "AddItem":
-            os_log("Adding a new vehicle.", log: OSLog.default, type: .debug)
-            
-        case "ShowDetail":
-            guard let vehicleDetailViewController = segue.destination as? AddVehicleViewController else {
+        if segue.identifier == nil {
+            print("I am nil")
+            guard segue.destination is DashboardViewController else {
                 fatalError("Unexpected destination: \(segue.destination)")
             }
-            
             guard let selectedVehicleCell = sender as? GarageTableViewCell else {
                 fatalError("Unexpected sender: \(sender)")
             }
-            
             guard let indexPath = tableView.indexPath(for: selectedVehicleCell) else {
                 fatalError("The selected cell is not being displayed by the table")
             }
-            
             let selectedVehicle = garage[indexPath.row]
-            vehicleDetailViewController.vehicles = selectedVehicle
+            selectVehicle = selectedVehicle
+            print("Do i get here")
+        } else {
+            print("This is the identifier name")
+            print(segue.identifier as Any)
             
-        default:
-            fatalError("Unexpected Segue Identifier; \(segue.identifier)")
+            switch(segue.identifier ?? "") {
+                
+            case "AddItem":
+                os_log("Adding a new vehicle.", log: OSLog.default, type: .debug)
+                
+            case "ShowDetail":
+                guard let vehicleDetailViewController = segue.destination as? AddVehicleViewController else {
+                    fatalError("Unexpected destination: \(segue.destination)")
+                }
+                
+                guard let selectedVehicleCell = sender as? GarageTableViewCell else {
+                    fatalError("Unexpected sender: \(sender)")
+                }
+                
+                guard let indexPath = tableView.indexPath(for: selectedVehicleCell) else {
+                    fatalError("The selected cell is not being displayed by the table")
+                }
+                
+                let selectedVehicle = garage[indexPath.row]
+                vehicleDetailViewController.vehicles = selectedVehicle
+                
+            default:
+                fatalError("Unexpected Segue Identifier; \(segue.identifier)")
+            }
         }
     }
     
