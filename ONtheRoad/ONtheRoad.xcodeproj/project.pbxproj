@@ -414,14 +414,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-<<<<<<< HEAD
-<<<<<<< HEAD
 				B16B9F5C1E94917500E6DA13 /* TripTableViewController.swift in Sources */,
 				069B33941E8CE5DC00760F3A /* VehicleProfileData.swift in Sources */,
-=======
->>>>>>> origin/master
-=======
->>>>>>> origin/master
 				B16B9F591E947FFB00E6DA13 /* MulticolorPolylineSegment.swift in Sources */,
 				063CE46D1E8F14A30020DCCA /* MakeTableViewCell.swift in Sources */,
 				063CE4721E8F14A30020DCCA /* TrimTableViewController.swift in Sources */,
