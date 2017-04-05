@@ -12,7 +12,7 @@ class GraphOneViewController: UIViewController {
    
     var currentCount: Double = 0.0
     //Fuel Consumption * MaxAccel
-    var maxCount: Double = 6.2 * 4.8
+    var maxCount: Double = ((6.2 * 100) / 37.5)
     
     @IBOutlet weak var circleAnimation: KDCircularProgress!
     @IBOutlet weak var circleBackground: KDCircularProgress!
@@ -26,25 +26,33 @@ class GraphOneViewController: UIViewController {
         setBackground()
         setAnimation()
         
-        Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(GraphOneViewController.updateCircle), userInfo: nil, repeats: true)
+        Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(GraphOneViewController.updateCircle), userInfo: nil, repeats: true)
     }
     
     func newAngle() -> Float {
-        return Float(360 * (currentCount * 6.2 / maxCount))
+        return Float(270 * (currentCount * 6.2 / maxCount))
     }
     
     func updateCircle() {
-        currentCount = (GlobalTripDataInstance.globalTrip?.tripLocationData[(GlobalTripDataInstance.globalTrip?.tripLocationData.count)!-1].efficiencyRatio)!
-        print("e: ", currentCount)
+        if (GlobalTripDataInstance.globalTrip?.started != nil) {
+            currentCount = (GlobalTripDataInstance.globalTrip?.tripLocationData[(GlobalTripDataInstance.globalTrip?.tripLocationData.count)!-1].efficiencyRatio)!
+        }
+        if (currentCount > maxCount) {
+            currentCount = maxCount
+        }
+        
+
         if currentCount == 0 {
             currentCount = 0.5
         }
         
-        if currentCount != maxCount {
+         print("e: ", currentCount)
+        
+ //       if currentCount <= maxCount {
             let newAngleValue = newAngle()
             circularProgress.animate(toAngle: Double(newAngleValue), duration: 0.5, completion: nil)
             efficiencyNumberLabel.text = String(format: "%.02f", (newAngleValue/10))
-        }
+ //       }
     }
     
     // MARK: Functions

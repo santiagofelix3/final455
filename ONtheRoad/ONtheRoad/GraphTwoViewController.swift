@@ -20,7 +20,7 @@ class GraphTwoViewController: UIViewController, ChartViewDelegate {
         super.viewDidLoad()
         
         kilometers = ["0"]
-        let efficiency = ["1"]
+        var efficiency = ["1"]
         
         setBackground()
         setChart(dataPoints: kilometers, values: efficiency)

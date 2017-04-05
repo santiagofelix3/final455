@@ -46,7 +46,7 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
         locationManager.activityType = .automotiveNavigation
         locationManager.distanceFilter = 10.0
         locationManager.requestAlwaysAuthorization()
-        
+        started = 1
         startTime = Date.init()
         print("Trip Started")
         locationManager.startUpdatingLocation()
@@ -55,6 +55,7 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
     //Stops the trip
     func endTrip(){
         locationManager.stopUpdatingLocation()
+        started = 0
         saveNewTrip()
         endTime = Date.init()
     }
@@ -70,7 +71,7 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
             //          print(location.coordinate.latitude)
             //          print(location.coordinate.longitude)
             //If locations is not empty, calculate all
-            if self.locations.count > 0 {
+            if self.locations.count > 1 {
                 let distanceSinceLast = location.distance(from: self.locations.last!)
                 addCLLocation(location: location, distanceSinceLast: distanceSinceLast)
                 print ("d: ", distanceSinceLast)
@@ -101,7 +102,10 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
             tempLocation.instAccel = tempLocation.instSpeed - self.tripLocationData[tripLocationData.count-1].instSpeed
         }
         //Getting the effRatio
-        tempLocation.efficiencyRatio = abs(tempLocation.instAccel/(vehicleMaxAccel!/2))+1
+        tempLocation.efficiencyRatio = abs(tempLocation.instAccel/(vehicleMaxAccel!))+1
+        if (tempLocation.efficiencyRatio > 1.9){
+            tempLocation.efficiencyRatio = 1.9
+        }
         
         self.tripLocationData.append(tempLocation)
     }

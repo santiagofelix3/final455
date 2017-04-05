@@ -58,7 +58,6 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
             
             stopWatch = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(DashboardViewController.updateTime(_stopWatch:)), userInfo: nil, repeats: true)
             startTime = Date.timeIntervalSinceReferenceDate
-            
         } else {
             startStopButton.setTitle("Start", for: .normal)
             GlobalTripDataInstance.globalTrip?.endTrip()
