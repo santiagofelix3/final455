@@ -40,28 +40,37 @@ class AnalyticsViewController: UIViewController {
         let totalTime = badTime + averageTime + goodTime + lowTime
         
         var newAngle = Float(360 * (badTime / totalTime))
-        badCircle.animate(toAngle: Double(newAngle), duration: 0.5, completion: nil)
+        badCircle.animate(toAngle: Double(newAngle), duration: 1, completion: nil)
+        print(newAngle)
         
         var nextAngle = Double(newAngle)
-        averageCircle.angle = nextAngle
+        print(nextAngle)
+        averageCircle.startAngle = nextAngle
         newAngle = Float(360 * (averageTime / totalTime))
         averageCircle.animate(toAngle: Double(newAngle), duration: 1, completion: nil)
+        print(newAngle)
         
         nextAngle += Double(newAngle)
-        goodCircle.angle = nextAngle
+        print(nextAngle)
+        goodCircle.startAngle = nextAngle
         newAngle = Float(360 * (goodTime / totalTime))
-        goodCircle.animate(toAngle: Double(newAngle), duration: 1.5, completion: nil)
+        goodCircle.animate(toAngle: Double(newAngle), duration: 1, completion: nil)
+        print(newAngle)
         
         nextAngle += Double(newAngle)
-        lowCircle.angle = nextAngle
+        print(nextAngle)
+        lowCircle.startAngle = nextAngle
         newAngle = Float(360 * (lowTime / totalTime))
-        lowCircle.animate(toAngle: Double(newAngle), duration: 2, completion: nil)
+        lowCircle.animate(toAngle: Double(newAngle), duration: 1, completion: nil)
+        print(newAngle)
     }
     
     func setupAnimation() {
-        badCircle.angle = -90
+        badCircle.angle = 0
+        averageCircle.angle = 0
+        goodCircle.angle = 0
+        lowCircle.angle = 0
     }
-    
     
     /*
      // MARK: - Navigation
