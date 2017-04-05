@@ -326,7 +326,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="jCc-gl-AcK">
                                         <rect key="frame" x="0.0" y="0.0" width="121.5" height="101"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="61" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cQ8-lA-QuG">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cQ8-lA-QuG">
                                                 <rect key="frame" x="0.0" y="0.0" width="121.5" height="65"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="45"/>
                                                 <color key="textColor" red="0.32156862749999998" green="0.61960784310000006" blue="0.81568627449999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -346,7 +346,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="wMN-XJ-UyL">
                                         <rect key="frame" x="181.5" y="0.0" width="121.5" height="101"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="61" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gHv-rr-LmQ">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gHv-rr-LmQ">
                                                 <rect key="frame" x="11" y="0.0" width="99.5" height="65"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="45"/>
                                                 <color key="textColor" red="0.32156862749999998" green="0.61960784310000006" blue="0.81568627449999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -390,6 +390,7 @@
                     <tabBarItem key="tabBarItem" title="Dashboard" image="dashboard" selectedImage="dashboard" id="acW-dT-cKf"/>
                     <connections>
                         <outlet property="contentView" destination="hF5-Zf-Zx7" id="H8F-XT-vNC"/>
+                        <outlet property="distanceLabel" destination="gHv-rr-LmQ" id="Udx-9N-9aN"/>
                         <outlet property="graphsView" destination="n3Z-oV-OzQ" id="znl-2B-0ag"/>
                         <outlet property="selectVehicleImage" destination="cyy-Pp-krx" id="ugA-sp-J5y"/>
                         <outlet property="selectVehicleView" destination="Bmt-Vv-pQf" id="qYk-uq-gXv"/>

@@ -90,6 +90,11 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
             timeLabel.text = String(format: "%02d", m) + ":"+String(format: "%02d", s)
         }
         
+        distanceLabel.text = String(format: "%.02f", (GlobalTripDataInstance.globalTrip?.tripDistance)!/1000)
+        //distanceLabel.text = String(Int((GlobalTripDataInstance.globalTrip?.tripDistance)!)/1000)
+        velocityLabel.text = String(Int(3.6*(GlobalTripDataInstance.globalTrip?.tripLocationData[(GlobalTripDataInstance.globalTrip?.tripLocationData.count)! - 1].instSpeed)!))
+
+        
         // print(newTrip?.tripLocationData[(newTrip?.tripLocationData.count)!-1].instAcceleration)
     }
     
