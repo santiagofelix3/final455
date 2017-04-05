@@ -30,11 +30,9 @@ class VehicleProfile: NSObject, NSCoding {
     var gas: String = ""
     
     // MARK: Archiving Paths
-    //static var numberOfVehiclesSaved: Int = 0
     static var totalNumberOfVehicles: Int = 0
     
     static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
-    //static let ArchiveURL = DocumentsDirectory.appendingPathComponent("vehicles")
     
     // MARK: Types
     
@@ -54,7 +52,6 @@ class VehicleProfile: NSObject, NSCoding {
         static let horsepower = "horsepower"
         static let torque = "torque"
         static let gas = "gas"
-        //static let numberOfVehiclesSaved = "numberOfVehiclesSaved"
     }
     
     //MARK: Initialization
@@ -101,7 +98,6 @@ class VehicleProfile: NSObject, NSCoding {
         aCoder.encode(horsepower, forKey: PropertyKey.horsepower)
         aCoder.encode(torque, forKey: PropertyKey.torque)
         aCoder.encode(gas, forKey: PropertyKey.gas)
-        //aCoder.encode(VehicleProfile.numberOfVehiclesSaved, forKey: PropertyKey.numberOfVehiclesSaved)
     }
     
     required convenience init?(coder aDecoder: NSCoder) {
@@ -167,12 +163,6 @@ class VehicleProfile: NSObject, NSCoding {
             os_log("Unable to decode the IMAGE for a Vehicle object.", log: OSLog.default, type: .debug)
             return nil
         }
-        /*guard let numberOfVehiclesSaved = aDecoder.decodeInteger(forKey: PropertyKey.numberOfVehiclesSaved) as Int? else {
-            os_log("Unable to decode the numberOfVehiclesSaved for a Vehicle object.", log: OSLog.default, type: .debug)
-            return nil
-        }*/
-        
-        //VehicleProfile.numberOfVehiclesSaved = numberOfVehiclesSaved
         
         self.init(photo: photo, name: name, make: make, model: model, year: year, trim: trim, type: type, id: id, maxAcceleration: maxAcceleration, efficiency: efficiency, cylinder: cylinder, size: size, horsepower: horsepower, torque: torque, gas: gas)
         

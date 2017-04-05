@@ -52,7 +52,7 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
             transitionAnimationShow()
             
             newTrip = TripData.init(vehicleID: 1, name: "", odometerStart: 0, vehicleMaxAccel: 4.8)
-             newTrip?.startTrip()
+            newTrip?.startTrip()
             
             stopWatch = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(DashboardViewController.updateTime(_stopWatch:)), userInfo: nil, repeats: true)
             startTime = Date.timeIntervalSinceReferenceDate
