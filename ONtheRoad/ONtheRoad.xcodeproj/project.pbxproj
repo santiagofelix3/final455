@@ -18,6 +18,8 @@
 		063CE4761E8F16EA0020DCCA /* KDCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063CE4751E8F16EA0020DCCA /* KDCircularProgress.swift */; };
 		0646DEE51E90311A00951E39 /* GarageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0646DEE41E90311A00951E39 /* GarageTableViewCell.swift */; };
 		0646DEE71E9036CA00951E39 /* GarageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0646DEE61E9036CA00951E39 /* GarageTableViewController.swift */; };
+		064E40F91E95FA8F0014BA15 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 066DACC21E8A41EE002B62E8 /* Charts.framework */; };
+		064E40FA1E95FA8F0014BA15 /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 066DACC21E8A41EE002B62E8 /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		066DACC11E8A41B6002B62E8 /* GraphTwoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066DACC01E8A41B6002B62E8 /* GraphTwoViewController.swift */; };
 		066DACC81E8A4964002B62E8 /* GraphThreeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066DACC71E8A4964002B62E8 /* GraphThreeViewController.swift */; };
 		0696516E1E8C294A00349A49 /* AddVehicleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0696516D1E8C294A00349A49 /* AddVehicleViewController.swift */; };
@@ -35,9 +37,6 @@
 		06C2D2581E8A0E5F0066AE3C /* GraphOneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C2D2571E8A0E5F0066AE3C /* GraphOneViewController.swift */; };
 		06EC44B61E959716008906C7 /* AnalyticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06EC44B51E959716008906C7 /* AnalyticsViewController.swift */; };
 		B037DDFFED8D704FFF8A87DB /* Pods_ONtheRoad.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 805BBC586CD39BC02A2EE363 /* Pods_ONtheRoad.framework */; };
-		B10933A31E95D13200EF289B /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B10933A21E95D13200EF289B /* Charts.framework */; };
-		B10933A41E95D13500EF289B /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B10933A21E95D13200EF289B /* Charts.framework */; };
-		B10933A51E95D13500EF289B /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B10933A21E95D13200EF289B /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B115BA701E90B6E50027803C /* TripData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B115BA6F1E90B6E50027803C /* TripData.swift */; };
 /* End PBXBuildFile section */
 
@@ -52,13 +51,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		B10933A61E95D13500EF289B /* Embed Frameworks */ = {
+		064E40FB1E95FA8F0014BA15 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				B10933A51E95D13500EF289B /* Charts.framework in Embed Frameworks */,
+				064E40FA1E95FA8F0014BA15 /* Charts.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -112,9 +111,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B10933A41E95D13500EF289B /* Charts.framework in Frameworks */,
-				B10933A31E95D13200EF289B /* Charts.framework in Frameworks */,
 				B037DDFFED8D704FFF8A87DB /* Pods_ONtheRoad.framework in Frameworks */,
+				064E40F91E95FA8F0014BA15 /* Charts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,7 +248,7 @@
 				06C2D21E1E89BD000066AE3C /* Resources */,
 				02FE5E10D5DAAF1BB9C82488 /* [CP] Embed Pods Frameworks */,
 				801C68C0D1A93E426320E8B0 /* [CP] Copy Pods Resources */,
-				B10933A61E95D13500EF289B /* Embed Frameworks */,
+				064E40FB1E95FA8F0014BA15 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
