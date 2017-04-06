@@ -63,7 +63,7 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
         activityIndicator.startAnimating()
         setupVehicle()
     }
-            
+    
     // MARK: Actions
     
     @IBAction func startStopButton(_ sender: UIButton) {
@@ -89,7 +89,7 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
     
     @IBAction func selectVehicleAction(_ sender: UITapGestureRecognizer) {
         performSegue(withIdentifier: "selectVehicleSegue", sender: nil)
-
+        
     }
     
     
@@ -110,16 +110,18 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
         
         seconds += 1
         let (h,m,s) = secondsToHoursMinutesSeconds(seconds: Int(seconds))
-
+        
         if seconds >= 3600 {
             timeLabel.text = String(format: "%02d", h) + ":" + String(format: "%02d", m) + ":"+String(format: "%02d", s)
         } else {
             timeLabel.text = String(format: "%02d", m) + ":"+String(format: "%02d", s)
         }
-        
-        distanceLabel.text = String(format: "%.02f", (GlobalTripDataInstance.globalTrip?.tripDistance)!/1000)
-        velocityLabel.text = String(Int(3.6*(GlobalTripDataInstance.globalTrip?.tripLocationData[(GlobalTripDataInstance.globalTrip?.tripLocationData.count)! - 1].instSpeed)!))
+        if (GlobalTripDataInstance.globalTrip?.tripLocationData.count)! > 1 {
+            distanceLabel.text = String(format: "%.02f", (GlobalTripDataInstance.globalTrip?.tripDistance)!/1000)
+            velocityLabel.text = String(Int(3.6*(GlobalTripDataInstance.globalTrip?.tripLocationData[(GlobalTripDataInstance.globalTrip?.tripLocationData.count)! - 1].instSpeed)!))
+        }
     }
+    
     
     func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
         return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)

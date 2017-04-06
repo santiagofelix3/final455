@@ -257,6 +257,69 @@ class Location {
     
     init(){}
     
+    private init(timeStamp: Date, latitude: Double, longitude: Double, distance: Double, instSpeed: Double, instAccel: Double, efficiencyRatio: Double) {
+        self.timeStamp = timeStamp
+        self.latitude = latitude
+        self.longitude = longitude
+        self.distance = distance
+        self.instSpeed = instSpeed
+        self.instAccel = instAccel
+        self.efficiencyRatio = efficiencyRatio
+    }
+    
+    struct PropertyKey {
+        static var timeStamp = "timeStamp"
+        static var latitude = "latitude"
+        static var longitude = "longitude"
+        static var distance = "distance"
+        static var instSpeed = "instSpeed"
+        static var instAccel = "instAccel"
+        static var efficiencyRatio = "efficiencyRatio"
+    }
+    
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(timeStamp, forKey: PropertyKey.timeStamp)
+        aCoder.encode(latitude, forKey: PropertyKey.latitude)
+        aCoder.encode(longitude, forKey: PropertyKey.longitude)
+        aCoder.encode(distance, forKey: PropertyKey.distance)
+        aCoder.encode(instSpeed, forKey: PropertyKey.instSpeed)
+        aCoder.encode(instAccel, forKey: PropertyKey.instAccel)
+        aCoder.encode(efficiencyRatio, forKey: PropertyKey.efficiencyRatio)
+    }
+    
+    required convenience init?(coder aDecoder: NSCoder) {
+        guard let timeStamp = aDecoder.decodeObject(forKey: PropertyKey.timeStamp) as? Date else {
+            os_log("Unable to decode the timeStamp for a Vehicle object.", log: OSLog.default, type: .debug)
+            return nil
+        }
+        guard let latitude = aDecoder.decodeDouble(forKey: PropertyKey.latitude) as Double? else {
+            os_log("Unable to decode the latitude for a Vehicle object.", log: OSLog.default, type: .debug)
+            return nil
+        }
+        guard let longitude = aDecoder.decodeDouble(forKey: PropertyKey.longitude) as Double? else {
+            os_log("Unable to decode the longitude for a Vehicle object.", log: OSLog.default, type: .debug)
+            return nil
+        }
+        guard let distance = aDecoder.decodeDouble(forKey: PropertyKey.distance) as Double? else {
+            os_log("Unable to decode the distance for a Vehicle object.", log: OSLog.default, type: .debug)
+            return nil
+        }
+        guard let instSpeed = aDecoder.decodeDouble(forKey: PropertyKey.instSpeed) as Double? else {
+            os_log("Unable to decode the instSpeed for a Vehicle object.", log: OSLog.default, type: .debug)
+            return nil
+        }
+        guard let instAccel = aDecoder.decodeDouble(forKey: PropertyKey.instAccel) as Double? else {
+            os_log("Unable to decode the instAccel for a Vehicle object.", log: OSLog.default, type: .debug)
+            return nil
+        }
+        guard let efficiencyRatio = aDecoder.decodeDouble(forKey: PropertyKey.efficiencyRatio) as Double? else {
+            os_log("Unable to decode the efficiencyRatio for a Vehicle object.", log: OSLog.default, type: .debug)
+            return nil
+        }
+        
+        self.init(timeStamp: timeStamp, latitude: latitude, longitude: longitude, distance: distance, instSpeed: instSpeed, instAccel: instAccel, efficiencyRatio: efficiencyRatio)
+        
+    }
 }
 
 struct GlobalTripDataInstance {
