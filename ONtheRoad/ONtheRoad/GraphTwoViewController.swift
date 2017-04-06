@@ -8,6 +8,7 @@
 
 import UIKit
 import Charts
+import Foundation
 
 class GraphTwoViewController: UIViewController, ChartViewDelegate {
     
@@ -15,12 +16,17 @@ class GraphTwoViewController: UIViewController, ChartViewDelegate {
     
     var kilometers: [String]!
     var counter = 0
+    var increment: Double?
+    var counter2 = 1.0
+    var tracker = 3
+    var effTemp = 0.0
+    var efficiency: [String]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         kilometers = ["0"]
-        let efficiency = ["1"]
+        efficiency = ["0"]
         
         setBackground()
         setChart(dataPoints: kilometers, values: efficiency)
@@ -32,16 +38,32 @@ class GraphTwoViewController: UIViewController, ChartViewDelegate {
     
     func newEfficiencyValue() {
         
-        let efficiency = ["5.0", "10.0", "15.0", "20.0", "25.0", "30.0", "35.0", "40.0", "45.0", "50.0"]
-        
-        if counter < 10 {
-            kilometers.insert(generateRandomNumbers(), at: counter)
-            counter += 1
-        } else {
-            kilometers.remove(at: 0)
-            kilometers.insert(generateRandomNumbers(), at: 10)
+        if (GlobalTripDataInstance.globalTrip?.started != nil) {
+                print ("d: ", GlobalTripDataInstance.globalTrip?.tripDistance)
+            increment = (GlobalTripDataInstance.globalTrip?.tripDistance)! / 250
+            if (increment! > 1.0*counter2) {
+                print ("i: ", increment!)
+                counter2 += 1
+                for location in tracker ..< (GlobalTripDataInstance.globalTrip?.tripLocationData.count)! {
+                    effTemp += (GlobalTripDataInstance.globalTrip?.tripLocationData[location].efficiencyRatio)!
+                }
+                self.efficiency.append(String(effTemp))
+                tracker = (GlobalTripDataInstance.globalTrip?.tripLocationData.count)!
+                
+                if Int(counter2-2) < 10 {
+                    kilometers.insert(String(effTemp), at: Int(counter2-2))
+                    counter += 1
+                } else {
+                    kilometers.remove(at: 0)
+                    kilometers.insert(String(effTemp), at: 10)
+                }
+                
+                effTemp = 0.0
+                
+                setChart(dataPoints: kilometers, values: efficiency)
+                
+            }
         }
-        setChart(dataPoints: kilometers, values: efficiency)
     }
     
     func setChart(dataPoints: [String], values: [String]) {
@@ -59,7 +81,7 @@ class GraphTwoViewController: UIViewController, ChartViewDelegate {
         
         let chartDataSet = BarChartDataSet(values: dataEntries, label: "Efficiency")
         let chartData = BarChartData(dataSet: chartDataSet)
-        let targetLine = ChartLimitLine(limit: 14.0, label: "Ideal")
+        let targetLine = ChartLimitLine(limit: (GlobalTripDataInstance.globalTrip?.vehicleIdeal)!, label: "Ideal")
         
         targetLine.lineWidth = 1
         targetLine.valueTextColor = UIColor.white

@@ -11,7 +11,6 @@ import UIKit
 class GraphOneViewController: UIViewController {
     
     var currentCount: Double = 0.0
-    var maxCount: Double = ((6.2 * 100) / 37.5)
     
     @IBOutlet weak var circleAnimation: KDCircularProgress!
     @IBOutlet weak var circleBackground: KDCircularProgress!
@@ -29,22 +28,26 @@ class GraphOneViewController: UIViewController {
     }
     
     func newAngle() -> Float {
-        return Float(270 * (currentCount * 6.2 / maxCount))
+        if (GlobalTripDataInstance.globalTrip?.vehicleIdeal != nil) {
+            return Float(270 * (self.currentCount * 6.2 / (GlobalTripDataInstance.globalTrip?.vehicleIdeal)!))
+        }
+        else {
+            return Float (0.0)
+        }
     }
     
     func updateCircle() {
         if (GlobalTripDataInstance.globalTrip?.started != nil) {
-            if (GlobalTripDataInstance.globalTrip?.tripLocationData.count)! > 1 {
+            if (GlobalTripDataInstance.globalTrip?.tripLocationData.count)! > 3 {
             currentCount = (GlobalTripDataInstance.globalTrip?.tripLocationData[(GlobalTripDataInstance.globalTrip?.tripLocationData.count)!-1].efficiencyRatio)!
             }
+            if (currentCount > (GlobalTripDataInstance.globalTrip?.vehicleIdeal)!) {
+                currentCount = (GlobalTripDataInstance.globalTrip?.vehicleIdeal)!
+            }
+            if currentCount == 0 {
+                currentCount = 0.5
+            }
         }
-        if (currentCount > maxCount) {
-            currentCount = maxCount
-        }
-        if currentCount == 0 {
-            currentCount = 0.5
-        }
-        print("e: ", currentCount)
         
         let newAngleValue = newAngle()
         

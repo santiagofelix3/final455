@@ -4,6 +4,7 @@ import MapKit
 import CoreData
 import os.log
 
+
 class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
     
     //Mandatory Variables
@@ -16,6 +17,7 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
     var name: String?
     var odometerStart: Int?
     var vehicleMaxAccel: Double?
+    var vehicleIdeal = 30.0
     
     //End of Trip Variables
     var odometerEnd: Int?
@@ -33,6 +35,7 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
         self.name = name
         self.odometerStart = odometerStart
         self.vehicleMaxAccel = vehicleMaxAccel
+        self.vehicleIdeal = ((6.8 * 100) / 37.5)
     }
     
     // MARK: GPS
@@ -66,15 +69,13 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
         for location in locations{
             
             //Bananas are delicious
-            print ("BANANAS")
             print (self.locations.count)
             //          print(location.coordinate.latitude)
             //          print(location.coordinate.longitude)
             //If locations is not empty, calculate all
-            if self.locations.count > 1 {
+            if self.locations.count > 3 {
                 let distanceSinceLast = location.distance(from: self.locations.last!)
                 addCLLocation(location: location, distanceSinceLast: distanceSinceLast)
-                print ("d: ", distanceSinceLast)
                 //              print(location.coordinate.latitude)
                 //              print(location.coordinate.longitude)
             }
