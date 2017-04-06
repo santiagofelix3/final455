@@ -73,13 +73,14 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
                 let alertController = UIAlertController(title: "No Vehicle Selected", message:
                     "Please select a vehicle for your trip", preferredStyle: UIAlertControllerStyle.alert)
                 //TODO: Change "FUCK YOU" for final release
-                alertController.addAction(UIAlertAction(title: "FUCK YOU!", style: UIAlertActionStyle.default,handler: nil))
+                alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default,handler: nil))
                 self.present(alertController, animated: true, completion: nil)
             } else {
                 startStopButton.setTitle("Stop", for: .normal)
                 
                 transitionAnimationShow()
-                GlobalTripDataInstance.globalTrip = TripData.init(vehiclePhoto: (vehicles?.photo)!, name: (vehicles?.name!)!, odometerStart: 0, vehicleMaxAccel: (vehicles?.maxAcceleration)!)
+                GlobalTripDataInstance.globalTrip = TripData.init(vehiclePhoto: (vehicles?.photo)!, name: vehicles?.name, odometerStart: 0, vehicleMaxAccel: vehicles?.maxAcceleration)
+                GlobalTripDataInstance.globalTrip?.started = 1
                 GlobalTripDataInstance.globalTrip?.startTrip()
                 
                 stopWatch = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(DashboardViewController.updateTime(_stopWatch:)), userInfo: nil, repeats: true)
@@ -124,7 +125,7 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
         } else {
             timeLabel.text = String(format: "%02d", m) + ":"+String(format: "%02d", s)
         }
-        if (GlobalTripDataInstance.globalTrip?.tripLocationData.count)! > 3 {
+        if (GlobalTripDataInstance.globalTrip?.tripLocationData.count)! > 0 {
             distanceLabel.text = String(format: "%.02f", (GlobalTripDataInstance.globalTrip?.tripDistance)!/1000)
             velocityLabel.text = String(Int(3.6*(GlobalTripDataInstance.globalTrip?.tripLocationData[(GlobalTripDataInstance.globalTrip?.tripLocationData.count)! - 1].instSpeed)!))
         }

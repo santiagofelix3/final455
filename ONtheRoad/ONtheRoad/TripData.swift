@@ -18,6 +18,7 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
     var odometerStart: Int = 0
     var vehicleMaxAccel: Double = 0.0
     var vehicleIdeal = 30.0
+
     
     //End of Trip Variables
     var odometerEnd: Int = 0
@@ -54,7 +55,6 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
         locationManager.activityType = .automotiveNavigation
         locationManager.distanceFilter = 10.0
         locationManager.requestAlwaysAuthorization()
-        started = 1
         startTime = Date.init()
         print("Trip Started")
         locationManager.startUpdatingLocation()
@@ -63,8 +63,10 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
     //Stops the trip
     func endTrip(){
         locationManager.stopUpdatingLocation()
+        if (started == 1) {
+            saveNewTrip()
+        }
         started = 0
-        saveNewTrip()
         endTime = Date.init()
     }
     
@@ -72,17 +74,11 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         //for each location the GPS returns, update tripLocationData with a new Location
         for location in locations{
-            
-            //Bananas are delicious
-            print (self.locations.count)
-            //          print(location.coordinate.latitude)
-            //          print(location.coordinate.longitude)
+
             //If locations is not empty, calculate all
-            if self.locations.count > 3 {
+            if self.locations.count > 0 {
                 let distanceSinceLast = location.distance(from: self.locations.last!)
                 addCLLocation(location: location, distanceSinceLast: distanceSinceLast)
-                //              print(location.coordinate.latitude)
-                //              print(location.coordinate.longitude)
             }
             self.locations.append(location)
         }
@@ -215,7 +211,7 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
     }
     
     //saveTrip saves the trip to desired location
-    private func saveTrip(numberOfTrip: Int){
+    private func saveTrip(numberOfTrip: Int) {
         let currentArchiveURL = VehicleProfile.DocumentsDirectory.appendingPathComponent("Trip"+String(numberOfTrip))
         if NSKeyedArchiver.archiveRootObject(self, toFile: currentArchiveURL.path){
             print("Trip Saved at:"+currentArchiveURL.path)
@@ -226,7 +222,7 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
     }
     
     //saveNewTrip() finds the location to save the trip
-    private func saveNewTrip(){
+    private func saveNewTrip() {
         var count = 1
         while FileManager.default.fileExists(atPath: VehicleProfile.DocumentsDirectory.appendingPathComponent("Trip"+String(count)).path) {
             count += 1

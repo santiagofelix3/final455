@@ -23,16 +23,17 @@ class LogsTableViewController: UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+    }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return tripLog.count
     }
 
@@ -64,6 +65,9 @@ class LogsTableViewController: UITableViewController {
             // This goes inside the loop to get all trips
             if let trips = self.trips.loadTrip(numberOfTrip: count) {
                 self.tripLog.append(trips)
+
+                print("This is supposeed to be the array of trips")
+
                 print(tripLog)
                 count += 1
             }
