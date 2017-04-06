@@ -13,8 +13,8 @@ class LogsTableViewController: UITableViewController {
     var trips = TripData()
     var tripLog = [TripData]()
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+ //       super.viewDidLoad()
         loadTripFromArray()
 
     }
@@ -24,8 +24,8 @@ class LogsTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//    }
 
     // MARK: - Table view data source
 

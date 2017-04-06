@@ -18,7 +18,7 @@ class GraphTwoViewController: UIViewController, ChartViewDelegate {
     var counter = 0
     var increment: Double?
     var counter2 = 1.0
-    var tracker = 3
+    var tracker = 1
     var effTemp = 0.0
     var efficiency: [String]!
     
@@ -31,7 +31,7 @@ class GraphTwoViewController: UIViewController, ChartViewDelegate {
         setBackground()
         setChart(dataPoints: kilometers, values: efficiency)
         
-        Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(GraphTwoViewController.newEfficiencyValue), userInfo: nil, repeats: true)
+        Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(GraphTwoViewController.newEfficiencyValue), userInfo: nil, repeats: true)
     }
     
     // MARK: Functions
@@ -39,10 +39,8 @@ class GraphTwoViewController: UIViewController, ChartViewDelegate {
     func newEfficiencyValue() {
         
         if (GlobalTripDataInstance.globalTrip?.started != nil) {
-                print ("d: ", GlobalTripDataInstance.globalTrip?.tripDistance)
             increment = (GlobalTripDataInstance.globalTrip?.tripDistance)! / 250
             if (increment! > 1.0*counter2) {
-                print ("i: ", increment!)
                 counter2 += 1
                 for location in tracker ..< (GlobalTripDataInstance.globalTrip?.tripLocationData.count)! {
                     effTemp += (GlobalTripDataInstance.globalTrip?.tripLocationData[location].efficiencyRatio)!
