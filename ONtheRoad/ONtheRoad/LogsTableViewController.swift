@@ -15,6 +15,7 @@ class LogsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadTripFromArray()
 
     }
 
@@ -63,6 +64,7 @@ class LogsTableViewController: UITableViewController {
             // This goes inside the loop to get all trips
             if let trips = self.trips.loadTrip(numberOfTrip: count) {
                 self.tripLog.append(trips)
+                print(tripLog)
                 count += 1
             }
             else{

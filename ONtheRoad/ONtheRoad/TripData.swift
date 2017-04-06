@@ -9,27 +9,27 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
     
     //Mandatory Variables
     var locationManager: CLLocationManager!
-    var startTime: Date?
+    var startTime: Date = Date.init()
     var vehiclePhoto: UIImage
     var started = 0
     
     //Optional Input Variables
     var name: String?
-    var odometerStart: Int?
-    var vehicleMaxAccel: Double?
+    var odometerStart: Int = 0
+    var vehicleMaxAccel: Double = 0.0
     var vehicleIdeal = 30.0
     
     //End of Trip Variables
-    var odometerEnd: Int?
-    var endTime: Date?
-    var tripLength: Double?
+    var odometerEnd: Int = 0
+    var endTime: Date = Date.distantFuture
+    var tripLength: Double = 0.0
     var tripDistance: Double = 0
     
     var tripLocationData = [Location]()
     
     lazy var locations = [CLLocation]()
     
-    init?(vehiclePhoto: UIImage, name: String?, odometerStart: Int?, vehicleMaxAccel: Double?){
+    init?(vehiclePhoto: UIImage, name: String, odometerStart: Int, vehicleMaxAccel: Double){
         self.startTime = Date.init()
         self.vehiclePhoto = #imageLiteral(resourceName: "defaultPhoto")
         self.name = name
@@ -108,7 +108,7 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
             tempLocation.instAccel = tempLocation.instSpeed - self.tripLocationData[tripLocationData.count-1].instSpeed
         }
         //Getting the effRatio
-        tempLocation.efficiencyRatio = abs(tempLocation.instAccel/(vehicleMaxAccel!))+1
+        tempLocation.efficiencyRatio = abs(tempLocation.instAccel/(vehicleMaxAccel))+1
         if (tempLocation.efficiencyRatio > 1.9){
             tempLocation.efficiencyRatio = 1.9
         }
@@ -138,7 +138,7 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
         aCoder.encode(name, forKey: PropertyKey.name)
         aCoder.encode(odometerStart, forKey: PropertyKey.odometerStart)
         aCoder.encode(vehicleMaxAccel, forKey: PropertyKey.vehicleMaxAccel)
-        aCoder.encode(odometerEnd, forKey: PropertyKey.odometerEnd)
+        aCoder.encode(odometerEnd,  forKey: PropertyKey.odometerEnd)
         aCoder.encode(endTime, forKey: PropertyKey.endTime)
         aCoder.encode(tripLength, forKey: PropertyKey.tripLength)
         aCoder.encode(tripDistance, forKey: PropertyKey.tripDistance)
@@ -159,47 +159,58 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
     }
     
     required convenience init?(coder aDecoder: NSCoder) {
-        guard let startTime = aDecoder.decodeObject(forKey: PropertyKey.startTime) as? Date else {
-            os_log("Unable to decode the startTime for a Vehicle object.", log: OSLog.default, type: .debug)
+     /*   guard let startTime = aDecoder.decodeObject(forKey: PropertyKey.startTime) as? Date else {
+            os_log("Unable to decode the startTime for a TripData object.", log: OSLog.default, type: .debug)
             return nil
         }
         guard let vehiclePhoto = aDecoder.decodeObject(forKey: PropertyKey.vehiclePhoto) as? UIImage else {
-            os_log("Unable to decode the vehiclePhoto for a Vehicle object.", log: OSLog.default, type: .debug)
+            os_log("Unable to decode the vehiclePhoto for a TripData object.", log: OSLog.default, type: .debug)
             return nil
         }
         guard let name = aDecoder.decodeObject(forKey: PropertyKey.name) as? String else {
-            os_log("Unable to decode the name for a Vehicle object.", log: OSLog.default, type: .debug)
+            os_log("Unable to decode the name for a TripData object.", log: OSLog.default, type: .debug)
             return nil
         }
         guard let odometerStart = aDecoder.decodeInteger(forKey: PropertyKey.odometerStart) as Int? else {
-            os_log("Unable to decode the odometerStart for a Vehicle object.", log: OSLog.default, type: .debug)
+            os_log("Unable to decode the odometerStart for a TripData object.", log: OSLog.default, type: .debug)
             return nil
         }
         guard let vehicleMaxAccel = aDecoder.decodeDouble(forKey: PropertyKey.vehicleMaxAccel) as Double? else {
-            os_log("Unable to decode the vehicleMaxAccel for a Vehicle object.", log: OSLog.default, type: .debug)
+            os_log("Unable to decode the vehicleMaxAccel for a TripData object.", log: OSLog.default, type: .debug)
             return nil
         }
         guard let odometerEnd = aDecoder.decodeInteger(forKey: PropertyKey.odometerEnd) as Int? else {
-            os_log("Unable to decode the odometerEnd for a Vehicle object.", log: OSLog.default, type: .debug)
+            os_log("Unable to decode the odometerEnd for a TripData object.", log: OSLog.default, type: .debug)
             return nil
         }
         guard let endTime = aDecoder.decodeObject(forKey: PropertyKey.endTime) as? Date else {
-            os_log("Unable to decode the endTime for a Vehicle object.", log: OSLog.default, type: .debug)
+            os_log("Unable to decode the endTime for a TripData object.", log: OSLog.default, type: .debug)
             return nil
         }
-        guard let tripLength = aDecoder.decodeDouble(forKey: PropertyKey.tripLength) as Double? else {
-            os_log("Unable to decode the tripLength for a Vehicle object.", log: OSLog.default, type: .debug)
+       guard let tripLength = aDecoder.decodeDouble(forKey: PropertyKey.tripLength) as Double? else {
+            os_log("Unable to decode the tripLength for a TripData object.", log: OSLog.default, type: .debug)
             return nil
         }
         guard let tripDistance = aDecoder.decodeDouble(forKey: PropertyKey.tripDistance) as Double? else {
-            os_log("Unable to decode the tripDistance for a Vehicle object.", log: OSLog.default, type: .debug)
+            os_log("Unable to decode the tripDistance for a TripData object.", log: OSLog.default, type: .debug)
             return nil
         }
         guard let tripLocationData = aDecoder.decodeObject(forKey: PropertyKey.tripLocationData) as? [Location] else {
-            os_log("Unable to decode the tripLocationData for a Vehicle object.", log: OSLog.default, type: .debug)
+            os_log("Unable to decode the tripLocationData for a TripData object.", log: OSLog.default, type: .debug)
             return nil
         }
-        
+  */
+        let startTime = aDecoder.decodeObject(forKey: PropertyKey.startTime) as! Date
+        let vehiclePhoto = aDecoder.decodeObject(forKey: PropertyKey.vehiclePhoto) as! UIImage
+        let name = aDecoder.decodeObject(forKey: PropertyKey.name) as! String
+        let odometerStart = aDecoder.decodeInteger(forKey: PropertyKey.odometerStart) as Int
+        let vehicleMaxAccel = aDecoder.decodeDouble(forKey: PropertyKey.vehicleMaxAccel)
+        let odometerEnd = aDecoder.decodeInteger(forKey: PropertyKey.odometerEnd) as Int
+        let endTime = aDecoder.decodeObject(forKey: PropertyKey.endTime) as! Date
+        let tripLength = aDecoder.decodeDouble(forKey: PropertyKey.tripLength) as Double
+        let tripDistance = aDecoder.decodeDouble(forKey: PropertyKey.tripDistance) as Double
+        let tripLocationData = aDecoder.decodeObject(forKey: PropertyKey.tripLocationData) as! [Location]
+    
         self.init(startTime: startTime, vehiclePhoto: vehiclePhoto, name: name, odometerStart: odometerStart, vehicleMaxAccel: vehicleMaxAccel, odometerEnd: odometerEnd, endTime: endTime, tripLength: tripLength, tripDistance: tripDistance, tripLocationData: tripLocationData)
     }
     
@@ -207,6 +218,7 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
     private func saveTrip(numberOfTrip: Int){
         let currentArchiveURL = VehicleProfile.DocumentsDirectory.appendingPathComponent("Trip"+String(numberOfTrip))
         if NSKeyedArchiver.archiveRootObject(self, toFile: currentArchiveURL.path){
+            print("Trip Saved at:"+currentArchiveURL.path)
             os_log("Trip successfully saved.", log: OSLog.default, type: .error)
         } else {
             os_log("FAILED to save Trip", log: OSLog.default, type: .error)
@@ -224,7 +236,11 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
     
     func loadTrip(numberOfTrip: Int) -> TripData? {
         let currentArchiveURL = VehicleProfile.DocumentsDirectory.appendingPathComponent("Trip"+String(numberOfTrip))
-        return NSKeyedUnarchiver.unarchiveObject(withFile: currentArchiveURL.path) as? TripData
+        print("Attempting to load trip at: "+currentArchiveURL.path)
+        let temp = NSKeyedUnarchiver.unarchiveObject(withFile: currentArchiveURL.path) as? TripData
+
+
+        return temp
     }
     
     func deleteTrip(numberOfTrip: Int) {

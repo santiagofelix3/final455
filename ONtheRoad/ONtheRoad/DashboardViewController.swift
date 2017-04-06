@@ -79,7 +79,7 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
                 startStopButton.setTitle("Stop", for: .normal)
                 
                 transitionAnimationShow()
-                GlobalTripDataInstance.globalTrip = TripData.init(vehiclePhoto: (vehicles?.photo)!, name: vehicles?.name, odometerStart: 0, vehicleMaxAccel: vehicles?.maxAcceleration)
+                GlobalTripDataInstance.globalTrip = TripData.init(vehiclePhoto: (vehicles?.photo)!, name: (vehicles?.name!)!, odometerStart: 0, vehicleMaxAccel: (vehicles?.maxAcceleration)!)
                 GlobalTripDataInstance.globalTrip?.startTrip()
                 
                 stopWatch = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(DashboardViewController.updateTime(_stopWatch:)), userInfo: nil, repeats: true)
