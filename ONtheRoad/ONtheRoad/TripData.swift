@@ -35,6 +35,11 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
         self.vehicleMaxAccel = vehicleMaxAccel
     }
     
+    override init() {
+        self.vehiclePhoto = #imageLiteral(resourceName: "defaultPhoto")
+        
+    }
+    
     // MARK: GPS
     
     //Starts the trip

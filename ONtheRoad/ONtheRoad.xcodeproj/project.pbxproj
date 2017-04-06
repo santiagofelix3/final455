@@ -21,6 +21,8 @@
 		066DACC11E8A41B6002B62E8 /* GraphTwoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066DACC01E8A41B6002B62E8 /* GraphTwoViewController.swift */; };
 		066DACC81E8A4964002B62E8 /* GraphThreeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066DACC71E8A4964002B62E8 /* GraphThreeViewController.swift */; };
 		0696516E1E8C294A00349A49 /* AddVehicleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0696516D1E8C294A00349A49 /* AddVehicleViewController.swift */; };
+		0699441C1E95E04800A72B8D /* LogsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0699441B1E95E04800A72B8D /* LogsTableViewController.swift */; };
+		0699441E1E95E08B00A72B8D /* LogsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0699441D1E95E08B00A72B8D /* LogsTableViewCell.swift */; };
 		069B33921E8CE5B100760F3A /* VehicleProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069B33911E8CE5B100760F3A /* VehicleProfile.swift */; };
 		069B33941E8CE5DC00760F3A /* VehicleProfileData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069B33931E8CE5DC00760F3A /* VehicleProfileData.swift */; };
 		06C2D2241E89BD000066AE3C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C2D2231E89BD000066AE3C /* AppDelegate.swift */; };
@@ -29,7 +31,6 @@
 		06C2D22D1E89BD000066AE3C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 06C2D22C1E89BD000066AE3C /* Assets.xcassets */; };
 		06C2D2301E89BD000066AE3C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 06C2D22E1E89BD000066AE3C /* LaunchScreen.storyboard */; };
 		06C2D23B1E89BD010066AE3C /* ONtheRoadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C2D23A1E89BD010066AE3C /* ONtheRoadTests.swift */; };
-		06C2D2521E8A0E1F0066AE3C /* LogsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C2D2511E8A0E1F0066AE3C /* LogsViewController.swift */; };
 		06C2D2561E8A0E480066AE3C /* HomeGraphsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C2D2551E8A0E480066AE3C /* HomeGraphsViewController.swift */; };
 		06C2D2581E8A0E5F0066AE3C /* GraphOneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C2D2571E8A0E5F0066AE3C /* GraphOneViewController.swift */; };
 		06EC44B61E959716008906C7 /* AnalyticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06EC44B51E959716008906C7 /* AnalyticsViewController.swift */; };
@@ -79,6 +80,8 @@
 		066DACC21E8A41EE002B62E8 /* Charts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Charts.framework; path = "../../../Library/Developer/Xcode/DerivedData/ONtheRoad-cusfdypjhzvtvlaizqdzrkdqhley/Build/Products/Debug-iphonesimulator/Charts/Charts.framework"; sourceTree = "<group>"; };
 		066DACC71E8A4964002B62E8 /* GraphThreeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphThreeViewController.swift; sourceTree = "<group>"; };
 		0696516D1E8C294A00349A49 /* AddVehicleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddVehicleViewController.swift; sourceTree = "<group>"; };
+		0699441B1E95E04800A72B8D /* LogsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogsTableViewController.swift; sourceTree = "<group>"; };
+		0699441D1E95E08B00A72B8D /* LogsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogsTableViewCell.swift; sourceTree = "<group>"; };
 		069B33911E8CE5B100760F3A /* VehicleProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VehicleProfile.swift; sourceTree = "<group>"; };
 		069B33931E8CE5DC00760F3A /* VehicleProfileData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VehicleProfileData.swift; sourceTree = "<group>"; };
 		06C2D2201E89BD000066AE3C /* ONtheRoad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ONtheRoad.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -91,7 +94,6 @@
 		06C2D2361E89BD010066AE3C /* ONtheRoadTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ONtheRoadTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		06C2D23A1E89BD010066AE3C /* ONtheRoadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ONtheRoadTests.swift; sourceTree = "<group>"; };
 		06C2D23C1E89BD010066AE3C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		06C2D2511E8A0E1F0066AE3C /* LogsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogsViewController.swift; sourceTree = "<group>"; };
 		06C2D2551E8A0E480066AE3C /* HomeGraphsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeGraphsViewController.swift; sourceTree = "<group>"; };
 		06C2D2571E8A0E5F0066AE3C /* GraphOneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphOneViewController.swift; sourceTree = "<group>"; };
 		06EC44B51E959716008906C7 /* AnalyticsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsViewController.swift; sourceTree = "<group>"; };
@@ -192,7 +194,8 @@
 				B115BA6F1E90B6E50027803C /* TripData.swift */,
 				069B338E1E8CD1FF00760F3A /* Dashboard */,
 				069B338F1E8CD20800760F3A /* Garage */,
-				06C2D2511E8A0E1F0066AE3C /* LogsViewController.swift */,
+				0699441B1E95E04800A72B8D /* LogsTableViewController.swift */,
+				0699441D1E95E08B00A72B8D /* LogsTableViewCell.swift */,
 				06EC44B51E959716008906C7 /* AnalyticsViewController.swift */,
 				06C2D22C1E89BD000066AE3C /* Assets.xcassets */,
 				06C2D22E1E89BD000066AE3C /* LaunchScreen.storyboard */,
@@ -397,15 +400,16 @@
 				069B33921E8CE5B100760F3A /* VehicleProfile.swift in Sources */,
 				0696516E1E8C294A00349A49 /* AddVehicleViewController.swift in Sources */,
 				0646DEE71E9036CA00951E39 /* GarageTableViewController.swift in Sources */,
+				0699441E1E95E08B00A72B8D /* LogsTableViewCell.swift in Sources */,
 				063CE46F1E8F14A30020DCCA /* ModelTableViewCell.swift in Sources */,
 				063CE4701E8F14A30020DCCA /* ModelTableViewController.swift in Sources */,
+				0699441C1E95E04800A72B8D /* LogsTableViewController.swift in Sources */,
 				063CE4741E8F14A30020DCCA /* YearTableViewController.swift in Sources */,
 				06C2D2581E8A0E5F0066AE3C /* GraphOneViewController.swift in Sources */,
 				063CE4711E8F14A30020DCCA /* TrimTableViewCell.swift in Sources */,
 				06C2D2241E89BD000066AE3C /* AppDelegate.swift in Sources */,
 				066DACC81E8A4964002B62E8 /* GraphThreeViewController.swift in Sources */,
 				06C2D2261E89BD000066AE3C /* DashboardViewController.swift in Sources */,
-				06C2D2521E8A0E1F0066AE3C /* LogsViewController.swift in Sources */,
 				06EC44B61E959716008906C7 /* AnalyticsViewController.swift in Sources */,
 				0646DEE51E90311A00951E39 /* GarageTableViewCell.swift in Sources */,
 				063CE4731E8F14A30020DCCA /* YearTableViewCell.swift in Sources */,
