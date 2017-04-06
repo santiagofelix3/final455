@@ -199,7 +199,7 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
     }
     
     //saveTrip saves the trip to desired location
-    private func saveTrip(numberOfTrip: Int){
+    private func saveTrip(numberOfTrip: Int) {
         let currentArchiveURL = VehicleProfile.DocumentsDirectory.appendingPathComponent("Trip"+String(numberOfTrip))
         if NSKeyedArchiver.archiveRootObject(self, toFile: currentArchiveURL.path){
             os_log("Trip successfully saved.", log: OSLog.default, type: .error)
@@ -209,7 +209,7 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
     }
     
     //saveNewTrip() finds the location to save the trip
-    private func saveNewTrip(){
+    private func saveNewTrip() {
         var count = 1
         while FileManager.default.fileExists(atPath: VehicleProfile.DocumentsDirectory.appendingPathComponent("Trip"+String(count)).path) {
             count += 1
