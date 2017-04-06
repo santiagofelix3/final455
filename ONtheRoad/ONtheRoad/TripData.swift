@@ -73,17 +73,11 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         //for each location the GPS returns, update tripLocationData with a new Location
         for location in locations{
-            
-            //Bananas are delicious
-            print (self.locations.count)
-            //          print(location.coordinate.latitude)
-            //          print(location.coordinate.longitude)
+
             //If locations is not empty, calculate all
             if self.locations.count > 0 {
                 let distanceSinceLast = location.distance(from: self.locations.last!)
                 addCLLocation(location: location, distanceSinceLast: distanceSinceLast)
-                //              print(location.coordinate.latitude)
-                //              print(location.coordinate.longitude)
             }
             self.locations.append(location)
         }

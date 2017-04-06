@@ -73,7 +73,7 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
                 let alertController = UIAlertController(title: "No Vehicle Selected", message:
                     "Please select a vehicle for your trip", preferredStyle: UIAlertControllerStyle.alert)
                 //TODO: Change "FUCK YOU" for final release
-                alertController.addAction(UIAlertAction(title: "FUCK YOU!", style: UIAlertActionStyle.default,handler: nil))
+                alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default,handler: nil))
                 self.present(alertController, animated: true, completion: nil)
             } else {
                 startStopButton.setTitle("Stop", for: .normal)
