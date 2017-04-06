@@ -51,10 +51,10 @@ class GraphTwoViewController: UIViewController, ChartViewDelegate {
                 tracker = (GlobalTripDataInstance.globalTrip?.tripLocationData.count)!
                 
                 if Int(counter2-2) < 10 {
-                    kilometers.insert(String(effTemp), at: Int(counter2-2))
+                    kilometers.insert(String(describing: increment), at: Int(counter2-2))
                 } else {
                     kilometers.remove(at: 0)
-                    kilometers.insert(String(effTemp), at: 10)
+                    kilometers.insert(String(describing: increment), at: 10)
                 }
                 
                 effTemp = 0.0

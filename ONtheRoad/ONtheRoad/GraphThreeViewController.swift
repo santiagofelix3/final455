@@ -52,10 +52,10 @@ class GraphThreeViewController: UIViewController, ChartViewDelegate {
                 tracker = (GlobalTripDataInstance.globalTrip?.tripLocationData.count)!
                 
                 if Int(counter2-2) < 10 {
-                    time.insert(String(effTemp), at: Int(counter2-2))
+                    time.insert(String(describing: increment), at: Int(counter2-2))
                 } else {
                     time.remove(at: 0)
-                    time.insert(String(effTemp), at: 10)
+                    time.insert(String(describing: increment), at: 10)
                 }
                 
                 effTemp = 0.0
