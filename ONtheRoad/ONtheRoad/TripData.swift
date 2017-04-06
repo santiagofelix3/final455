@@ -18,13 +18,14 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
     var odometerStart: Int = 0
     var vehicleMaxAccel: Double = 0.0
     var vehicleIdeal = 30.0
+    var vehicleActual = 6.8
 
     
     //End of Trip Variables
     var odometerEnd: Int = 0
     var endTime: Date = Date.distantFuture
     var tripLength: Double = 0.0
-    var tripDistance: Double = 0
+    var tripDistance: Double = 0.0
     
     var tripLocationData = [Location]()
     
@@ -36,7 +37,8 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
         self.name = name
         self.odometerStart = odometerStart
         self.vehicleMaxAccel = vehicleMaxAccel
-        self.vehicleIdeal = ((6.8 * 100) / 37.5)
+        self.vehicleActual = 6.8
+        self.vehicleIdeal = ((self.vehicleActual * 100) / 37.5)
     }
     
     override init() {
@@ -76,15 +78,16 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
         for location in locations{
 
             //If locations is not empty, calculate all
-            if self.locations.count > 0 {
+            if self.locations.count > 1 {
                 let distanceSinceLast = location.distance(from: self.locations.last!)
-                addCLLocation(location: location, distanceSinceLast: distanceSinceLast)
+                let timeSinceLast = Double(location.timestamp.timeIntervalSince(self.locations.last!.timestamp))
+                addCLLocation(location: location, distanceSinceLast: distanceSinceLast, timeSinceLast: timeSinceLast)
             }
             self.locations.append(location)
         }
     }
     
-    func addCLLocation(location: CLLocation, distanceSinceLast: Double)
+    func addCLLocation(location: CLLocation, distanceSinceLast: Double, timeSinceLast: Double)
     {
         let tempLocation = Location()
         
@@ -97,6 +100,8 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
         //Getting the distance
         tempLocation.distance = distanceSinceLast
         self.tripDistance += distanceSinceLast
+        self.tripLength += timeSinceLast
+        print (self.tripLength)
         //Getting the instSpeed
         tempLocation.instSpeed = (tempLocation.distance)
         //Getting the instAccel

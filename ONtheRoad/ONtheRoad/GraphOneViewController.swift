@@ -38,7 +38,7 @@ class GraphOneViewController: UIViewController {
     
     func updateCircle() {
         if (GlobalTripDataInstance.globalTrip?.started != nil) {
-            if (GlobalTripDataInstance.globalTrip?.tripLocationData.count)! > 0 {
+            if (GlobalTripDataInstance.globalTrip?.tripLocationData.count)! > 1 {
             currentCount = (GlobalTripDataInstance.globalTrip?.tripLocationData[(GlobalTripDataInstance.globalTrip?.tripLocationData.count)!-1].efficiencyRatio)!
             }
             if (currentCount > (GlobalTripDataInstance.globalTrip?.vehicleIdeal)!) {

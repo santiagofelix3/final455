@@ -8,41 +8,61 @@
 
 import UIKit
 import Charts
+import Foundation
 
 class GraphThreeViewController: UIViewController, ChartViewDelegate {
     
     @IBOutlet weak var lineChartView: LineChartView!
     
-    var kilometers: [String]!
-    var counter = 0
+    var time: [String]!
+    var increment: Double?
+    var counter = 0.0
+    var counter2 = 1.0
+    var tracker = 1
+    var effTemp = 0.0
+    var efficiency: [String]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        kilometers = ["0"]
-        let efficiency = ["1"]
+        time = ["0"]
+        efficiency = ["0"]
         
         setBackground()
-        setChart(dataPoints: kilometers, values: efficiency)
+        setChart(dataPoints: time, values: efficiency)
         
-        Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(GraphThreeViewController.newEfficiencyValue), userInfo: nil, repeats: true)
+        Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(GraphThreeViewController.newEfficiencyValue), userInfo: nil, repeats: true)
     }
     
     // MARK: Functions
     
     func newEfficiencyValue() {
         
-        let efficiency = ["5.0", "10.0", "15.0", "20.0", "25.0", "30.0", "35.0", "40.0", "45.0", "50.0"]
-        
-        if counter < 20 {
-            kilometers.insert(generateRandomNumbers(), at: counter)
-            counter += 1
-        } else {
-            kilometers.remove(at: 0)
-            kilometers.insert(generateRandomNumbers(), at: 20)
+        if (GlobalTripDataInstance.globalTrip?.started != nil) {
+            increment = (GlobalTripDataInstance.globalTrip?.tripLength)! / 15
+            if (increment! > 1.0*counter2) {
+                counter2 += 1
+                for location in tracker ..< (GlobalTripDataInstance.globalTrip?.tripLocationData.count)! {
+                    effTemp += (GlobalTripDataInstance.globalTrip?.tripLocationData[location].efficiencyRatio)!
+                    counter += 1
+                }
+                self.efficiency.append(String((effTemp / counter)*6.2))
+                print ("e: ", (effTemp / counter)*6.2)
+                counter = 0
+                tracker = (GlobalTripDataInstance.globalTrip?.tripLocationData.count)!
+                
+                if Int(counter2-2) < 10 {
+                    time.insert(String(effTemp), at: Int(counter2-2))
+                } else {
+                    time.remove(at: 0)
+                    time.insert(String(effTemp), at: 10)
+                }
+                
+                effTemp = 0.0
+                
+                setChart(dataPoints: time, values: efficiency)
+            }
         }
-        
-        setChart(dataPoints: kilometers, values: efficiency)
     }
     
     func setChart(dataPoints: [String], values: [String]) {
@@ -58,7 +78,7 @@ class GraphThreeViewController: UIViewController, ChartViewDelegate {
             dataEntries.append(dataEntry)
         }
         
-        let targetLine = ChartLimitLine(limit: 14.0, label: "Ideal")
+        let targetLine = ChartLimitLine(limit: (GlobalTripDataInstance.globalTrip?.vehicleActual)!, label: "Ideal")
         
         targetLine.lineWidth = 1
         targetLine.valueTextColor = UIColor.white
@@ -82,7 +102,7 @@ class GraphThreeViewController: UIViewController, ChartViewDelegate {
         lineChartView.xAxis.drawGridLinesEnabled = false
         
         lineChartView.leftAxis.addLimitLine(targetLine)
-        lineChartView.leftAxis.axisMaximum = 30.0
+        lineChartView.leftAxis.axisMaximum = ((GlobalTripDataInstance.globalTrip?.vehicleActual)!*3)
         lineChartView.rightAxis.axisMinimum = 0.0
         lineChartView.rightAxis.axisMaximum = 30.0
         lineChartView.leftAxis.axisMinimum = 0.0
@@ -109,13 +129,6 @@ class GraphThreeViewController: UIViewController, ChartViewDelegate {
         let gradient = CGGradient.init(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: gradientColors, locations: colorLocations) // Gradient Object
         lineChartDataSet.fill = Fill.fillWithLinearGradient(gradient!, angle: 90.0) // Set the Gradient
         lineChartDataSet.drawFilledEnabled = true
-    }
-    
-    func generateRandomNumbers() -> String {
-        let rand = Double(arc4random_uniform(UInt32(28.0)))
-        let randStr = "\(rand)"
-        
-        return randStr
     }
     
     func setBackground() {

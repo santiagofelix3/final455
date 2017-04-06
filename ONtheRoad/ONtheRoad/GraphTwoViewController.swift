@@ -15,8 +15,8 @@ class GraphTwoViewController: UIViewController, ChartViewDelegate {
     @IBOutlet weak var barChartView: BarChartView!
     
     var kilometers: [String]!
-    var counter = 0
     var increment: Double?
+    var counter = 0.0
     var counter2 = 1.0
     var tracker = 1
     var effTemp = 0.0
@@ -44,13 +44,14 @@ class GraphTwoViewController: UIViewController, ChartViewDelegate {
                 counter2 += 1
                 for location in tracker ..< (GlobalTripDataInstance.globalTrip?.tripLocationData.count)! {
                     effTemp += (GlobalTripDataInstance.globalTrip?.tripLocationData[location].efficiencyRatio)!
+                    counter += 1
                 }
-                self.efficiency.append(String(effTemp))
+                counter = 0
+                self.efficiency.append(String((effTemp / counter)*6.2))
                 tracker = (GlobalTripDataInstance.globalTrip?.tripLocationData.count)!
                 
                 if Int(counter2-2) < 10 {
                     kilometers.insert(String(effTemp), at: Int(counter2-2))
-                    counter += 1
                 } else {
                     kilometers.remove(at: 0)
                     kilometers.insert(String(effTemp), at: 10)
@@ -79,7 +80,7 @@ class GraphTwoViewController: UIViewController, ChartViewDelegate {
         
         let chartDataSet = BarChartDataSet(values: dataEntries, label: "Efficiency")
         let chartData = BarChartData(dataSet: chartDataSet)
-        let targetLine = ChartLimitLine(limit: (GlobalTripDataInstance.globalTrip?.vehicleIdeal)!, label: "Ideal")
+        let targetLine = ChartLimitLine(limit: (GlobalTripDataInstance.globalTrip?.vehicleActual)!, label: "Ideal")
         
         targetLine.lineWidth = 1
         targetLine.valueTextColor = UIColor.white
@@ -98,7 +99,7 @@ class GraphTwoViewController: UIViewController, ChartViewDelegate {
         barChartView.xAxis.drawGridLinesEnabled = false
         
         barChartView.leftAxis.addLimitLine(targetLine)
-        barChartView.leftAxis.axisMaximum = 30.0
+        barChartView.leftAxis.axisMaximum = ((GlobalTripDataInstance.globalTrip?.vehicleActual)!*3)
         barChartView.rightAxis.axisMinimum = 0.0
         barChartView.rightAxis.axisMaximum = 30.0
         barChartView.leftAxis.axisMinimum = 0.0
