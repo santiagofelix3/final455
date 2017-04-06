@@ -17,7 +17,7 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
     var name: String?
     var odometerStart: Int?
     var vehicleMaxAccel: Double?
-    var vehicleIdeal = 30.0
+    var vehicleIdeal = 18.0
     
     //End of Trip Variables
     var odometerEnd: Int?
@@ -54,7 +54,6 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
         locationManager.activityType = .automotiveNavigation
         locationManager.distanceFilter = 10.0
         locationManager.requestAlwaysAuthorization()
-        started = 1
         startTime = Date.init()
         print("Trip Started")
         locationManager.startUpdatingLocation()
@@ -63,8 +62,10 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
     //Stops the trip
     func endTrip(){
         locationManager.stopUpdatingLocation()
+        if (started == 1) {
+            saveNewTrip()
+        }
         started = 0
-        saveNewTrip()
         endTime = Date.init()
     }
     
@@ -78,7 +79,7 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
             //          print(location.coordinate.latitude)
             //          print(location.coordinate.longitude)
             //If locations is not empty, calculate all
-            if self.locations.count > 3 {
+            if self.locations.count > 0 {
                 let distanceSinceLast = location.distance(from: self.locations.last!)
                 addCLLocation(location: location, distanceSinceLast: distanceSinceLast)
                 //              print(location.coordinate.latitude)
