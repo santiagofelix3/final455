@@ -69,15 +69,23 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
     @IBAction func startStopButton(_ sender: UIButton) {
         
         if startStopButton.currentTitle == "Start" {
-            startStopButton.setTitle("Stop", for: .normal)
-            
-            transitionAnimationShow()
-            
-            GlobalTripDataInstance.globalTrip = TripData.init(vehiclePhoto: (vehicles?.photo)!, name: vehicles?.name, odometerStart: 0, vehicleMaxAccel: vehicles?.maxAcceleration)
-            GlobalTripDataInstance.globalTrip?.startTrip()
-            
-            stopWatch = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(DashboardViewController.updateTime(_stopWatch:)), userInfo: nil, repeats: true)
-            startTime = Date.timeIntervalSinceReferenceDate
+            if vehicles == nil {
+                let alertController = UIAlertController(title: "No Vehicle Selected", message:
+                    "Please select a vehicle for your trip", preferredStyle: UIAlertControllerStyle.alert)
+                //TODO: Change "FUCK YOU" for final release
+                alertController.addAction(UIAlertAction(title: "FUCK YOU!", style: UIAlertActionStyle.default,handler: nil))
+                self.present(alertController, animated: true, completion: nil)
+            } else {
+                startStopButton.setTitle("Stop", for: .normal)
+                
+                transitionAnimationShow()
+                GlobalTripDataInstance.globalTrip = TripData.init(vehiclePhoto: (vehicles?.photo)!, name: vehicles?.name, odometerStart: 0, vehicleMaxAccel: vehicles?.maxAcceleration)
+                GlobalTripDataInstance.globalTrip?.startTrip()
+                
+                stopWatch = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(DashboardViewController.updateTime(_stopWatch:)), userInfo: nil, repeats: true)
+                startTime = Date.timeIntervalSinceReferenceDate
+            }
+
             
         } else {
             startStopButton.setTitle("Start", for: .normal)
