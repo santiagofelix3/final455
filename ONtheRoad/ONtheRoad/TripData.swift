@@ -10,7 +10,7 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
     //Mandatory Variables
     var locationManager: CLLocationManager!
     var startTime: Date?
-    var vehicleID: Int
+    var vehiclePhoto: UIImage
     var started = 0
     
     //Optional Input Variables
@@ -29,13 +29,18 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
     
     lazy var locations = [CLLocation]()
     
-    init?(vehicleID: Int, name: String?, odometerStart: Int?, vehicleMaxAccel: Double?){
+    init?(vehiclePhoto: UIImage, name: String?, odometerStart: Int?, vehicleMaxAccel: Double?){
         self.startTime = Date.init()
-        self.vehicleID = vehicleID
+        self.vehiclePhoto = #imageLiteral(resourceName: "defaultPhoto")
         self.name = name
         self.odometerStart = odometerStart
         self.vehicleMaxAccel = vehicleMaxAccel
         self.vehicleIdeal = ((6.8 * 100) / 37.5)
+    }
+    
+    override init() {
+        self.vehiclePhoto = #imageLiteral(resourceName: "defaultPhoto")
+        
     }
     
     // MARK: GPS
@@ -116,7 +121,7 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
     
     struct PropertyKey {
         static var startTime = "startTime"
-        static var vehicleID = "vehicleID"
+        static var vehiclePhoto = "vehiclePhoto"
         static var name = "name"
         static var odometerStart = "odometerStart"
         static var vehicleMaxAccel = "vehicleMaxAccel"
@@ -129,7 +134,7 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
     
     func encode(with aCoder: NSCoder) {
         aCoder.encode(startTime, forKey: PropertyKey.startTime)
-        aCoder.encode(vehicleID, forKey: PropertyKey.vehicleID)
+        aCoder.encode(vehiclePhoto, forKey: PropertyKey.vehiclePhoto)
         aCoder.encode(name, forKey: PropertyKey.name)
         aCoder.encode(odometerStart, forKey: PropertyKey.odometerStart)
         aCoder.encode(vehicleMaxAccel, forKey: PropertyKey.vehicleMaxAccel)
@@ -140,9 +145,9 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
         aCoder.encode(tripLocationData, forKey: PropertyKey.tripLocationData)
     }
     
-    init(startTime: Date, vehicleID: Int, name: String, odometerStart: Int, vehicleMaxAccel: Double, odometerEnd: Int, endTime: Date, tripLength: Double, tripDistance: Double, tripLocationData: [Location]) {
+    init(startTime: Date, vehiclePhoto: UIImage, name: String, odometerStart: Int, vehicleMaxAccel: Double, odometerEnd: Int, endTime: Date, tripLength: Double, tripDistance: Double, tripLocationData: [Location]) {
         self.startTime = startTime
-        self.vehicleID = vehicleID
+        self.vehiclePhoto = vehiclePhoto
         self.name = name
         self.odometerStart = odometerStart
         self.vehicleMaxAccel = vehicleMaxAccel
@@ -158,8 +163,8 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
             os_log("Unable to decode the startTime for a Vehicle object.", log: OSLog.default, type: .debug)
             return nil
         }
-        guard let vehicleID = aDecoder.decodeObject(forKey: PropertyKey.vehicleID) as? Int else {
-            os_log("Unable to decode the vehicleID for a Vehicle object.", log: OSLog.default, type: .debug)
+        guard let vehiclePhoto = aDecoder.decodeObject(forKey: PropertyKey.vehiclePhoto) as? UIImage else {
+            os_log("Unable to decode the vehiclePhoto for a Vehicle object.", log: OSLog.default, type: .debug)
             return nil
         }
         guard let name = aDecoder.decodeObject(forKey: PropertyKey.name) as? String else {
@@ -195,7 +200,7 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
             return nil
         }
         
-        self.init(startTime: startTime, vehicleID: vehicleID, name: name, odometerStart: odometerStart, vehicleMaxAccel: vehicleMaxAccel, odometerEnd: odometerEnd, endTime: endTime, tripLength: tripLength, tripDistance: tripDistance, tripLocationData: tripLocationData)
+        self.init(startTime: startTime, vehiclePhoto: vehiclePhoto, name: name, odometerStart: odometerStart, vehicleMaxAccel: vehicleMaxAccel, odometerEnd: odometerEnd, endTime: endTime, tripLength: tripLength, tripDistance: tripDistance, tripLocationData: tripLocationData)
     }
     
     //saveTrip saves the trip to desired location
@@ -237,7 +242,7 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
     }
 }
 
-class Location {
+class Location: NSObject, NSCoding {
     //Mandatory Variables
     var timeStamp: Date = Date.init()
     var latitude: Double = 0
@@ -256,7 +261,7 @@ class Location {
         self.distance = distance
     }
     
-    init(){}
+    override init(){}
     
     private init(timeStamp: Date, latitude: Double, longitude: Double, distance: Double, instSpeed: Double, instAccel: Double, efficiencyRatio: Double) {
         self.timeStamp = timeStamp
@@ -326,6 +331,6 @@ class Location {
 struct GlobalTripDataInstance {
     static var globalTrip: TripData?
     init (){
-        GlobalTripDataInstance.globalTrip = TripData.init(vehicleID: 1, name: "", odometerStart: 0, vehicleMaxAccel: 4.8)
+        GlobalTripDataInstance.globalTrip = TripData.init(vehiclePhoto: #imageLiteral(resourceName: "defaultPhoto"), name: "", odometerStart: 0, vehicleMaxAccel: 4.8)
     }
 }
