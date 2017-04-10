@@ -33,7 +33,7 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
     
     init?(vehiclePhoto: UIImage, name: String, odometerStart: Int, vehicleMaxAccel: Double){
         self.startTime = Date.init()
-        self.vehiclePhoto = #imageLiteral(resourceName: "defaultPhoto")
+        self.vehiclePhoto = vehiclePhoto
         self.name = name
         self.odometerStart = odometerStart
         self.vehicleMaxAccel = vehicleMaxAccel

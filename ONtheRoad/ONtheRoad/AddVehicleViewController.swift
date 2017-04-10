@@ -520,11 +520,11 @@ class AddVehicleViewController: UIViewController, UITextFieldDelegate, UIImagePi
                         let torque = equipment["torque"] as! Int
                         let gas = (equipment["type"] as! String).capitalized*/
                         
-                        cylinderLabel.text = "1"//"\(cylinder)"
-                        sizeLabel.text = "1"//"\(size)"
-                        horsepowerLabel.text = "1"//"\(horsepower)"
-                        torqueLabel.text = "1"//"\(torque)"
-                        gasLabel.text = "1"//gas
+                        cylinderLabel.text = "4"//"\(cylinder)"
+                        sizeLabel.text = "2.5"//"\(size)"
+                        horsepowerLabel.text = "230"//"\(horsepower)"
+                        torqueLabel.text = "250"//"\(torque)"
+                        gasLabel.text = "Gas"//gas
                         
                         /*print(cylinder)
                         print(size)

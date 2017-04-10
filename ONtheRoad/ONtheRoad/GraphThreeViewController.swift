@@ -73,7 +73,7 @@ class GraphThreeViewController: UIViewController, ChartViewDelegate {
         for (i, j) in dataPoints.enumerated() {
             let dataEntry = BarChartDataEntry()
             dataEntry.x = Double(i)
-            dataEntry.y = Double(j)!
+            dataEntry.y = Double(j)! / 2
             
             dataEntries.append(dataEntry)
         }

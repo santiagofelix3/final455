@@ -12,6 +12,8 @@ class LogsTableViewCell: UITableViewCell {
 
     @IBOutlet weak var vehicleImage: UIImageView!
     @IBOutlet weak var vehicleName: UILabel!
+    @IBOutlet weak var tripStartTime: UILabel!
+    @IBOutlet weak var tripDistance: UILabel!
     
     
     override func awakeFromNib() {

@@ -45,6 +45,10 @@ class LogsTableViewController: UITableViewController {
         
         cell?.vehicleImage.image = trips.vehiclePhoto
         cell?.vehicleName.text = trips.name
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd.MM.yyyy HH:mm"
+        cell?.tripStartTime.text = formatter.string(from: trips.startTime)
+        cell?.tripDistance.text = String(Int(trips.tripDistance)) + "m"
         
         cell?.vehicleImage.layer.cornerRadius = (cell?.vehicleImage.frame.size.height)! / 2
         cell?.vehicleImage.clipsToBounds = true
