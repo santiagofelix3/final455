@@ -28,8 +28,8 @@ class GraphOneViewController: UIViewController {
     }
     
     func newAngle() -> Float {
-        if (GlobalTripDataInstance.globalTrip?.vehicleIdeal != nil) {
-            return Float(270 * (self.currentCount * 6.2 / (GlobalTripDataInstance.globalTrip?.vehicleIdeal)!))
+        if (GlobalTripDataInstance.globalTrip?.vehicleActual != nil) {
+            return Float(270 * (self.currentCount * (GlobalTripDataInstance.globalTrip?.vehicleActual)! / ((GlobalTripDataInstance.globalTrip?.vehicleActual)!*5)))
         }
         else {
             return Float (0.0)
@@ -38,11 +38,12 @@ class GraphOneViewController: UIViewController {
     
     func updateCircle() {
         if (GlobalTripDataInstance.globalTrip?.started != nil) {
-            if (GlobalTripDataInstance.globalTrip?.tripLocationData.count)! > 1 {
+            if (GlobalTripDataInstance.globalTrip?.tripLocationData.count)! > 0 {
             currentCount = (GlobalTripDataInstance.globalTrip?.tripLocationData[(GlobalTripDataInstance.globalTrip?.tripLocationData.count)!-1].efficiencyRatio)!
             }
-            if (currentCount > (GlobalTripDataInstance.globalTrip?.vehicleIdeal)!) {
-                currentCount = (GlobalTripDataInstance.globalTrip?.vehicleIdeal)!
+            
+            if (currentCount > (GlobalTripDataInstance.globalTrip?.vehicleActual)!) {
+                currentCount = (GlobalTripDataInstance.globalTrip?.vehicleActual)!
             }
             if currentCount == 0 {
                 currentCount = 0.5

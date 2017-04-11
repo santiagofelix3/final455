@@ -72,7 +72,6 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
             if vehicles == nil {
                 let alertController = UIAlertController(title: "No Vehicle Selected", message:
                     "Please select a vehicle for your trip", preferredStyle: UIAlertControllerStyle.alert)
-                //TODO: Change "FUCK YOU" for final release
                 alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default,handler: nil))
                 self.present(alertController, animated: true, completion: nil)
             } else {
@@ -91,6 +90,10 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
         } else {
             startStopButton.setTitle("Start", for: .normal)
             GlobalTripDataInstance.globalTrip?.endTrip()
+            seconds = 0
+            timeLabel.text = "00 :00"
+            distanceLabel.text = "--"
+            velocityLabel.text = "--"
             stopWatch.invalidate()
             transitionAnimationHide()
         }
@@ -125,7 +128,7 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
         } else {
             timeLabel.text = String(format: "%02d", m) + ":"+String(format: "%02d", s)
         }
-        if (GlobalTripDataInstance.globalTrip?.tripLocationData.count)! > 1 {
+        if (GlobalTripDataInstance.globalTrip?.tripLocationData.count)! > 0 {
             distanceLabel.text = String(format: "%.02f", (GlobalTripDataInstance.globalTrip?.tripDistance)!/1000)
             velocityLabel.text = String(Int(3.6*(GlobalTripDataInstance.globalTrip?.tripLocationData[(GlobalTripDataInstance.globalTrip?.tripLocationData.count)! - 1].instSpeed)!))
         }

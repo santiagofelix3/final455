@@ -14,9 +14,8 @@ class LogsTableViewController: UITableViewController {
     var tripLog = [TripData]()
 
     override func viewWillAppear(_ animated: Bool) {
- //       super.viewDidLoad()
+        super.viewWillAppear(true)
         loadTripFromArray()
-
     }
 
     override func didReceiveMemoryWarning() {

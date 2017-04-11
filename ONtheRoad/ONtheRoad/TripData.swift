@@ -17,7 +17,6 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
     var name: String?
     var odometerStart: Int = 0
     var vehicleMaxAccel: Double = 0.0
-    var vehicleIdeal = 30.0
     var vehicleActual = 6.8
 
     
@@ -38,7 +37,6 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
         self.odometerStart = odometerStart
         self.vehicleMaxAccel = vehicleMaxAccel
         self.vehicleActual = 6.8
-        self.vehicleIdeal = ((self.vehicleActual * 100) / 37.5)
     }
     
     override init() {

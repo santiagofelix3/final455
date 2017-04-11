@@ -15,7 +15,7 @@ class GraphThreeViewController: UIViewController, ChartViewDelegate {
     @IBOutlet weak var lineChartView: LineChartView!
     
     var time: [String]!
-    var increment: Double?
+    var increment = 0.0
     var counter = 0.0
     var counter2 = 1.0
     var tracker = 1
@@ -27,7 +27,7 @@ class GraphThreeViewController: UIViewController, ChartViewDelegate {
         
         time = ["0"]
         efficiency = ["0"]
-        
+        print ("Fuck this shit I'm out")
         setBackground()
         setChart(dataPoints: time, values: efficiency)
         
@@ -39,27 +39,27 @@ class GraphThreeViewController: UIViewController, ChartViewDelegate {
     func newEfficiencyValue() {
         
         if (GlobalTripDataInstance.globalTrip?.started != nil) {
-            increment = (GlobalTripDataInstance.globalTrip?.tripLength)! / 15
-            if (increment! > 1.0*counter2) {
+            increment = (GlobalTripDataInstance.globalTrip?.tripLength)! / 5
+            if (increment > 1.0*counter2) {
                 counter2 += 1
                 for location in tracker ..< (GlobalTripDataInstance.globalTrip?.tripLocationData.count)! {
                     effTemp += (GlobalTripDataInstance.globalTrip?.tripLocationData[location].efficiencyRatio)!
                     counter += 1
                 }
-                self.efficiency.append(String((effTemp / counter)*6.2))
-                print ("e: ", (effTemp / counter)*6.2)
-                counter = 0
                 tracker = (GlobalTripDataInstance.globalTrip?.tripLocationData.count)!
+                effTemp = ((effTemp / (counter+1)) * (GlobalTripDataInstance.globalTrip?.vehicleActual)!)
+                self.efficiency.append(String(effTemp))
                 
                 if Int(counter2-2) < 10 {
-                    time.insert(String(describing: increment), at: Int(counter2-2))
+                    time.insert(String(effTemp), at: Int(counter2-2))
                 } else {
                     time.remove(at: 0)
-                    time.insert(String(describing: increment), at: 10)
+                    time.insert(String(effTemp), at: 9)
                 }
                 
+                print ("e2: ", effTemp)
                 effTemp = 0.0
-                
+                counter = 0.0
                 setChart(dataPoints: time, values: efficiency)
             }
         }
@@ -102,7 +102,7 @@ class GraphThreeViewController: UIViewController, ChartViewDelegate {
         lineChartView.xAxis.drawGridLinesEnabled = false
         
         lineChartView.leftAxis.addLimitLine(targetLine)
-        lineChartView.leftAxis.axisMaximum = ((GlobalTripDataInstance.globalTrip?.vehicleActual)!*3)
+        lineChartView.leftAxis.axisMaximum = ((GlobalTripDataInstance.globalTrip?.vehicleActual)!*2.5)
         lineChartView.rightAxis.axisMinimum = 0.0
         lineChartView.rightAxis.axisMaximum = 30.0
         lineChartView.leftAxis.axisMinimum = 0.0
