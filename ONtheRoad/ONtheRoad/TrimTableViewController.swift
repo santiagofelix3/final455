@@ -97,7 +97,7 @@ class TrimTableViewController: UITableViewController {
             let allTrimNames = try Data(contentsOf: fullURL!)
             let allTrims = try JSONSerialization.jsonObject(with: allTrimNames, options: JSONSerialization.ReadingOptions.allowFragments) as! [String : AnyObject]
             
-            if let aryJSON = allTrims["styles"] {
+            if let aryJSON = allTrims["styles"] as? NSArray {
                 for index in 0...aryJSON.count-1 {
                     let trims = aryJSON[index] as! [String : AnyObject]
                     

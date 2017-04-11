@@ -469,14 +469,14 @@ class AddVehicleViewController: UIViewController, UITextFieldDelegate, UIImagePi
         let selectedStyleID = "101353967"//"101172638"//"101353967"//styleID
         
         let urlBase = "https://api.edmunds.com/api/vehicle/v2/styles/"
-        let urlExtra = "/equipment?fmt=json&api_key=gjppwybke2wgy6ndafz23cyr" //b3aa4xkn4mc964zcpnzm3pmv, 8zc8djuwwteevqe9nea3cejq, gjppwybke2wgy6ndafz23cyr
+        let urlExtra = "/equipment?fmt=json&api_key=8zc8djuwwteevqe9nea3cejq" //b3aa4xkn4mc964zcpnzm3pmv, 8zc8djuwwteevqe9nea3cejq, gjppwybke2wgy6ndafz23cyr
         let fullURL = URL(string: "\(urlBase)\(selectedStyleID)\(urlExtra)")
         
         do {
             let specs = try Data(contentsOf: fullURL!)
             let allSpecs = try JSONSerialization.jsonObject(with: specs, options: JSONSerialization.ReadingOptions.allowFragments) as! [String : AnyObject]
             
-            if let aryJSON = allSpecs["equipment"] {
+            if let aryJSON = allSpecs["equipment"] as? NSArray {
                 for index in 0...aryJSON.count-1 {
                     
                     let equipment = aryJSON[index] as! [String : AnyObject]

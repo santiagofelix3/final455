@@ -21,6 +21,7 @@ class GarageTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        loadVehicleFromArray()
     }
     
     override func didReceiveMemoryWarning() {
@@ -28,8 +29,7 @@ class GarageTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        loadVehicleFromArray()
-
+        
         print("This is the total number of vehicles" + String(VehicleProfile.totalNumberOfVehicles))
         
         if activeFlag == 0 {
@@ -82,17 +82,21 @@ class GarageTableViewController: UITableViewController {
                 let rowNum = selectedIndexPath.row
                 
                 garage[selectedIndexPath.row] = vehicle
-                tableView.reloadRows(at: [selectedIndexPath], with: .none)
+                //tableView.reloadRows(at: [selectedIndexPath], with: .none)
+                //loadVehicleFromArray()
+                tableView.reloadData()
                 
                 vehicle.deleteWithInsert(numberOfVehicle: rowNum + 1, totalNumberOfVehicles: VehicleProfile.totalNumberOfVehicles)
             }
             else {
                 // Add new vehicle
-                let newIndexPath = IndexPath(row: garage.count, section: 0)
+                //let newIndexPath = IndexPath(row: garage.count, section: 0)
                 
                 garage.append(vehicle)
                 VehicleProfile.totalNumberOfVehicles = garage.count
-                tableView.insertRows(at: [newIndexPath], with: .automatic)
+                //tableView.insertRows(at: [newIndexPath], with: .automatic)
+                //loadVehicleFromArray()
+                tableView.reloadData()
             }
             print(garage)
         }
@@ -101,12 +105,6 @@ class GarageTableViewController: UITableViewController {
     @IBAction func cancel(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
-    
-    /*@IBAction func returnToDashboard(_ sender: UITapGestureRecognizer) {
-     if activeFlag == 0 {
-     performSegue(withIdentifier: "returnToDashboard", sender: nil)
-     }
-     }*/
     
     // MARK: Private Methods
     
@@ -160,30 +158,16 @@ class GarageTableViewController: UITableViewController {
         if editingStyle == .delete {
             // Delete the row from the data source
             let rowNum = indexPath.row
+            print("This is the row number of the vehicle we want to delete " + String(rowNum))
+            print("This is the total number of vehicles when we try to delete " + String(VehicleProfile.totalNumberOfVehicles))
             garage.remove(at: indexPath.row)
             vehicles.deleteVehicle(numberOfVehicle: rowNum + 1, totalNumberOfVehicles: VehicleProfile.totalNumberOfVehicles)
+            
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
     }
-    
-    
-    /*
-     // Override to support rearranging the table view.
-     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-     
-     }
-     */
-    
-    /*
-     // Override to support conditional rearranging of the table view.
-     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the item to be re-orderable.
-     return true
-     }
-     */
-    
     
     // MARK: - Navigation
     
@@ -236,24 +220,3 @@ class GarageTableViewController: UITableViewController {
     }
     
 }
-
-/*extension GarageTableViewController : UIViewControllerPreviewingDelegate {
-    // Peek
-    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-        guard let indexPath = tableView.indexPathForSelectedRow, let cell = tableView.cellForRow(at: indexPath) as? GarageTableViewCell else {
-            return nil
-        }
-        
-        let identifier = "GarageTableViewController"
-        guard let garageVC = storyboard?.instantiateViewController(withIdentifier: identifier) as? GarageTableViewController else { return nil }
-        
-        garageVC.vehicles.photo = cell.vehicleImage.image!
-        previewingContext.sourceRect = cell.frame
-        
-        return garageVC
-    }
-    
-    // Pop
-    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
-    }
-}*/

@@ -85,7 +85,7 @@ class MakeTableViewController: UITableViewController {
             let allMakesNames = try Data(contentsOf: url!)
             let allMakes = try JSONSerialization.jsonObject(with: allMakesNames, options: JSONSerialization.ReadingOptions.allowFragments) as! [String : AnyObject]
             
-            if let aryJSON = allMakes["makes"] {
+            if let aryJSON = allMakes["makes"] as? NSArray {
                 for index in 0...aryJSON.count-1 {
                     
                     let makes = aryJSON[index] as! [String : AnyObject]

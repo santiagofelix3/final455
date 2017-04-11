@@ -210,6 +210,7 @@ class VehicleProfile: NSObject, NSCoding {
     }
     
     func saveVehicle(numberOfVehicle: Int) {
+        
         let currentArchiveURL = VehicleProfile.DocumentsDirectory.appendingPathComponent(String(numberOfVehicle))
         let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(self, toFile: currentArchiveURL.path)
         
@@ -252,6 +253,7 @@ class VehicleProfile: NSObject, NSCoding {
             // Delete copy of remaining vehicle... last vehicle in array
             let remainingArchiveURL = VehicleProfile.DocumentsDirectory.appendingPathComponent(String(totalNumberOfVehicles))
             do {
+                print("This is the total number of vehicles when deleting one " + String(VehicleProfile.totalNumberOfVehicles))
                 try FileManager.default.removeItem(at: remainingArchiveURL)
                 VehicleProfile.totalNumberOfVehicles -= 1
             } catch {

@@ -90,7 +90,7 @@ class ModelTableViewController: UITableViewController {
             let allModelsNames = try Data(contentsOf: fullURL!)
             let allModels = try JSONSerialization.jsonObject(with: allModelsNames, options: JSONSerialization.ReadingOptions.allowFragments) as! [String : AnyObject]
 
-            if let aryJSON = allModels["models"] {
+            if let aryJSON = allModels["models"] as? NSArray {
                 for index in 0...aryJSON.count-1 {
                     let models = aryJSON[index] as! [String : AnyObject]
                     modelNames.append(models["name"]!.capitalized as String)

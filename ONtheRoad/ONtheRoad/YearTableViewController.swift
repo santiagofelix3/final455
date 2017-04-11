@@ -91,7 +91,7 @@ class YearTableViewController: UITableViewController {
             let allYearStrings = try Data(contentsOf: fullURL!)
             let allYears = try JSONSerialization.jsonObject(with: allYearStrings, options: JSONSerialization.ReadingOptions.allowFragments) as! [String : AnyObject]
             
-            if let aryJSON = allYears["years"] {
+            if let aryJSON = allYears["years"] as? NSArray {
                 for index in 0...aryJSON.count-1 {
                     let years = aryJSON[index] as! [String : AnyObject]
                     yearString.append((years["year"]! as? Int)!)
