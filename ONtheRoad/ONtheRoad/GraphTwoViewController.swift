@@ -15,7 +15,7 @@ class GraphTwoViewController: UIViewController, ChartViewDelegate {
     @IBOutlet weak var barChartView: BarChartView!
     
     var kilometers: [String]!
-    var increment: Double?
+    var increment = 0.0
     var counter = 0.0
     var counter2 = 1.0
     var tracker = 1
@@ -27,7 +27,7 @@ class GraphTwoViewController: UIViewController, ChartViewDelegate {
         
         kilometers = ["0"]
         efficiency = ["0"]
-        
+        print ("Fuck this shit")
         setBackground()
         setChart(dataPoints: kilometers, values: efficiency)
         
@@ -39,24 +39,26 @@ class GraphTwoViewController: UIViewController, ChartViewDelegate {
     func newEfficiencyValue() {
         
         if (GlobalTripDataInstance.globalTrip?.started != nil) {
-            increment = (GlobalTripDataInstance.globalTrip?.tripDistance)! / 250
-            if (increment! > 1.0*counter2) {
+            increment = (GlobalTripDataInstance.globalTrip?.tripDistance)! / 100
+            if (increment > 1.0*counter2) {
                 counter2 += 1
                 for location in tracker ..< (GlobalTripDataInstance.globalTrip?.tripLocationData.count)! {
                     effTemp += (GlobalTripDataInstance.globalTrip?.tripLocationData[location].efficiencyRatio)!
                     counter += 1
                 }
-                counter = 0
-                self.efficiency.append(String((effTemp / counter)*6.2))
                 tracker = (GlobalTripDataInstance.globalTrip?.tripLocationData.count)!
+                effTemp = ((effTemp / (counter+1)) * (GlobalTripDataInstance.globalTrip?.vehicleActual)!)
+                self.efficiency.append(String(effTemp))
                 
                 if Int(counter2-2) < 10 {
-                    kilometers.insert(String(describing: increment), at: Int(counter2-2))
+                    kilometers.insert(String(effTemp), at: Int(counter2-2))
                 } else {
                     kilometers.remove(at: 0)
-                    kilometers.insert(String(describing: increment), at: 10)
+                    kilometers.insert(String(effTemp), at: 9)
                 }
                 
+                print ("e1: ", effTemp)
+                counter = 0.0
                 effTemp = 0.0
                 
                 setChart(dataPoints: kilometers, values: efficiency)
@@ -99,7 +101,7 @@ class GraphTwoViewController: UIViewController, ChartViewDelegate {
         barChartView.xAxis.drawGridLinesEnabled = false
         
         barChartView.leftAxis.addLimitLine(targetLine)
-        barChartView.leftAxis.axisMaximum = ((GlobalTripDataInstance.globalTrip?.vehicleActual)!*3)
+        barChartView.leftAxis.axisMaximum = ((GlobalTripDataInstance.globalTrip?.vehicleActual)!*2.5)
         barChartView.rightAxis.axisMinimum = 0.0
         barChartView.rightAxis.axisMaximum = 30.0
         barChartView.leftAxis.axisMinimum = 0.0
