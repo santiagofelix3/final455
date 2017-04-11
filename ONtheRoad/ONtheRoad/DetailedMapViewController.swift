@@ -10,9 +10,9 @@ import UIKit
 import MapKit
 import HealthKit
 
-class DetailViewController: UIViewController,MKMapViewDelegate {
+class DetailedMapViewController: UIViewController,MKMapViewDelegate {
     
-    var newTrip: TripData?
+    var trips: TripData?
     var mapOverlay: MKTileOverlay!
     
     @IBOutlet weak var mapView: MKMapView!
@@ -29,14 +29,14 @@ class DetailViewController: UIViewController,MKMapViewDelegate {
     //Focusing the map
     //Going to need to do some pinch zoom work on this as well, I think. Haven't been able to do it in the sim, haven't found code for it either, assuming it is missing.
     func mapRegion() -> MKCoordinateRegion {
-        let initialLoc = newTrip?.tripLocationData[0]
+        let initialLoc = trips?.tripLocationData[0]
         
         var minLat = initialLoc?.latitude
         var minLng = initialLoc?.longitude
         var maxLat = minLat
         var maxLng = minLng
         
-        let locations = newTrip?.tripLocationData
+        let locations = trips?.tripLocationData
         
         for location in locations! {
             minLat = min(minLat!, location.latitude)
@@ -83,19 +83,19 @@ class DetailViewController: UIViewController,MKMapViewDelegate {
     func polyline() -> MKPolyline {
         var coords = [CLLocationCoordinate2D]()
         
-        let locations = newTrip?.tripLocationData
+        let locations = trips?.tripLocationData
         for location in locations! {
             coords.append(CLLocationCoordinate2D(latitude: location.latitude,
                                                  longitude: location.longitude))
         }
         
-        return MKPolyline(coordinates: &coords, count: (newTrip?.tripLocationData.count)!)
+        return MKPolyline(coordinates: &coords, count: (trips?.tripLocationData.count)!)
     }
     //*******************
     
     //Loading in the map
     func loadMap() {
-        if (newTrip?.tripLocationData.count)! > 0 {
+        if (trips?.tripLocationData.count)! > 0 {
             mapView.isHidden = false
             //Call to a map
             let template = "https://api.mapbox.com/styles/v1/spitfire4466/citl7jqwe00002hmwrvffpbzt/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic3BpdGZpcmU0NDY2IiwiYSI6Im9jX0JHQUUifQ.2QarbK_LccnrvDg7FobGjA"
@@ -109,7 +109,7 @@ class DetailViewController: UIViewController,MKMapViewDelegate {
             mapView.region = mapRegion()
             
             // Make the line(s!) on the map
-            let colorSegments = MulticolorPolylineSegment.colorSegments(forLocations: (newTrip?.tripLocationData)!)
+            let colorSegments = MulticolorPolylineSegment.colorSegments(forLocations: (trips?.tripLocationData)!)
             mapView.addOverlays(colorSegments)
         } else {
             // No locations were found!
