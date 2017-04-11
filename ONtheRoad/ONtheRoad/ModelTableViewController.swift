@@ -22,7 +22,8 @@ class ModelTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        downloadData()
+        
+        //downloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -72,7 +73,7 @@ class ModelTableViewController: UITableViewController {
         if selectedModel == "Label" {
             selectedModel = modelNames[0]
         }
-        returnThis = selectedModel
+        returnThis = "HOLA"//selectedModel
     }
     
     // MARK: Functions

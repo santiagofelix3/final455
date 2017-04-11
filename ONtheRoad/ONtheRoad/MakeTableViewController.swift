@@ -22,7 +22,7 @@ class MakeTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        downloadData()
+        //downloadData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -72,7 +72,7 @@ class MakeTableViewController: UITableViewController {
         if selectedMake == "Label" {
             selectedMake = makeNames[0]
         }
-        returnThis = selectedMake
+        returnThis = "HOLA"//selectedMake
     }
     
     // MARK: Functions

@@ -14,6 +14,7 @@ class LogsTableViewCell: UITableViewCell {
     @IBOutlet weak var vehicleName: UILabel!
     @IBOutlet weak var tripStartTime: UILabel!
     @IBOutlet weak var tripDistance: UILabel!
+    @IBOutlet weak var tripTotalTime: UILabel!
     
     
     override func awakeFromNib() {

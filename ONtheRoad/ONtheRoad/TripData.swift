@@ -101,7 +101,6 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
         tempLocation.distance = distanceSinceLast
         self.tripDistance += distanceSinceLast
         self.tripLength += timeSinceLast
-        print (self.tripLength)
         //Getting the instSpeed
         tempLocation.instSpeed = (tempLocation.distance)
         //Getting the instAccel

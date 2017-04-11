@@ -45,10 +45,25 @@ class LogsTableViewController: UITableViewController {
         
         cell?.vehicleImage.image = trips.vehiclePhoto
         cell?.vehicleName.text = trips.name
+        
         let formatter = DateFormatter()
-        formatter.dateFormat = "dd.MM.yyyy HH:mm"
+        formatter.dateFormat = "MMM d yyyy, h:mm a"//"dd.MM.yyyy HH:mm"
         cell?.tripStartTime.text = formatter.string(from: trips.startTime)
-        cell?.tripDistance.text = String(Int(trips.tripDistance)) + "m"
+        
+        let tripDistance = trips.tripDistance / 1000
+        cell?.tripDistance.text = String(format: "%.2f", tripDistance) + " km"
+
+        let tripTime = trips.tripLength
+        
+        let (h,m) = secondsToHoursMinutes(seconds: Int(tripTime))
+        
+        if tripTime >= 3600 {
+            cell?.tripTotalTime.text = String(format: "%2d", h) + " hr " + String(format: "%2d", m) + " min"
+        } else if tripTime < 60 {
+            cell?.tripTotalTime.text = "0" + " min"
+        } else {
+            cell?.tripTotalTime.text = String(format: "%.0d", m) + " min"
+        }
         
         cell?.vehicleImage.layer.cornerRadius = (cell?.vehicleImage.frame.size.height)! / 2
         cell?.vehicleImage.clipsToBounds = true
@@ -79,5 +94,9 @@ class LogsTableViewController: UITableViewController {
                 ONTINEUSGH = false
             }
         }
+    }
+    
+    func secondsToHoursMinutes (seconds : Int) -> (Int, Int) {
+        return (seconds / 3600, (seconds % 3600) / 60)
     }
 }

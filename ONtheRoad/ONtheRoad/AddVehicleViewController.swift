@@ -10,13 +10,14 @@ import UIKit
 import os.log
 
 class AddVehicleViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
+    
     var vehicles: VehicleProfile?
     var tempMake = ""
     var tempModel = ""
     var tempYear = ""
     var valueKM: Double = 0.0
     var maxAccelerationTime: Double = 0.0
+    var loopFlag = 0
     
     @IBOutlet weak var vehicleImage: UIImageView!
     @IBOutlet weak var vehicleName: UITextField!
@@ -152,7 +153,7 @@ class AddVehicleViewController: UIViewController, UITextFieldDelegate, UIImagePi
     // MARK: Actions
     
     @IBAction func imageGestureRecognizer(_ sender: UITapGestureRecognizer) {
-                
+        
         openActionSheet()
     }
     
@@ -208,14 +209,14 @@ class AddVehicleViewController: UIViewController, UITextFieldDelegate, UIImagePi
         if let sourceViewController = sender.source as? MakeTableViewController, let returnedMake = sourceViewController.returnThis {
             vehicleMake.text = returnedMake
             tempMake = returnedMake.replacingOccurrences(of: " ", with: "")
-
+            
             if vehicleMake.text! != "Label" && vehicleMake.text! != "" {
                 vehicleModel.textColor = UIColor(red: 99/255.0, green: 175/255.0, blue: 213/255.0, alpha: 1.0)
                 vehicleModel.layer.borderColor = UIColor(red: 99/255.0, green: 175/255.0, blue: 213/255.0, alpha: 1.0).cgColor
                 vehicleModel.layer.borderColor = UIColor(red: 99/255.0, green: 175/255.0, blue: 213/255.0, alpha: 1.0).cgColor
                 vehicleModel.layer.borderWidth = 1.0
                 vehicleModel.layer.cornerRadius = 5.0
-
+                
                 vehicleMake.isUserInteractionEnabled = true
                 vehicleModel.isUserInteractionEnabled = true
                 vehicleYear.isUserInteractionEnabled = false
@@ -228,7 +229,7 @@ class AddVehicleViewController: UIViewController, UITextFieldDelegate, UIImagePi
         if let sourceViewController = sender.source as? ModelTableViewController, let returnedModel = sourceViewController.returnThis {
             vehicleModel.text = returnedModel
             tempModel = returnedModel.replacingOccurrences(of: " ", with: "")
-
+            
             
             if vehicleModel.text! != "Label" {
                 vehicleYear.textColor = UIColor(red: 99/255.0, green: 175/255.0, blue: 213/255.0, alpha: 1.0)
@@ -237,7 +238,7 @@ class AddVehicleViewController: UIViewController, UITextFieldDelegate, UIImagePi
                 vehicleYear.layer.borderWidth = 1.0
                 vehicleYear.layer.cornerRadius = 5.0
                 
-                vehicleMake.isUserInteractionEnabled = true
+                vehicleMake.isUserInteractionEnabled = false
                 vehicleModel.isUserInteractionEnabled = true
                 vehicleYear.isUserInteractionEnabled = true
                 vehicleTrim.isUserInteractionEnabled = false
@@ -257,8 +258,8 @@ class AddVehicleViewController: UIViewController, UITextFieldDelegate, UIImagePi
                 vehicleTrim.layer.borderWidth = 1.0
                 vehicleTrim.layer.cornerRadius = 5.0
                 
-                vehicleMake.isUserInteractionEnabled = true
-                vehicleModel.isUserInteractionEnabled = true
+                vehicleMake.isUserInteractionEnabled = false
+                vehicleModel.isUserInteractionEnabled = false
                 vehicleYear.isUserInteractionEnabled = true
                 vehicleTrim.isUserInteractionEnabled = true
             } else {
@@ -271,6 +272,10 @@ class AddVehicleViewController: UIViewController, UITextFieldDelegate, UIImagePi
             
             if vehicleTrim.text! == "Label" || vehicleTrim.text! == "" {
                 vehicleTrim.text = ""
+            } else {
+                vehicleMake.isUserInteractionEnabled = false
+                vehicleModel.isUserInteractionEnabled = false
+                vehicleYear.isUserInteractionEnabled = false
             }
         }
         
@@ -324,14 +329,14 @@ class AddVehicleViewController: UIViewController, UITextFieldDelegate, UIImagePi
         // Dismiss the picker.
         dismiss(animated: true, completion: nil)
     }
-
+    
     
     // MARK: Functions
     
     func setupView() {
         saveButton.isEnabled = false
         
-        // Disable scroll view delay of touch 
+        // Disable scroll view delay of touch
         addVehicleScroll.delaysContentTouches = false
         
         // Round corners for profile image
@@ -460,7 +465,7 @@ class AddVehicleViewController: UIViewController, UITextFieldDelegate, UIImagePi
     
     func getVehicleSpecifications(styleID: String) {
         
-        let selectedStyleID = styleID
+        let selectedStyleID = "101353967"//"101172638"//"101353967"//styleID
         
         let urlBase = "https://api.edmunds.com/api/vehicle/v2/styles/"
         let urlExtra = "/equipment?fmt=json&api_key=gjppwybke2wgy6ndafz23cyr" //b3aa4xkn4mc964zcpnzm3pmv, 8zc8djuwwteevqe9nea3cejq, gjppwybke2wgy6ndafz23cyr
@@ -480,58 +485,88 @@ class AddVehicleViewController: UIViewController, UITextFieldDelegate, UIImagePi
                         
                         let attr = equipment["attributes"] as! NSArray
                         var aryValues = attr[6] as! [String : AnyObject]
-                        //var name = aryValues["name"] as! String
-                        var value = aryValues["value"] as! String
+                        var name = aryValues["name"] as! String
                         
-                        // Convert String to Int and convert mpg to km/L
-                        if let valueNumber = Double(value) {
-                            valueKM = 235 / valueNumber
-                            print(valueNumber)
-                            print(value)
-                            print("This L/100km")
+                        if name == "Ege Combined Mpg" {
+                            let value = aryValues["value"] as! String
+                            
+                            // Convert String to Int and convert mpg to km/L
+                            if let valueNumber = Double(value) {
+                                valueKM = 235 / valueNumber
+                                print(valueNumber)
+                                print(value)
+                                print("This L/100km")
+                                print(valueKM)
+                            }
+                        } else {
+                            
+                            // If the information in the API is missing these values for the car we give them average values
+                            valueKM = 235 / 26.4
+                            print("This L/100km for the average value 26.4")
                             print(valueKM)
+                            
                         }
                         
                         let kmLabel = "L/100km"
-                        let finalEfficiency = "\(valueKM)\(kmLabel)"
+                        let finalEfficiency = valueKM
                         let formattedEfficiency = String(format: "%.2f", finalEfficiency)
-
-                        efficiencyLabel.text = formattedEfficiency
+                        
+                        print("This is the final efficiency")
+                        print(formattedEfficiency)
+                        
+                        efficiencyLabel.text = formattedEfficiency + kmLabel
                         
                         aryValues = attr[7] as! [String : AnyObject]
-                        //name = aryValues["name"] as! String
-                        value = aryValues["value"] as! String
-                        print("This is time??????")
-                        print("value")
+                        name = aryValues["name"] as! String
                         
-                        // Convert String to Int and convert mpg to km/L
-                        if let accelerationTime = Double(value) {
-                            maxAccelerationTime = ((96.56 * 0.278) / accelerationTime)
-                            print("This is the max acceleration time")
-                            print(maxAccelerationTime)
+                        if name == "Manufacturer 0 60mph Acceleration Time (seconds)" {
+                            let value = aryValues["value"] as! String
+                            
+                            print("This is time from 0-60 mph")
+                            print("value")
+                            
+                            // Convert String to Int and convert mpg to km/L
+                            if let accelerationTime = Double(value) {
+                                maxAccelerationTime = ((96.56 * 0.278) / accelerationTime)
+                                print("This is the max acceleration time")
+                                print(maxAccelerationTime)
+                            }
+                        } else {
+                            print("This is maxacceleration for the average car")
+                            maxAccelerationTime = 3.36
                         }
                         updateSaveButtonState()
                     }
                     
-                    /*for i in 0...0 {
-                        let cylinder = equipment["cylinder"] as! Int
-                        let size = equipment["size"] as! Double
-                        let horsepower = equipment["horsepower"] as! Int
-                        let torque = equipment["torque"] as! Int
-                        let gas = (equipment["type"] as! String).capitalized*/
+                    if sectionName == "Engine" && loopFlag == 0 {
                         
-                        cylinderLabel.text = "4"//"\(cylinder)"
-                        sizeLabel.text = "2.5"//"\(size)"
-                        horsepowerLabel.text = "230"//"\(horsepower)"
-                        torqueLabel.text = "250"//"\(torque)"
-                        gasLabel.text = "Gas"//gas
+                        var cylinder = 0
+                        cylinder = equipment["cylinder"] as! Int
+                        var size = 0.0
+                        size = equipment["size"] as! Double
+                        var horsepower = 0
+                        horsepower = equipment["horsepower"] as! Int
+                        var torque = 0
+                        torque = equipment["torque"] as! Int
+                        var type = ""
+                        type = (equipment["type"] as! String).capitalized
                         
-                        /*print(cylinder)
-                        print(size)
-                        print(horsepower)
-                        print(torque)
-                        print(gas)
-                    }*/
+                        if cylinder != 0 && size != 0.0 && horsepower != 0 && torque != 0 && type != "" {
+                            cylinderLabel.text = "\(cylinder)"
+                            sizeLabel.text = "\(size)"
+                            horsepowerLabel.text = "\(horsepower)"
+                            torqueLabel.text = "\(torque)"
+                            gasLabel.text = type
+                            
+                            loopFlag = 1
+                            
+                            print(cylinder)
+                            print(size)
+                            print(horsepower)
+                            print(torque)
+                            print(type)
+                        }
+                    }
                 }
             }
         }

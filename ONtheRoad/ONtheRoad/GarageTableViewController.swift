@@ -21,6 +21,10 @@ class GarageTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        /*if traitCollection.forceTouchCapability == .available {
+            registerForPreviewing(with: self, sourceView: tableView)
+        }*/
+        
         loadVehicleFromArray()
     }
     
@@ -224,3 +228,24 @@ class GarageTableViewController: UITableViewController {
     }
     
 }
+
+/*extension GarageTableViewController : UIViewControllerPreviewingDelegate {
+    // Peek
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        guard let indexPath = tableView.indexPathForSelectedRow, let cell = tableView.cellForRow(at: indexPath) as? GarageTableViewCell else {
+            return nil
+        }
+        
+        let identifier = "GarageTableViewController"
+        guard let garageVC = storyboard?.instantiateViewController(withIdentifier: identifier) as? GarageTableViewController else { return nil }
+        
+        garageVC.vehicles.photo = cell.vehicleImage.image!
+        previewingContext.sourceRect = cell.frame
+        
+        return garageVC
+    }
+    
+    // Pop
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+    }
+}*/

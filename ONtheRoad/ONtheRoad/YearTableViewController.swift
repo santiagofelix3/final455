@@ -23,7 +23,7 @@ class YearTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        downloadData()
+        //downloadData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -73,7 +73,7 @@ class YearTableViewController: UITableViewController {
         if selectedYear == "Label" {
             selectedYear = "\(yearString[0])"
         }
-        returnThis = selectedYear
+        returnThis = "HOLA"//selectedYear
     }
     
     // MARK: Functions
