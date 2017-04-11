@@ -83,7 +83,6 @@ class GarageTableViewController: UITableViewController {
                 
                 garage[selectedIndexPath.row] = vehicle
                 tableView.reloadRows(at: [selectedIndexPath], with: .none)
-                
                 vehicle.deleteWithInsert(numberOfVehicle: rowNum + 1, totalNumberOfVehicles: VehicleProfile.totalNumberOfVehicles)
             }
             else {

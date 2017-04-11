@@ -27,7 +27,6 @@ class GraphTwoViewController: UIViewController, ChartViewDelegate {
         
         kilometers = ["0"]
         efficiency = ["0"]
-        print ("Fuck this shit")
         setBackground()
         setChart(dataPoints: kilometers, values: efficiency)
         
@@ -39,7 +38,7 @@ class GraphTwoViewController: UIViewController, ChartViewDelegate {
     func newEfficiencyValue() {
         
         if (GlobalTripDataInstance.globalTrip?.started != nil) {
-            increment = (GlobalTripDataInstance.globalTrip?.tripDistance)! / 100
+            increment = (GlobalTripDataInstance.globalTrip?.tripDistance)! / 400
             if (increment > 1.0*counter2) {
                 counter2 += 1
                 for location in tracker ..< (GlobalTripDataInstance.globalTrip?.tripLocationData.count)! {
@@ -57,7 +56,6 @@ class GraphTwoViewController: UIViewController, ChartViewDelegate {
                     kilometers.insert(String(effTemp), at: 9)
                 }
                 
-                print ("e1: ", effTemp)
                 counter = 0.0
                 effTemp = 0.0
                 

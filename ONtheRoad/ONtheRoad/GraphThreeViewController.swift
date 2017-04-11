@@ -27,7 +27,6 @@ class GraphThreeViewController: UIViewController, ChartViewDelegate {
         
         time = ["0"]
         efficiency = ["0"]
-        print ("Fuck this shit I'm out")
         setBackground()
         setChart(dataPoints: time, values: efficiency)
         
@@ -57,7 +56,6 @@ class GraphThreeViewController: UIViewController, ChartViewDelegate {
                     time.insert(String(effTemp), at: 9)
                 }
                 
-                print ("e2: ", effTemp)
                 effTemp = 0.0
                 counter = 0.0
                 setChart(dataPoints: time, values: efficiency)
@@ -73,7 +71,7 @@ class GraphThreeViewController: UIViewController, ChartViewDelegate {
         for (i, j) in dataPoints.enumerated() {
             let dataEntry = BarChartDataEntry()
             dataEntry.x = Double(i)
-            dataEntry.y = Double(j)! / 2
+            dataEntry.y = Double(j)!
             
             dataEntries.append(dataEntry)
         }
