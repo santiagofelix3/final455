@@ -1,0 +1,33 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "DA629FBC19AEA79AD1C7B15255DC295276268FE8",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "DA629FBC19AEA79AD1C7B15255DC295276268FE8" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "A315546F-E3D1-4628-AF5E-1083E352D676",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "DA629FBC19AEA79AD1C7B15255DC295276268FE8" : "final455\/ONtheRoad\/ONtheRoad\/Old\/final455%20Current\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "ONtheRoad",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "ONtheRoad\/ONtheRoad.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/santiagofelix3\/final455.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "DA629FBC19AEA79AD1C7B15255DC295276268FE8"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/santiagofelix3\/final455.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "DA629FBC19AEA79AD1C7B15255DC295276268FE8"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/santiagofelix3\/final455.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "DA629FBC19AEA79AD1C7B15255DC295276268FE8"
+    }
+  ]
+}
