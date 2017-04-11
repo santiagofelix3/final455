@@ -64,7 +64,7 @@ class VehicleProfile: NSObject, NSCoding {
     }
     
     init?(photo: UIImage, name: String, make: String, model: String, year: String, trim: String, type: String, id: String, maxAcceleration: Double, efficiency: Double, cylinder: String, size: String, horsepower: String, torque: String, gas: String) {
-
+        
         // Initialize stored properties.
         self.photo = photo
         self.name = name
@@ -168,9 +168,9 @@ class VehicleProfile: NSObject, NSCoding {
             return nil
         }
         /*guard let numberOfVehiclesSaved = aDecoder.decodeInteger(forKey: PropertyKey.numberOfVehiclesSaved) as Int? else {
-            os_log("Unable to decode the numberOfVehiclesSaved for a Vehicle object.", log: OSLog.default, type: .debug)
-            return nil
-        }*/
+         os_log("Unable to decode the numberOfVehiclesSaved for a Vehicle object.", log: OSLog.default, type: .debug)
+         return nil
+         }*/
         
         //VehicleProfile.numberOfVehiclesSaved = numberOfVehiclesSaved
         
@@ -179,10 +179,40 @@ class VehicleProfile: NSObject, NSCoding {
         
     }
     
+    func deleteWithInsert(numberOfVehicle: Int, totalNumberOfVehicles: Int) {
+        // Delete
+        let currentArchiveURL = VehicleProfile.DocumentsDirectory.appendingPathComponent(String(numberOfVehicle))
+        
+        do {
+            try FileManager.default.removeItem(at: currentArchiveURL)
+            
+            // Save
+            let currentArchiveURL = VehicleProfile.DocumentsDirectory.appendingPathComponent(String(numberOfVehicle))
+            let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(self, toFile: currentArchiveURL.path)
+            
+            if isSuccessfulSave {
+                os_log("Edited Vehicle successfully saved.", log: OSLog.default, type: .debug)
+            } else {
+                os_log("Failed to save edited vehicle", log: OSLog.default, type: .error)
+            }
+            
+            // Delete
+            let createdArchiveURL = VehicleProfile.DocumentsDirectory.appendingPathComponent(String(totalNumberOfVehicles))
+            do {
+                try FileManager.default.removeItem(at: createdArchiveURL)
+                VehicleProfile.totalNumberOfVehicles -= 1
+                print("The last item which is a copy of the edited one should be deleted")
+                print("Total number of vehicles " + String(totalNumberOfVehicles))
+            }
+        } catch {
+            print("Error when editig vehicle")
+        }
+    }
+    
     func saveVehicle(numberOfVehicle: Int) {
         let currentArchiveURL = VehicleProfile.DocumentsDirectory.appendingPathComponent(String(numberOfVehicle))
         let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(self, toFile: currentArchiveURL.path)
-
+        
         if isSuccessfulSave {
             os_log("Vehicle successfully saved. Did it really save?????", log: OSLog.default, type: .debug)
         } else {
@@ -197,7 +227,7 @@ class VehicleProfile: NSObject, NSCoding {
     
     func deleteVehicle(numberOfVehicle: Int, totalNumberOfVehicles: Int) {
         let currentArchiveURL = VehicleProfile.DocumentsDirectory.appendingPathComponent(String(numberOfVehicle))
-
+        
         do {
             try FileManager.default.removeItem(at: currentArchiveURL)
             var i = numberOfVehicle
@@ -227,8 +257,8 @@ class VehicleProfile: NSObject, NSCoding {
             } catch {
                 print("Error when deleting remaining vehicle")
             }
-
-
+            
+            
         } catch {
             os_log("Catch the Error", log: OSLog.default, type: .debug)
         }

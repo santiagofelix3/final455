@@ -196,9 +196,8 @@
 				B115BA6F1E90B6E50027803C /* TripData.swift */,
 				069B338E1E8CD1FF00760F3A /* Dashboard */,
 				069B338F1E8CD20800760F3A /* Garage */,
-				0699441B1E95E04800A72B8D /* LogsTableViewController.swift */,
-				0699441D1E95E08B00A72B8D /* LogsTableViewCell.swift */,
-				06EC44B51E959716008906C7 /* AnalyticsViewController.swift */,
+				06F1E7181E9CBB8B00DC8D16 /* Trip Log */,
+				06F1E7191E9CBBA700DC8D16 /* Analytics */,
 				06C2D22C1E89BD000066AE3C /* Assets.xcassets */,
 				06C2D22E1E89BD000066AE3C /* LaunchScreen.storyboard */,
 				06C2D2311E89BD000066AE3C /* Info.plist */,
@@ -213,6 +212,23 @@
 				06C2D23C1E89BD010066AE3C /* Info.plist */,
 			);
 			path = ONtheRoadTests;
+			sourceTree = "<group>";
+		};
+		06F1E7181E9CBB8B00DC8D16 /* Trip Log */ = {
+			isa = PBXGroup;
+			children = (
+				0699441B1E95E04800A72B8D /* LogsTableViewController.swift */,
+				0699441D1E95E08B00A72B8D /* LogsTableViewCell.swift */,
+			);
+			name = "Trip Log";
+			sourceTree = "<group>";
+		};
+		06F1E7191E9CBBA700DC8D16 /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				06EC44B51E959716008906C7 /* AnalyticsViewController.swift */,
+			);
+			name = Analytics;
 			sourceTree = "<group>";
 		};
 		07239AD398877C5D62920BAA /* Pods */ = {

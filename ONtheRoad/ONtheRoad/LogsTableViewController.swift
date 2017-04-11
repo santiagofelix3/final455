@@ -12,20 +12,16 @@ class LogsTableViewController: UITableViewController {
 
     var trips = TripData()
     var tripLog = [TripData]()
-
-    override func viewWillAppear(_ animated: Bool) {
- //       super.viewDidLoad()
-        loadTripFromArray()
-
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        navigationItem.leftBarButtonItem = editButtonItem
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//    }
+    override func viewWillAppear(_ animated: Bool) {
+        loadTripFromArray()
+    }
 
     // MARK: - Table view data source
 
@@ -84,7 +80,7 @@ class LogsTableViewController: UITableViewController {
             // This goes inside the loop to get all trips
             if let trips = self.trips.loadTrip(numberOfTrip: count) {
                 self.tripLog.append(trips)
-
+                print("it did load and append trip" + String(count))
                 print("This is supposeed to be the array of trips")
 
                 print(tripLog)

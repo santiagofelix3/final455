@@ -21,11 +21,6 @@ class GarageTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        /*if traitCollection.forceTouchCapability == .available {
-            registerForPreviewing(with: self, sourceView: tableView)
-        }*/
-        
-        loadVehicleFromArray()
     }
     
     override func didReceiveMemoryWarning() {
@@ -33,6 +28,10 @@ class GarageTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        loadVehicleFromArray()
+
+        print("This is the total number of vehicles" + String(VehicleProfile.totalNumberOfVehicles))
+        
         if activeFlag == 0 {
             navigationItem.leftBarButtonItem = editButtonItem
         } else {
@@ -77,13 +76,20 @@ class GarageTableViewController: UITableViewController {
         if let sourceViewController = sender.source as? AddVehicleViewController, let vehicle = sourceViewController.vehicles {
             
             if let selectedIndexPath = tableView.indexPathForSelectedRow {
+                print("This should print when editing a vehicle")
+                
                 // Update an existing vehicle.
+                let rowNum = selectedIndexPath.row
+                
                 garage[selectedIndexPath.row] = vehicle
                 tableView.reloadRows(at: [selectedIndexPath], with: .none)
+                
+                vehicle.deleteWithInsert(numberOfVehicle: rowNum + 1, totalNumberOfVehicles: VehicleProfile.totalNumberOfVehicles)
             }
             else {
                 // Add new vehicle
                 let newIndexPath = IndexPath(row: garage.count, section: 0)
+                
                 garage.append(vehicle)
                 VehicleProfile.totalNumberOfVehicles = garage.count
                 tableView.insertRows(at: [newIndexPath], with: .automatic)
@@ -124,6 +130,7 @@ class GarageTableViewController: UITableViewController {
     
     func loadVehicleFromArray() {
         var count = 1
+        VehicleProfile.totalNumberOfVehicles = 0
         
         //ONTINEUSGH is a boolean to control loop
         //Variable name represents success after long periods of failure
@@ -134,10 +141,11 @@ class GarageTableViewController: UITableViewController {
                 count += 1
                 VehicleProfile.totalNumberOfVehicles += 1
             }
-            else{
+            else {
                 ONTINEUSGH = false
             }
         }
+        print("This is the total number of vehicles after the while loop to load them is done " + String(VehicleProfile.totalNumberOfVehicles))
     }
     
     // Override to support conditional editing of the table view.

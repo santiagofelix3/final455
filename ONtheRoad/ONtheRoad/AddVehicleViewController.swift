@@ -147,6 +147,7 @@ class AddVehicleViewController: UIViewController, UITextFieldDelegate, UIImagePi
         
         VehicleProfile.totalNumberOfVehicles += 1
         vehicles?.saveVehicle(numberOfVehicle: VehicleProfile.totalNumberOfVehicles)
+        print("It saves and comes back to add vehicle")
         
     }
     

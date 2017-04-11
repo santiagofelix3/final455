@@ -43,7 +43,6 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
     
     override init() {
         self.vehiclePhoto = #imageLiteral(resourceName: "defaultPhoto")
-        
     }
     
     // MARK: GPS
@@ -215,11 +214,12 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
     }
     
     //saveTrip saves the trip to desired location
-    private func saveTrip(numberOfTrip: Int) {
-        let currentArchiveURL = VehicleProfile.DocumentsDirectory.appendingPathComponent("Trip"+String(numberOfTrip))
+    private func saveTrip() {
+        print("Step 5: Inside saving trip")
+        let currentArchiveURL = VehicleProfile.DocumentsDirectory.appendingPathComponent("Trip1")
         if NSKeyedArchiver.archiveRootObject(self, toFile: currentArchiveURL.path){
-            print("Trip Saved at:"+currentArchiveURL.path)
-            os_log("Trip successfully saved.", log: OSLog.default, type: .error)
+            print("Trip Saved at:" + currentArchiveURL.path)
+            os_log("New Trip successfully saved.", log: OSLog.default, type: .error)
         } else {
             os_log("FAILED to save Trip", log: OSLog.default, type: .error)
         }
@@ -227,26 +227,57 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
     
     //saveNewTrip() finds the location to save the trip
     private func saveNewTrip() {
+        print("Step 1 calling save new trip")
         var count = 1
         while FileManager.default.fileExists(atPath: VehicleProfile.DocumentsDirectory.appendingPathComponent("Trip"+String(count)).path) {
             count += 1
         }
-        saveTrip(numberOfTrip: count)
+        print("Step 2: count number of trips")
+        print(count)
+        shiftSavedTripsDown(numberOfTrip: count)
+        saveTrip()
     }
     
     func loadTrip(numberOfTrip: Int) -> TripData? {
-        let currentArchiveURL = VehicleProfile.DocumentsDirectory.appendingPathComponent("Trip"+String(numberOfTrip))
-        print("Attempting to load trip at: "+currentArchiveURL.path)
+        let currentArchiveURL = VehicleProfile.DocumentsDirectory.appendingPathComponent("Trip" + String(numberOfTrip))
+        print("Attempting to load trip at: " + currentArchiveURL.path)
         let temp = NSKeyedUnarchiver.unarchiveObject(withFile: currentArchiveURL.path) as? TripData
 
-
         return temp
+    }
+    
+    private func shiftSavedTripsDown(numberOfTrip: Int) {
+        print("Step 3: start shifting things down")
+        do {
+            var i = numberOfTrip
+            print("This is i, the number of trips in shifting")
+            print(i)
+            
+            while i > 1 {
+                // Get next vehicle after deleted vehicle
+                let nextArchiveURL = VehicleProfile.DocumentsDirectory.appendingPathComponent("Trip" + String(i - 1))
+                let nextVehicleInArray = NSKeyedUnarchiver.unarchiveObject(withFile: nextArchiveURL.path) as? TripData
+                
+                // Set new name/path for vehicles left
+                let currentArchiveURL = VehicleProfile.DocumentsDirectory.appendingPathComponent("Trip" + String(i))
+                let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(nextVehicleInArray as Any, toFile: currentArchiveURL.path)
+                
+                if isSuccessfulSave {
+                    print("Trip Saved at:" + nextArchiveURL.path)
+                    os_log("Trip successfully saved.", log: OSLog.default, type: .error)
+                } else {
+                    os_log("FAILED to save Trip", log: OSLog.default, type: .error)
+                }
+                i -= 1
+            }
+        }
+        print("Step 4: This is the end of shifting trips")
     }
     
     func deleteTrip(numberOfTrip: Int) {
         var tripCount = numberOfTrip
         while let tempTrip = loadTrip(numberOfTrip: tripCount + 1) {
-            tempTrip.saveTrip(numberOfTrip: tripCount)
+            tempTrip.saveTrip()
             tripCount += 1
         }
         let currentArchiveURL = VehicleProfile.DocumentsDirectory.appendingPathComponent("Trip"+String(tripCount))
