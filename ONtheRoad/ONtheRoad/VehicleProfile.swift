@@ -233,7 +233,7 @@ class VehicleProfile: NSObject, NSCoding {
             try FileManager.default.removeItem(at: currentArchiveURL)
             var i = numberOfVehicle
             
-            while i < totalNumberOfVehicles {
+            while i <= totalNumberOfVehicles {
                 // Get next vehicle after deleted vehicle
                 let nextArchiveURL = VehicleProfile.DocumentsDirectory.appendingPathComponent(String(i + 1))
                 let nextVehicleInArray = NSKeyedUnarchiver.unarchiveObject(withFile: nextArchiveURL.path) as? VehicleProfile

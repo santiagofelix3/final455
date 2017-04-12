@@ -10,7 +10,7 @@ import UIKit
 import os.log
 
 class LogsTableViewController: UITableViewController {
-
+    
     var tripLog = [TripData]()
     var trips = TripData()
     var activeFlag = 0
