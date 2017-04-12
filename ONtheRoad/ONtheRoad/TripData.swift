@@ -275,11 +275,22 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
         print("Step 4: This is the end of shifting trips")
     }
     
-    func deleteTrip(numberOfTrip: Int, totalTrips: Int) {
+    private func shiftTripUp(numberOfTrip: Int) {
+        print("Trips are shifting")
+        let tripCount = numberOfTrip
+        let currentArchiveURL = VehicleProfile.DocumentsDirectory.appendingPathComponent("Trip" + String(tripCount))
+        if NSKeyedArchiver.archiveRootObject(self, toFile: currentArchiveURL.path){
+            print("Shifted Trip Saved at:" + currentArchiveURL.path)
+            os_log("Shifted Trip successfully saved.", log: OSLog.default, type: .error)
+        } else {
+            os_log("FAILED to save Trip", log: OSLog.default, type: .error)
+        }
+    }
+    
+    func deleteTrip(numberOfTrip: Int) {
         var tripCount = numberOfTrip
-        while
-            let tempTrip = loadTrip(numberOfTrip: tripCount + 1) {
-            tempTrip.saveTrip()
+        while let tempTrip = loadTrip(numberOfTrip: tripCount + 1) {
+            tempTrip.shiftTripUp(numberOfTrip: tripCount)
             tripCount += 1
         }
         let currentArchiveURL = VehicleProfile.DocumentsDirectory.appendingPathComponent("Trip"+String(tripCount))

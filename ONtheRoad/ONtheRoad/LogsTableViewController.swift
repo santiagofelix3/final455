@@ -109,7 +109,7 @@ class LogsTableViewController: UITableViewController {
             let rowNum = indexPath.row
             
             tripLog.remove(at: indexPath.row)
-            trips.deleteTrip(numberOfTrip: rowNum + 1, trips.totalNumberOfTrips)
+            trips.deleteTrip(numberOfTrip: rowNum + 1)
             //trips.deleteVehicle(numberOfVehicle: rowNum + 1, totalNumberOfVehicles: VehicleProfile.totalNumberOfVehicles)
             
             tableView.deleteRows(at: [indexPath], with: .fade)
@@ -146,7 +146,8 @@ class LogsTableViewController: UITableViewController {
 
     func loadTripFromArray() {
         var count = 1
-        trips.totalNumberOfTrips = 0
+        TripData.totalNumberOfTrips = 0
+
         //ONTINEUSGH is a boolean to control loop
         //Variable name represents success after long periods of failure
         var ONTINEUSGH = true
@@ -159,7 +160,7 @@ class LogsTableViewController: UITableViewController {
 
                 print(tripLog)
                 count += 1
-                trips.totalNumberOfTrips += 1
+                TripData.totalNumberOfTrips += 1
             }
             else{
                 ONTINEUSGH = false
