@@ -16,8 +16,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         //Creating a global instance that starts the GPS running on launch, this allows us to start getting accurate on the user before they start the trip.
-        //This guy is being used
-        GlobalTripDataInstance.init()
         GlobalTripDataInstance.globalTrip?.startTrip()
         return true
     }
