@@ -7,15 +7,19 @@
 //
 
 import UIKit
+import os.log
 
 class LogsTableViewController: UITableViewController {
 
-    var trips = TripData()
     var tripLog = [TripData]()
+    var trips = TripData()
+    var activeFlag = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         navigationItem.leftBarButtonItem = editButtonItem
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -69,6 +73,32 @@ class LogsTableViewController: UITableViewController {
         return cell!
     }
     
+    // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        
+        switch(segue.identifier ?? "") {
+            
+        case "ShowDetail":
+            guard let tripDetailViewController = segue.destination as? DetailedMapViewController else {
+                fatalError("Unexpected destination: \(segue.destination)")
+            }
+            guard let selectedTripCell = sender as? LogsTableViewCell else {
+                fatalError("Unexpected sender: \(sender)")
+            }
+            guard let indexPath = tableView.indexPath(for: selectedTripCell) else {
+                fatalError("The selected cell is not being displayed by the table")
+            }
+            let selectedTrip = tripLog[indexPath.row]
+            tripDetailViewController.trips = selectedTrip
+            
+        default:
+            fatalError("Unexpected Segue Identifier; \(segue.identifier)")
+        }
+    }
+
+
     func loadTripFromArray() {
         var count = 1
         

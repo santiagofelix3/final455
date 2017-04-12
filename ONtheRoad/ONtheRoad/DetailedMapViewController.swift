@@ -10,16 +10,44 @@ import UIKit
 import MapKit
 import HealthKit
 
-class DetailedMapViewController: UIViewController,MKMapViewDelegate {
-    
-    var trips: TripData?
-    var mapOverlay: MKTileOverlay!
+class DetailedMapViewController: UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
+    @IBOutlet weak var tripTime: UILabel!
+    
+    var trips: TripData?
+    var selectTrip = TripData()
+    var mapOverlay: MKTileOverlay!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Set up views if editing an existing trip.
+        if let trips = trips {
+            navigationItem.title = trips.name
+            
+            let tripT = trips.tripLength
+            
+            let (h,m) = secondsToHoursMinutes(seconds: Int(tripT))
+            
+            if tripT >= 3600 {
+                tripTime.text = String(format: "%2d", h) + " hr " + String(format: "%2d", m) + " min"
+            } else if tripT < 60 {
+                tripTime.text = "0" + " min"
+            } else {
+                tripTime.text = String(format: "%.0d", m) + " min"
+            }
+        }
+        
         configureView()
+    }
+    
+    // MARK: Functions
+    
+    func secondsToHoursMinutes (seconds : Int) -> (Int, Int) {
+        return (seconds / 3600, (seconds % 3600) / 60)
     }
     
     func configureView() {
