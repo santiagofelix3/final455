@@ -5,12 +5,28 @@
 	<key>UIApplicationShortcutItems</key>
 	<array>
 		<dict>
-			<key>UIApplicationShortcutItemIconType</key>
-			<string>UIApplicationShorticonTypeAdd</string>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>quickActionStart</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Start Trip</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>com.example.ONtheRoad.Start</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>quickActionTrip</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Trip Log</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>com.example.ONtheRoad.Log</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>quickActionAddV</string>
 			<key>UIApplicationShortcutItemTitle</key>
 			<string>Add Vehicle</string>
 			<key>UIApplicationShortcutItemType</key>
-			<string>com.example.ONtheRoad.addvehicle</string>
+			<string>com.example.ONtheRoad.Add</string>
 		</dict>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>

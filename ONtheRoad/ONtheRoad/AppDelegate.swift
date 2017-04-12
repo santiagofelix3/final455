@@ -42,11 +42,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
+    
+    // MARK: Shortcut Handler Methods
+    
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
-        if shortcutItem.type == "com.example.ONtheRoad.addvehicle" {
-            // Take user to add vehicle view
+        if shortcutItem.type == "com.example.ONtheRoad.Add" {
+            let sb = UIStoryboard(name: "Main", bundle: nil)
+            let addVehicleVC = sb.instantiateViewController(withIdentifier: "AddVehicleVC") as! AddVehicleViewController
+            let root = UIApplication.shared.keyWindow?.rootViewController
+            
+            root?.present(addVehicleVC, animated: false, completion: { () -> Void in
+                completionHandler(true)
+            })
+        }
+        if shortcutItem.type == "com.example.ONtheRoad.Log" {
+            let sb = UIStoryboard(name: "Main", bundle: nil)
+            let addVehicleVC = sb.instantiateViewController(withIdentifier: "TripLogNavigationVC") as! LogsTableViewController
+            let root = UIApplication.shared.keyWindow?.rootViewController
+            
+            root?.present(addVehicleVC, animated: false, completion: { () -> Void in
+                completionHandler(true)
+            })
         }
     }
 }
-

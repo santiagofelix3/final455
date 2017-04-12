@@ -218,5 +218,4 @@ class GarageTableViewController: UITableViewController {
             }
         }
     }
-    
 }

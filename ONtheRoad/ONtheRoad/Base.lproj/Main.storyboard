@@ -473,7 +473,7 @@
         <!--Add Vehicle-->
         <scene sceneID="gAn-te-uzQ">
             <objects>
-                <viewController id="F4I-sh-gmx" customClass="AddVehicleViewController" customModule="ONtheRoad" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier=" AddVehicleVC" id="F4I-sh-gmx" customClass="AddVehicleViewController" customModule="ONtheRoad" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Us1-bZ-ebS"/>
                         <viewControllerLayoutGuide type="bottom" id="8Vg-fj-Gp5"/>
@@ -1177,7 +1177,7 @@
         <!--Trip Log-->
         <scene sceneID="BeF-3E-57E">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="aT4-1z-wYb" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="TripLogNavigationVC" automaticallyAdjustsScrollViewInsets="NO" id="aT4-1z-wYb" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Trip Log" image="details" selectedImage="details" id="Zhz-cd-dA9"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="p1l-Bo-7qg">
@@ -1196,7 +1196,7 @@
         <!--Trip Log-->
         <scene sceneID="05L-zv-cve">
             <objects>
-                <tableViewController id="z0l-Dw-IYI" customClass="LogsTableViewController" customModule="ONtheRoad" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="TripLogVC" id="z0l-Dw-IYI" customClass="LogsTableViewController" customModule="ONtheRoad" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="110" sectionHeaderHeight="28" sectionFooterHeight="28" id="qCD-s2-u8n">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

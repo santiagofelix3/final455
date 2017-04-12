@@ -46,7 +46,7 @@ class AnalyticsViewController: UIViewController {
         if let sourceViewController = sender.source as? DetailedMapViewController, let trip = sourceViewController.sendTrip {
             print("***********************************************************************************HOLAHOLAHOLAHOLAADIOS")
             print(trip)
-            //trips = trip
+            trips = trip
         }
     }
     
