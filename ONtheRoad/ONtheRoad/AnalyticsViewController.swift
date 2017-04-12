@@ -18,6 +18,7 @@ class AnalyticsViewController: UIViewController {
     var kilometers: [String]!
     var efficiency2: [String]!
     var counter = 0
+    var trips: TripData?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +34,16 @@ class AnalyticsViewController: UIViewController {
         updateLineChartData(dataPoints: times, values: efficiency2)
 
         //setChart(dataPoints: kilometers, values: efficiency)
+    }
+    
+    // MARK: Navigation
+    
+    @IBAction func unwindToAnalytics(sender: UIStoryboardSegue) {
+        if let sourceViewController = sender.source as? DetailedMapViewController, let trip = sourceViewController.sendTrip {
+            print("***********************************************************************************HOLAHOLAHOLAHOLA")
+            print(trip)
+            trips = trip
+        }
     }
     
     // MARK: Functions

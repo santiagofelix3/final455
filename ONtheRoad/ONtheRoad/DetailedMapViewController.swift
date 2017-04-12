@@ -21,7 +21,8 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate {
     
     var trips: TripData?
     var selectTrip = TripData()
-
+    var sendTrip: TripData?
+    var tripLog = [TripData]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +44,18 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate {
             }
         }
         configureView()
+    }
+    
+    // MARK: Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        
+        guard segue.destination is AnalyticsViewController else {
+            fatalError("Unexpected destination: \(segue.destination)")
+        }
+        let selectedTrip = trips
+        sendTrip = selectedTrip
     }
     
     // MARK: Functions
@@ -129,7 +142,6 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate {
         
         return MKPolyline(coordinates: &coords, count: (trips?.tripLocationData.count)!)
     }
-    //*******************
     
     //Loading in the map
     func loadMap() {
