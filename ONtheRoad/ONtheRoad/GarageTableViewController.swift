@@ -20,7 +20,7 @@ class GarageTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        //Loads the list of vehicles
         loadVehicleFromArray()
     }
     
@@ -29,12 +29,11 @@ class GarageTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
-        print("This is the total number of vehicles" + String(VehicleProfile.totalNumberOfVehicles))
-        
+        //Loads the edit button when viewing garage
         if activeFlag == 0 {
             navigationItem.leftBarButtonItem = editButtonItem
         } else {
+        //Loads the cancel button when editing
             navigationItem.leftBarButtonItem = cancelButton
             navigationItem.rightBarButtonItem = nil
         }
@@ -50,7 +49,7 @@ class GarageTableViewController: UITableViewController {
         return garage.count
     }
     
-    
+    //Loading in the table cells
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "vehicleTableCell", for: indexPath) as? GarageTableViewCell
         
@@ -74,31 +73,24 @@ class GarageTableViewController: UITableViewController {
     
     @IBAction func unwindToGarageList(sender: UIStoryboardSegue) {
         if let sourceViewController = sender.source as? AddVehicleViewController, let vehicle = sourceViewController.vehicles {
-            
+            //Seg for loading in the edit vehicle window
             if let selectedIndexPath = tableView.indexPathForSelectedRow {
-                print("This should print when editing a vehicle")
-                
                 // Update an existing vehicle.
                 let rowNum = selectedIndexPath.row
                 
                 garage[selectedIndexPath.row] = vehicle
-                //tableView.reloadRows(at: [selectedIndexPath], with: .none)
-                //loadVehicleFromArray()
                 tableView.reloadData()
                 
                 vehicle.deleteWithInsert(numberOfVehicle: rowNum + 1, totalNumberOfVehicles: VehicleProfile.totalNumberOfVehicles)
             }
+            //Seg for creating a new vehicle
             else {
                 // Add new vehicle
-                //let newIndexPath = IndexPath(row: garage.count, section: 0)
-                
                 garage.append(vehicle)
                 VehicleProfile.totalNumberOfVehicles = garage.count
-                //tableView.insertRows(at: [newIndexPath], with: .automatic)
-                //loadVehicleFromArray()
+
                 tableView.reloadData()
             }
-            print(garage)
         }
     }
     
@@ -108,6 +100,7 @@ class GarageTableViewController: UITableViewController {
     
     // MARK: Private Methods
     
+    //Sample data set
     private func loadSampleData() {
         
         let photo1 = UIImage(named: "photo1")
@@ -126,6 +119,7 @@ class GarageTableViewController: UITableViewController {
         loadVehicleFromArray()
     }
     
+    //Loads the vehicles
     func loadVehicleFromArray() {
         var count = 1
         VehicleProfile.totalNumberOfVehicles = 0
@@ -134,6 +128,7 @@ class GarageTableViewController: UITableViewController {
         //Variable name represents success after long periods of failure
         var ONTINEUSGH = true
         while(ONTINEUSGH) {
+            //Walks through the list and loads as long as there are still vehicles
             if let savedVehicles = self.vehicles.loadVehicle(numberOfVehicle: count) {
                 self.garage.append(savedVehicles)
                 count += 1
@@ -143,7 +138,6 @@ class GarageTableViewController: UITableViewController {
                 ONTINEUSGH = false
             }
         }
-        print("This is the total number of vehicles after the while loop to load them is done " + String(VehicleProfile.totalNumberOfVehicles))
     }
     
     // Override to support conditional editing of the table view.
@@ -158,11 +152,8 @@ class GarageTableViewController: UITableViewController {
         if editingStyle == .delete {
             // Delete the row from the data source
             let rowNum = indexPath.row
-            print("This is the row number of the vehicle we want to delete " + String(rowNum))
-            print("This is the total number of vehicles when we try to delete " + String(VehicleProfile.totalNumberOfVehicles))
             garage.remove(at: indexPath.row)
             vehicles.deleteVehicle(numberOfVehicle: rowNum + 1, totalNumberOfVehicles: VehicleProfile.totalNumberOfVehicles)
-            
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -171,11 +162,11 @@ class GarageTableViewController: UITableViewController {
     
     // MARK: - Navigation
     
+    //Seg Nav controller
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
         
         if segue.identifier == nil {
-            print("I am nil")
             guard segue.destination is DashboardViewController else {
                 fatalError("Unexpected destination: \(segue.destination)")
             }
@@ -187,11 +178,7 @@ class GarageTableViewController: UITableViewController {
             }
             let selectedVehicle = garage[indexPath.row]
             selectVehicle = selectedVehicle
-            print("Do i get here")
         } else {
-            print("This is the identifier name")
-            print(segue.identifier as Any)
-            
             switch(segue.identifier ?? "") {
                 
             case "AddItem":

@@ -27,7 +27,7 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Set up views if editing an existing trip.
+        //Displaying the total trip time in h m s instead of just s
         if let trips = trips {
             navigationItem.title = trips.name
             
@@ -43,6 +43,7 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate {
                 tripTime.text = String(format: "%.0d", m) + " min"
             }
         }
+        //loads in the map
         configureView()
     }
     
@@ -72,6 +73,7 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
+    //converts from seconds to h m s
     func secondsToHoursMinutes (seconds : Int) -> (Int, Int) {
         return (seconds / 3600, (seconds % 3600) / 60)
     }
@@ -80,8 +82,7 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate {
         loadMap()
     }
     
-    //Focusing the map
-    //Going to need to do some pinch zoom work on this as well, I think. Haven't been able to do it in the sim, haven't found code for it either, assuming it is missing.
+    //Focusing the map on the mid point of the trip
     func mapRegion() -> MKCoordinateRegion {
         let initialLoc = trips?.tripLocationData[0]
         
@@ -98,12 +99,9 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate {
             maxLat = max(maxLat!, location.latitude)
             maxLng = max(maxLng!, location.longitude)
         }
-        
-        //This should be showing the entire area driven over but it is not
-        //Looks like its because of the differences in between the two deltas and trying to find a compromise.
-        //If one is drastically different than the other it's not going to display the whole area we want.
-        //I'm currently composating for this by changing the mult factor from 1.1 to 2, not a great fix.
-        //Can lead to a really bad zoom level, will need to work on being able to zoom the map.
+
+        //Grabbing the max and min lat and long and finding the middle point of it.
+        //Focusing on the mid of these co-ords.
         return MKCoordinateRegion(
             center: CLLocationCoordinate2D(latitude: (minLat! + maxLat!)/2,
                                            longitude: (minLng! + maxLng!)/2),
@@ -137,6 +135,7 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate {
     func polyline() -> MKPolyline {
         var coords = [CLLocationCoordinate2D]()
         
+        //Doing it segment by segment
         let locations = trips?.tripLocationData
         for location in locations! {
             coords.append(CLLocationCoordinate2D(latitude: location.latitude,
@@ -150,7 +149,7 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate {
     func loadMap() {
         if (trips?.tripLocationData.count)! > 0 {
             mapView.isHidden = false
-            //Call to a map
+            //Call to a map api
             let template = "http://mt0.google.com/vt/x={x}&y={y}&z={z}" //"https://api.mapbox.com/styles/v1/spitfire4466/citl7jqwe00002hmwrvffpbzt/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic3BpdGZpcmU0NDY2IiwiYSI6Im9jX0JHQUUifQ.2QarbK_LccnrvDg7FobGjA"
             
             mapOverlay = MKTileOverlay(urlTemplate: template)

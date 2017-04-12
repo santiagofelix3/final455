@@ -13,6 +13,7 @@ class HomeGraphsViewController: UIPageViewController, UIPageViewControllerDataSo
     lazy var viewControllerList: [UIViewController] = {
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         
+        //Creating an array to store the three running graphs
         let viewController1 = storyBoard.instantiateViewController(withIdentifier: "graph1VC")
         let viewController2 = storyBoard.instantiateViewController(withIdentifier: "graph2VC")
         let viewController3 = storyBoard.instantiateViewController(withIdentifier: "graph3VC")
@@ -50,6 +51,8 @@ class HomeGraphsViewController: UIPageViewController, UIPageViewControllerDataSo
     
     // MARK: Functions
     
+    //Controls for which chart to display and which ones will come up next.
+    
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         
         guard let viewControllerIndex = viewControllerList.index(of: viewController) else {return nil}
@@ -80,15 +83,4 @@ class HomeGraphsViewController: UIPageViewController, UIPageViewControllerDataSo
         }
         return firstViewControllerIndex
     }
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }

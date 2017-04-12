@@ -24,7 +24,6 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var vehicles: VehicleProfile?
-    //var newTrip: TripData?
     lazy var stopWatch = Timer()
     var startTime = TimeInterval()
     var seconds = 0
@@ -33,7 +32,7 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    //Creating the UI
         setupView()
     }
     
@@ -42,6 +41,7 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    //Loading in the active vehicle
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "selectVehicleSegue" {
             flag = 1
@@ -55,8 +55,6 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
     
     @IBAction func unwindToDashboard(sender: UIStoryboardSegue) {
         if let sourceViewController = sender.source as? GarageTableViewController, let vehicle = sourceViewController.selectVehicle {
-            print("***********************************************************************************HOLAHOLAHOLAHOLA")
-            print(vehicle)
             vehicles = vehicle
         }
         activityIndicator.isHidden = false
@@ -67,26 +65,31 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
     // MARK: Actions
     
     @IBAction func startStopButton(_ sender: UIButton) {
-        
+     //Start/Stop Button controls
+        //Start Case
         if startStopButton.currentTitle == "Start" {
+            //Making sure user has an active vehicle, if they do not they get a prompt to select one and the trip does not start
             if vehicles == nil {
                 let alertController = UIAlertController(title: "No Vehicle Selected", message:
                     "Please select a vehicle for your trip", preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default,handler: nil))
                 self.present(alertController, animated: true, completion: nil)
             } else {
+                //If user has an active vehicle the trip can start
                 startStopButton.setTitle("Stop", for: .normal)
                 
                 transitionAnimationShow()
+                //Loading in the users vehicle specs for the trip
                 GlobalTripDataInstance.globalTrip = TripData.init(vehiclePhoto: (vehicles?.photo)!, name: (vehicles?.name)!, odometerStart: 0, vehicleMaxAccel: (vehicles?.maxAcceleration)!, vehicleActual: (vehicles?.efficiency)!)
                 GlobalTripDataInstance.globalTrip?.started = 1
+                //Start recording the users trip
                 GlobalTripDataInstance.globalTrip?.startTrip()
                 
                 stopWatch = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(DashboardViewController.updateTime(_stopWatch:)), userInfo: nil, repeats: true)
                 startTime = Date.timeIntervalSinceReferenceDate
             }
 
-            
+        //Stop case
         } else {
             startStopButton.setTitle("Start", for: .normal)
             GlobalTripDataInstance.globalTrip?.endTrip()
@@ -118,49 +121,53 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
         activityIndicator.isHidden = true
     }
     
+    //Dashboard display/update function
     func updateTime(_stopWatch: Timer) {
-        
         seconds += 1
         let (h,m,s) = secondsToHoursMinutesSeconds(seconds: Int(seconds))
         
+        //Case for hours, minutes, seconds
         if seconds >= 3600 {
             timeLabel.text = String(format: "%02d", h) + ":" + String(format: "%02d", m) + ":"+String(format: "%02d", s)
         } else {
+            //case for minutes, seconds
             timeLabel.text = String(format: "%02d", m) + ":"+String(format: "%02d", s)
         }
+        //If the trip has at least one item display current specs.
         if (GlobalTripDataInstance.globalTrip?.tripLocationData.count)! > 0 {
+            //Converting from meters to kms
             distanceLabel.text = String(format: "%.02f", (GlobalTripDataInstance.globalTrip?.tripDistance)!/1000)
+            //Converting from m/s to km/h
             velocityLabel.text = String(Int(3.6*(GlobalTripDataInstance.globalTrip?.tripLocationData[(GlobalTripDataInstance.globalTrip?.tripLocationData.count)! - 1].instSpeed)!))
         }
     }
     
-    
+    //Converting from seconds to Hours, Minutes, Seconds
     func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
         return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
     }
     
+    //Flipping from dashboard view to trip running view
     func transitionAnimationShow() {
         let transitionOptions: UIViewAnimationOptions = [.transitionFlipFromLeft, .showHideTransitionViews]
         
         UIView.transition(with: graphsView, duration: 1.0, options: transitionOptions, animations: {
             self.selectVehicleView.isHidden = true
             self.testView.isHidden = true
-            //self.graphsView.isHidden = false
         })
-        //selectVehicleView.backgroundColor = UIColor.clear
     }
     
+    //Flipping back
     func transitionAnimationHide() {
         let transitionOptions: UIViewAnimationOptions = [.transitionFlipFromRight, .showHideTransitionViews]
         
         UIView.transition(with: graphsView, duration: 1.0, options: transitionOptions, animations: {
             self.selectVehicleView.isHidden = false
             self.testView.isHidden = false
-            //self.graphsView.isHidden = true
         })
-        //selectVehicleView.backgroundColor = UIColor.clear
     }
     
+    //Storing the active vehicle's stats
     func setupVehicle() {
         selectVehicleImage.image = vehicles?.photo
         selectVehicleName.text = vehicles?.name
