@@ -167,10 +167,12 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate {
             // No locations were found!
             mapView.isHidden = true
             
-            UIAlertView(title: "Error",
-                        message: "Sorry, this drive has no locations saved",
-                        delegate:nil,
-                        cancelButtonTitle: "OK").show()
+            let alertController = UIAlertController(title: "Error",
+                                                    message: "Sorry, this drive has no locations saved",
+                                                    preferredStyle: UIAlertControllerStyle.alert)
+            alertController.addAction(UIAlertAction(title: "Ok",
+                                                    style: UIAlertActionStyle.default,handler: nil))
+            self.present(alertController, animated: true, completion: nil)
         }
     }
 }

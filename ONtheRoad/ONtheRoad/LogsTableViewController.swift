@@ -122,7 +122,7 @@ class LogsTableViewController: UITableViewController {
                 fatalError("Unexpected destination: \(segue.destination)")
             }
             guard let selectedTripCell = sender as? LogsTableViewCell else {
-                fatalError("Unexpected sender: \(sender)")
+                fatalError("Unexpected sender: \(String(describing: sender))")
             }
             guard let indexPath = tableView.indexPath(for: selectedTripCell) else {
                 fatalError("The selected cell is not being displayed by the table")
@@ -131,7 +131,7 @@ class LogsTableViewController: UITableViewController {
             tripDetailViewController.trips = selectedTrip
             
         default:
-            fatalError("Unexpected Segue Identifier; \(segue.identifier)")
+            fatalError("Unexpected Segue Identifier; \(String(describing: segue.identifier))")
         }
     }
     

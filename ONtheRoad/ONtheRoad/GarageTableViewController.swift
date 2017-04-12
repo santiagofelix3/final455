@@ -171,7 +171,7 @@ class GarageTableViewController: UITableViewController {
                 fatalError("Unexpected destination: \(segue.destination)")
             }
             guard let selectedVehicleCell = sender as? GarageTableViewCell else {
-                fatalError("Unexpected sender: \(sender)")
+                fatalError("Unexpected sender: \(String(describing: sender))")
             }
             guard let indexPath = tableView.indexPath(for: selectedVehicleCell) else {
                 fatalError("The selected cell is not being displayed by the table")
@@ -190,7 +190,7 @@ class GarageTableViewController: UITableViewController {
                 }
                 
                 guard let selectedVehicleCell = sender as? GarageTableViewCell else {
-                    fatalError("Unexpected sender: \(sender)")
+                    fatalError("Unexpected sender: \(String(describing: sender))")
                 }
                 
                 guard let indexPath = tableView.indexPath(for: selectedVehicleCell) else {
@@ -201,7 +201,7 @@ class GarageTableViewController: UITableViewController {
                 vehicleDetailViewController.vehicles = selectedVehicle
                 
             default:
-                fatalError("Unexpected Segue Identifier; \(segue.identifier)")
+                fatalError("Unexpected Segue Identifier; \(String(describing: segue.identifier))")
             }
         }
     }
