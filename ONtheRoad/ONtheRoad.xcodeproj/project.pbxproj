@@ -16,8 +16,6 @@
 		063CE4731E8F14A30020DCCA /* YearTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063CE46B1E8F14A30020DCCA /* YearTableViewCell.swift */; };
 		063CE4741E8F14A30020DCCA /* YearTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063CE46C1E8F14A30020DCCA /* YearTableViewController.swift */; };
 		063CE4761E8F16EA0020DCCA /* KDCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063CE4751E8F16EA0020DCCA /* KDCircularProgress.swift */; };
-		06441EBA1E9DC7F40047119C /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06B20D7E1E96B26800BCA61D /* Charts.framework */; };
-		06441EBC1E9DC7FA0047119C /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 06B20D7E1E96B26800BCA61D /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0646DEE51E90311A00951E39 /* GarageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0646DEE41E90311A00951E39 /* GarageTableViewCell.swift */; };
 		0646DEE71E9036CA00951E39 /* GarageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0646DEE61E9036CA00951E39 /* GarageTableViewController.swift */; };
 		066DACC11E8A41B6002B62E8 /* GraphTwoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066DACC01E8A41B6002B62E8 /* GraphTwoViewController.swift */; };
@@ -36,10 +34,11 @@
 		06C2D2561E8A0E480066AE3C /* HomeGraphsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C2D2551E8A0E480066AE3C /* HomeGraphsViewController.swift */; };
 		06C2D2581E8A0E5F0066AE3C /* GraphOneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C2D2571E8A0E5F0066AE3C /* GraphOneViewController.swift */; };
 		06EC44B61E959716008906C7 /* AnalyticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06EC44B51E959716008906C7 /* AnalyticsViewController.swift */; };
-		B037DDFFED8D704FFF8A87DB /* Pods_ONtheRoad.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 805BBC586CD39BC02A2EE363 /* Pods_ONtheRoad.framework */; };
 		B115BA701E90B6E50027803C /* TripData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B115BA6F1E90B6E50027803C /* TripData.swift */; };
 		B1C143801E9D8DFA007B9E99 /* DetailedMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C1437F1E9D8DFA007B9E99 /* DetailedMapViewController.swift */; };
 		B1C143861E9D8EA8007B9E99 /* MulticolorPolylineSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C143851E9D8EA8007B9E99 /* MulticolorPolylineSegment.swift */; };
+		B1EF88161E9EC53600C3275F /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B10CE9C31E9321A80082FB06 /* Charts.framework */; };
+		B1EF88171E9EC53600C3275F /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B10CE9C31E9321A80082FB06 /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,13 +52,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		06441EBD1E9DC7FA0047119C /* Embed Frameworks */ = {
+		B1EF88181E9EC53600C3275F /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				06441EBC1E9DC7FA0047119C /* Charts.framework in Embed Frameworks */,
+				B1EF88171E9EC53600C3275F /* Charts.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -79,14 +78,12 @@
 		0646DEE41E90311A00951E39 /* GarageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GarageTableViewCell.swift; sourceTree = "<group>"; };
 		0646DEE61E9036CA00951E39 /* GarageTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GarageTableViewController.swift; sourceTree = "<group>"; };
 		066DACC01E8A41B6002B62E8 /* GraphTwoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphTwoViewController.swift; sourceTree = "<group>"; };
-		066DACC21E8A41EE002B62E8 /* Charts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Charts.framework; path = "../../../Library/Developer/Xcode/DerivedData/ONtheRoad-cusfdypjhzvtvlaizqdzrkdqhley/Build/Products/Debug-iphonesimulator/Charts/Charts.framework"; sourceTree = "<group>"; };
 		066DACC71E8A4964002B62E8 /* GraphThreeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphThreeViewController.swift; sourceTree = "<group>"; };
 		0696516D1E8C294A00349A49 /* AddVehicleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddVehicleViewController.swift; sourceTree = "<group>"; };
 		0699441B1E95E04800A72B8D /* LogsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogsTableViewController.swift; sourceTree = "<group>"; };
 		0699441D1E95E08B00A72B8D /* LogsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogsTableViewCell.swift; sourceTree = "<group>"; };
 		069B33911E8CE5B100760F3A /* VehicleProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VehicleProfile.swift; sourceTree = "<group>"; };
 		069B33931E8CE5DC00760F3A /* VehicleProfileData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VehicleProfileData.swift; sourceTree = "<group>"; };
-		06B20D7E1E96B26800BCA61D /* Charts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Charts.framework; path = "../../../Library/Developer/Xcode/DerivedData/ONtheRoad-fjrpyqdrmviafpacdsfijorhjewi/Build/Products/Debug-iphonesimulator/Charts/Charts.framework"; sourceTree = "<group>"; };
 		06C2D2201E89BD000066AE3C /* ONtheRoad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ONtheRoad.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		06C2D2231E89BD000066AE3C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		06C2D2251E89BD000066AE3C /* DashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
@@ -101,10 +98,7 @@
 		06C2D2571E8A0E5F0066AE3C /* GraphOneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphOneViewController.swift; sourceTree = "<group>"; };
 		06EC44B51E959716008906C7 /* AnalyticsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsViewController.swift; sourceTree = "<group>"; };
 		2654D2751129C5C6F9726DBE /* Pods-ONtheRoad.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ONtheRoad.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ONtheRoad/Pods-ONtheRoad.debug.xcconfig"; sourceTree = "<group>"; };
-		805BBC586CD39BC02A2EE363 /* Pods_ONtheRoad.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ONtheRoad.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B10933A21E95D13200EF289B /* Charts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Charts.framework; path = "../../Library/Developer/Xcode/DerivedData/ONtheRoad-bwwwwsxqtusrkbcijcxesnjuzqqp/Build/Products/Debug-iphonesimulator/Charts/Charts.framework"; sourceTree = "<group>"; };
 		B10CE9C31E9321A80082FB06 /* Charts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Charts.framework; path = "../../../Library/Developer/Xcode/DerivedData/ONtheRoad-agqtgyzqxxemhhdsshlfkqotslnv/Build/Products/Debug-iphonesimulator/Charts/Charts.framework"; sourceTree = "<group>"; };
-		B115BA6A1E90B2FC0027803C /* Charts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Charts.framework; path = "../../Library/Developer/Xcode/DerivedData/ONtheRoad-aypgtbvdxubyqgghbrgsnerblhpg/Build/Products/Debug-iphonesimulator/Charts/Charts.framework"; sourceTree = "<group>"; };
 		B115BA6F1E90B6E50027803C /* TripData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripData.swift; sourceTree = "<group>"; };
 		B1C1437F1E9D8DFA007B9E99 /* DetailedMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailedMapViewController.swift; sourceTree = "<group>"; };
 		B1C143851E9D8EA8007B9E99 /* MulticolorPolylineSegment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MulticolorPolylineSegment.swift; sourceTree = "<group>"; };
@@ -116,8 +110,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				06441EBA1E9DC7F40047119C /* Charts.framework in Frameworks */,
-				B037DDFFED8D704FFF8A87DB /* Pods_ONtheRoad.framework in Frameworks */,
+				B1EF88161E9EC53600C3275F /* Charts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,12 +242,7 @@
 		51861189C707F7A46085F8AA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				06B20D7E1E96B26800BCA61D /* Charts.framework */,
-				B10933A21E95D13200EF289B /* Charts.framework */,
 				B10CE9C31E9321A80082FB06 /* Charts.framework */,
-				B115BA6A1E90B2FC0027803C /* Charts.framework */,
-				066DACC21E8A41EE002B62E8 /* Charts.framework */,
-				805BBC586CD39BC02A2EE363 /* Pods_ONtheRoad.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -272,7 +260,7 @@
 				06C2D21E1E89BD000066AE3C /* Resources */,
 				02FE5E10D5DAAF1BB9C82488 /* [CP] Embed Pods Frameworks */,
 				801C68C0D1A93E426320E8B0 /* [CP] Copy Pods Resources */,
-				06441EBD1E9DC7FA0047119C /* Embed Frameworks */,
+				B1EF88181E9EC53600C3275F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

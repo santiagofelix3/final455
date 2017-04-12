@@ -15,8 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        GlobalTripDataInstance.init()
+        //Creating a global instance that starts the GPS running on launch, this allows us to start getting accurate on the user before they start the trip.
         GlobalTripDataInstance.globalTrip?.startTrip()
         return true
     }

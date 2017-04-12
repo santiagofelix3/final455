@@ -6,6 +6,10 @@
 //  Copyright (c) 2015 Kaan Dedeoglu. All rights reserved.
 //
 
+//
+//Library for the charts we are using
+//
+
 import UIKit
 
 public enum KDCircularProgressGlowMode {

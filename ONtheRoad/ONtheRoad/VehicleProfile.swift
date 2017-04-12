@@ -12,7 +12,7 @@ import os.log
 class VehicleProfile: NSObject, NSCoding {
     
     // MARK: Properties
-    
+    //Creating all the variables we need to store vehicle info
     var photo: UIImage = #imageLiteral(resourceName: "defaultPhoto")
     var name: String? = ""
     var make: String = ""
@@ -30,14 +30,11 @@ class VehicleProfile: NSObject, NSCoding {
     var gas: String = ""
     
     // MARK: Archiving Paths
-    //static var numberOfVehiclesSaved: Int = 0
     static var totalNumberOfVehicles: Int = 0
     
     static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
-    //static let ArchiveURL = DocumentsDirectory.appendingPathComponent("vehicles")
     
     // MARK: Types
-    
     struct PropertyKey {
         static let photo = "photo"
         static let name = "name"
@@ -54,7 +51,6 @@ class VehicleProfile: NSObject, NSCoding {
         static let horsepower = "horsepower"
         static let torque = "torque"
         static let gas = "gas"
-        //static let numberOfVehiclesSaved = "numberOfVehiclesSaved"
     }
     
     //MARK: Initialization
@@ -84,7 +80,6 @@ class VehicleProfile: NSObject, NSCoding {
     }
     
     //MARK: NSCoding
-    
     func encode(with aCoder: NSCoder) {
         aCoder.encode(photo, forKey: PropertyKey.photo)
         aCoder.encode(name, forKey: PropertyKey.name)
@@ -101,7 +96,6 @@ class VehicleProfile: NSObject, NSCoding {
         aCoder.encode(horsepower, forKey: PropertyKey.horsepower)
         aCoder.encode(torque, forKey: PropertyKey.torque)
         aCoder.encode(gas, forKey: PropertyKey.gas)
-        //aCoder.encode(VehicleProfile.numberOfVehiclesSaved, forKey: PropertyKey.numberOfVehiclesSaved)
     }
     
     required convenience init?(coder aDecoder: NSCoder) {
@@ -167,15 +161,8 @@ class VehicleProfile: NSObject, NSCoding {
             os_log("Unable to decode the IMAGE for a Vehicle object.", log: OSLog.default, type: .debug)
             return nil
         }
-        /*guard let numberOfVehiclesSaved = aDecoder.decodeInteger(forKey: PropertyKey.numberOfVehiclesSaved) as Int? else {
-         os_log("Unable to decode the numberOfVehiclesSaved for a Vehicle object.", log: OSLog.default, type: .debug)
-         return nil
-         }*/
-        
-        //VehicleProfile.numberOfVehiclesSaved = numberOfVehiclesSaved
         
         self.init(photo: photo, name: name, make: make, model: model, year: year, trim: trim, type: type, id: id, maxAcceleration: maxAcceleration, efficiency: efficiency, cylinder: cylinder, size: size, horsepower: horsepower, torque: torque, gas: gas)
-        
         
     }
     
@@ -201,11 +188,10 @@ class VehicleProfile: NSObject, NSCoding {
             do {
                 try FileManager.default.removeItem(at: createdArchiveURL)
                 VehicleProfile.totalNumberOfVehicles -= 1
-                print("The last item which is a copy of the edited one should be deleted")
-                print("Total number of vehicles " + String(totalNumberOfVehicles))
             }
         } catch {
-            print("Error when editig vehicle")
+            //Leaving this print in for error purposes
+            print("Error when editing vehicle")
         }
     }
     
@@ -253,11 +239,9 @@ class VehicleProfile: NSObject, NSCoding {
             // Delete copy of remaining vehicle... last vehicle in array
             let remainingArchiveURL = VehicleProfile.DocumentsDirectory.appendingPathComponent(String(totalNumberOfVehicles))
             do {
-                print("This is the total number of vehicles when deleting one " + String(VehicleProfile.totalNumberOfVehicles))
                 try FileManager.default.removeItem(at: remainingArchiveURL)
                 VehicleProfile.totalNumberOfVehicles -= 1
             } catch {
-                print("Error when deleting remaining vehicle")
             }
             
             

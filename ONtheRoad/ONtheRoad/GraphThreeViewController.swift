@@ -25,30 +25,38 @@ class GraphThreeViewController: UIViewController, ChartViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Working variables
         time = ["0"]
         efficiency = ["0"]
+        //Start displaying charts
         setBackground()
         setChart(dataPoints: time, values: efficiency)
-        
+        //Starting update interval
         Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(GraphThreeViewController.newEfficiencyValue), userInfo: nil, repeats: true)
     }
     
     // MARK: Functions
     
+    //Grabs the new value for the chart
+    //EffRatio over Time
     func newEfficiencyValue() {
-        
         if (GlobalTripDataInstance.globalTrip?.started != nil) {
-            increment = (GlobalTripDataInstance.globalTrip?.tripLength)! / 5
-            if (increment > 1.0*counter2) {
+            //This chart goes off of 1 minute increments, checking to see if we need to had a new item.
+            increment = (GlobalTripDataInstance.globalTrip?.tripLength)! / 60
+            if (increment > counter2) {
                 counter2 += 1
+                //Tallying up the effRatio for the users last min of driving
                 for location in tracker ..< (GlobalTripDataInstance.globalTrip?.tripLocationData.count)! {
                     effTemp += (GlobalTripDataInstance.globalTrip?.tripLocationData[location].efficiencyRatio)!
                     counter += 1
                 }
+                //Updating tracker to refelect the new starting point for the next km
                 tracker = (GlobalTripDataInstance.globalTrip?.tripLocationData.count)!
+                //Getting the avg and applying to vehicleActual to get a value to display
                 effTemp = ((effTemp / (counter+1)) * (GlobalTripDataInstance.globalTrip?.vehicleActual)!)
                 self.efficiency.append(String(effTemp))
                 
+                //Inserting latest value on to the bar chart in the correct location.
                 if Int(counter2-2) < 10 {
                     time.insert(String(effTemp), at: Int(counter2-2))
                 } else {
@@ -56,13 +64,16 @@ class GraphThreeViewController: UIViewController, ChartViewDelegate {
                     time.insert(String(effTemp), at: 9)
                 }
                 
+                //Reseting for next item
                 effTemp = 0.0
                 counter = 0.0
+                
                 setChart(dataPoints: time, values: efficiency)
             }
         }
     }
     
+    //Displays the current chart
     func setChart(dataPoints: [String], values: [String]) {
         lineChartView.noDataText = "You need to provide data for the chart."
         

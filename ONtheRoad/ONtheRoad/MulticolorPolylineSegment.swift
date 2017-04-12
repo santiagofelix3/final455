@@ -37,11 +37,7 @@ class MulticolorPolylineSegment: MKPolyline {
             var coords = [CLLocationCoordinate2D]()
             coords.append(CLLocationCoordinate2D(latitude: l1.latitude, longitude: l1.longitude))
             coords.append(CLLocationCoordinate2D(latitude: l2.latitude, longitude: l2.longitude))
-            
-            //test printing the variables
-            //let distance = l1.distance
-            //let time = l1.timeStamp
-            
+
             //Creating an array of speeds
             let speed = l1.instSpeed
             speeds.append(speed)
@@ -66,7 +62,6 @@ class MulticolorPolylineSegment: MKPolyline {
             }
             
             //Defining each segment of coloured line
-            //We will need to make sure our measurement of segment stays consistent throughout the app
             let segment = MulticolorPolylineSegment(coordinates: &coords, count: coords.count)
             segment.color = color
             colorSegments.append(segment)

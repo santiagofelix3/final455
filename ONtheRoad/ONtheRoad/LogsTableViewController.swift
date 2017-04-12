@@ -18,14 +18,10 @@ class LogsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Loads the trip log
         loadTripFromArray()
-        
         navigationItem.leftBarButtonItem = editButtonItem
     }
-    
-   // override func viewWillAppear(_ animated: Bool) {
-    //    loadTripFromArray()
-   // }
 
     // MARK: - Table view data source
 
@@ -37,7 +33,7 @@ class LogsTableViewController: UITableViewController {
         return tripLog.count
     }
 
-    
+    //displays the contents of each table cell
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "logTableCell", for: indexPath) as? LogsTableViewCell
         
@@ -80,12 +76,10 @@ class LogsTableViewController: UITableViewController {
         if let sourceViewController = sender.source as? DetailedMapViewController, let trip = sourceViewController.trips {
             
             if let selectedIndexPath = tableView.indexPathForSelectedRow {
-                print("This should print when editing a trip")
                 
                 // Update an existing trip.
                 tripLog[selectedIndexPath.row] = trip
                 tableView.reloadData()
-                //deleteWithInsert(numberOfVehicle: rowNum + 1, totalNumberOfVehicles: VehicleProfile.totalNumberOfVehicles)
             }
             else {
                 // Add new trip
@@ -110,7 +104,6 @@ class LogsTableViewController: UITableViewController {
             
             tripLog.remove(at: indexPath.row)
             trips.deleteTrip(numberOfTrip: rowNum + 1)
-            //trips.deleteVehicle(numberOfVehicle: rowNum + 1, totalNumberOfVehicles: VehicleProfile.totalNumberOfVehicles)
             
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
@@ -129,7 +122,7 @@ class LogsTableViewController: UITableViewController {
                 fatalError("Unexpected destination: \(segue.destination)")
             }
             guard let selectedTripCell = sender as? LogsTableViewCell else {
-                fatalError("Unexpected sender: \(sender)")
+                fatalError("Unexpected sender: \(String(describing: sender))")
             }
             guard let indexPath = tableView.indexPath(for: selectedTripCell) else {
                 fatalError("The selected cell is not being displayed by the table")
@@ -138,7 +131,7 @@ class LogsTableViewController: UITableViewController {
             tripDetailViewController.trips = selectedTrip
             
         default:
-            fatalError("Unexpected Segue Identifier; \(segue.identifier)")
+            fatalError("Unexpected Segue Identifier; \(String(describing: segue.identifier))")
         }
     }
     
@@ -155,10 +148,6 @@ class LogsTableViewController: UITableViewController {
             // This goes inside the loop to get all trips
             if let trips = self.trips.loadTrip(numberOfTrip: count) {
                 self.tripLog.append(trips)
-                print("it did load and append trip" + String(count))
-                print("This is supposeed to be the array of trips")
-
-                print(tripLog)
                 count += 1
                 TripData.totalNumberOfTrips += 1
             }

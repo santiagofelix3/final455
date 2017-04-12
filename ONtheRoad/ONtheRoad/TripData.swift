@@ -17,6 +17,7 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
     var name: String?
     var odometerStart: Int = 0
     var vehicleMaxAccel: Double = 0.0
+    //Just giving this guy a initial value as a safety
     var vehicleActual = 6.8
 
     
@@ -26,6 +27,7 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
     var tripLength: Double = 0.0
     var tripDistance: Double = 0.0
     
+    //Array for storing each location point
     var tripLocationData = [Location]()
     
     lazy var locations = [CLLocation]()
@@ -57,13 +59,13 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
         locationManager.distanceFilter = 10.0
         locationManager.requestAlwaysAuthorization()
         startTime = Date.init()
-        print("Trip Started")
         locationManager.startUpdatingLocation()
     }
     
     //Stops the trip
     func endTrip(){
         locationManager.stopUpdatingLocation()
+        //Safety to make sure we only store user started trips
         if (started == 1) {
             saveNewTrip()
         }
@@ -76,7 +78,7 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
         //for each location the GPS returns, update tripLocationData with a new Location
         for location in locations{
 
-            //If locations is not empty, calculate all
+            //If locations is not empty, get the distance and time since the last stamp
             if self.locations.count > 1 {
                 let distanceSinceLast = location.distance(from: self.locations.last!)
                 let timeSinceLast = Double(location.timestamp.timeIntervalSince(self.locations.last!.timestamp))
@@ -86,6 +88,7 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
         }
     }
     
+    //Pruning off our wanted data from the CLLocation object
     func addCLLocation(location: CLLocation, distanceSinceLast: Double, timeSinceLast: Double)
     {
         let tempLocation = Location()
@@ -99,19 +102,21 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
         //Getting the distance
         tempLocation.distance = distanceSinceLast
         self.tripDistance += distanceSinceLast
+        //Getting the time
         self.tripLength += timeSinceLast
-        //Getting the instSpeed
+        //Getting the current speed
         tempLocation.instSpeed = (tempLocation.distance)
-        //Getting the instAccel
+        //Getting the accel
         if tripLocationData.count > 1 {
             tempLocation.instAccel = tempLocation.instSpeed - self.tripLocationData[tripLocationData.count-1].instSpeed
         }
-        //Getting the effRatio
+        //Getting the effRatio, this guy is just a rough metric we've come up with through a bit of reading.
         tempLocation.efficiencyRatio = abs(tempLocation.instAccel/(vehicleMaxAccel))+1
         if (tempLocation.efficiencyRatio > 1.9){
             tempLocation.efficiencyRatio = 1.9
         }
         
+        //Adding all the wanted variables onto the end of our tracking array
         self.tripLocationData.append(tempLocation)
     }
     
@@ -158,47 +163,6 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
     }
     
     required convenience init?(coder aDecoder: NSCoder) {
-     /*   guard let startTime = aDecoder.decodeObject(forKey: PropertyKey.startTime) as? Date else {
-            os_log("Unable to decode the startTime for a TripData object.", log: OSLog.default, type: .debug)
-            return nil
-        }
-        guard let vehiclePhoto = aDecoder.decodeObject(forKey: PropertyKey.vehiclePhoto) as? UIImage else {
-            os_log("Unable to decode the vehiclePhoto for a TripData object.", log: OSLog.default, type: .debug)
-            return nil
-        }
-        guard let name = aDecoder.decodeObject(forKey: PropertyKey.name) as? String else {
-            os_log("Unable to decode the name for a TripData object.", log: OSLog.default, type: .debug)
-            return nil
-        }
-        guard let odometerStart = aDecoder.decodeInteger(forKey: PropertyKey.odometerStart) as Int? else {
-            os_log("Unable to decode the odometerStart for a TripData object.", log: OSLog.default, type: .debug)
-            return nil
-        }
-        guard let vehicleMaxAccel = aDecoder.decodeDouble(forKey: PropertyKey.vehicleMaxAccel) as Double? else {
-            os_log("Unable to decode the vehicleMaxAccel for a TripData object.", log: OSLog.default, type: .debug)
-            return nil
-        }
-        guard let odometerEnd = aDecoder.decodeInteger(forKey: PropertyKey.odometerEnd) as Int? else {
-            os_log("Unable to decode the odometerEnd for a TripData object.", log: OSLog.default, type: .debug)
-            return nil
-        }
-        guard let endTime = aDecoder.decodeObject(forKey: PropertyKey.endTime) as? Date else {
-            os_log("Unable to decode the endTime for a TripData object.", log: OSLog.default, type: .debug)
-            return nil
-        }
-       guard let tripLength = aDecoder.decodeDouble(forKey: PropertyKey.tripLength) as Double? else {
-            os_log("Unable to decode the tripLength for a TripData object.", log: OSLog.default, type: .debug)
-            return nil
-        }
-        guard let tripDistance = aDecoder.decodeDouble(forKey: PropertyKey.tripDistance) as Double? else {
-            os_log("Unable to decode the tripDistance for a TripData object.", log: OSLog.default, type: .debug)
-            return nil
-        }
-        guard let tripLocationData = aDecoder.decodeObject(forKey: PropertyKey.tripLocationData) as? [Location] else {
-            os_log("Unable to decode the tripLocationData for a TripData object.", log: OSLog.default, type: .debug)
-            return nil
-        }
-  */
         let startTime = aDecoder.decodeObject(forKey: PropertyKey.startTime) as! Date
         let vehiclePhoto = aDecoder.decodeObject(forKey: PropertyKey.vehiclePhoto) as! UIImage
         let name = aDecoder.decodeObject(forKey: PropertyKey.name) as! String
@@ -215,11 +179,9 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
     
     //saveTrip saves the trip to desired location
     private func saveTrip() {
-        print("Step 5: Inside saving trip")
         TripData.totalNumberOfTrips += 1
         let currentArchiveURL = VehicleProfile.DocumentsDirectory.appendingPathComponent("Trip1")
         if NSKeyedArchiver.archiveRootObject(self, toFile: currentArchiveURL.path){
-            print("Trip Saved at:" + currentArchiveURL.path)
             os_log("New Trip successfully saved.", log: OSLog.default, type: .error)
         } else {
             os_log("FAILED to save Trip", log: OSLog.default, type: .error)
@@ -228,31 +190,24 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
     
     //saveNewTrip() finds the location to save the trip
     private func saveNewTrip() {
-        print("Step 1 calling save new trip")
         var count = 1
         while FileManager.default.fileExists(atPath: VehicleProfile.DocumentsDirectory.appendingPathComponent("Trip"+String(count)).path) {
             count += 1
         }
-        print("Step 2: count number of trips")
-        print(count)
         shiftSavedTripsDown(numberOfTrip: count)
         saveTrip()
     }
     
     func loadTrip(numberOfTrip: Int) -> TripData? {
         let currentArchiveURL = VehicleProfile.DocumentsDirectory.appendingPathComponent("Trip" + String(numberOfTrip))
-        print("Attempting to load trip at: " + currentArchiveURL.path)
         let temp = NSKeyedUnarchiver.unarchiveObject(withFile: currentArchiveURL.path) as? TripData
 
         return temp
     }
     
     private func shiftSavedTripsDown(numberOfTrip: Int) {
-        print("Step 3: start shifting things down")
         do {
             var i = numberOfTrip
-            print("This is i, the number of trips in shifting")
-            print(i)
             
             while i > 1 {
                 // Get next vehicle after deleted vehicle
@@ -264,7 +219,6 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
                 let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(nextVehicleInArray as Any, toFile: currentArchiveURL.path)
                 
                 if isSuccessfulSave {
-                    print("Trip Saved at:" + nextArchiveURL.path)
                     os_log("Trip successfully saved.", log: OSLog.default, type: .error)
                 } else {
                     os_log("FAILED to save Trip", log: OSLog.default, type: .error)
@@ -272,15 +226,12 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
                 i -= 1
             }
         }
-        print("Step 4: This is the end of shifting trips")
     }
     
     private func shiftTripUp(numberOfTrip: Int) {
-        print("Trips are shifting")
         let tripCount = numberOfTrip
         let currentArchiveURL = VehicleProfile.DocumentsDirectory.appendingPathComponent("Trip" + String(tripCount))
         if NSKeyedArchiver.archiveRootObject(self, toFile: currentArchiveURL.path){
-            print("Shifted Trip Saved at:" + currentArchiveURL.path)
             os_log("Shifted Trip successfully saved.", log: OSLog.default, type: .error)
         } else {
             os_log("FAILED to save Trip", log: OSLog.default, type: .error)
@@ -388,6 +339,7 @@ class Location: NSObject, NSCoding {
     }
 }
 
+//Creating a global default item for priming gps and filling in some blanks
 struct GlobalTripDataInstance {
     static var globalTrip: TripData?
     init (){

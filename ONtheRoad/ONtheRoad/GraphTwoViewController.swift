@@ -25,37 +25,47 @@ class GraphTwoViewController: UIViewController, ChartViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Init working vars
         kilometers = ["0"]
         efficiency = ["0"]
+        //Starts the chart
         setBackground()
         setChart(dataPoints: kilometers, values: efficiency)
-        
+        //Controling update intervals
         Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(GraphTwoViewController.newEfficiencyValue), userInfo: nil, repeats: true)
     }
     
     // MARK: Functions
     
+    //Grabbing the new value for the chart
+    //EffRatio over distance
     func newEfficiencyValue() {
         
         if (GlobalTripDataInstance.globalTrip?.started != nil) {
-            increment = (GlobalTripDataInstance.globalTrip?.tripDistance)! / 400
-            if (increment > 1.0*counter2) {
+            //Doesn't create a new bar until the user has traveled 1km
+            increment = (GlobalTripDataInstance.globalTrip?.tripDistance)! / 1000
+            //Usinging this to check for 1km increments, counter2 tracks km ranges
+            if (increment > counter2) {
                 counter2 += 1
+                //Tallying up the effRatio for the users last km of driving
                 for location in tracker ..< (GlobalTripDataInstance.globalTrip?.tripLocationData.count)! {
                     effTemp += (GlobalTripDataInstance.globalTrip?.tripLocationData[location].efficiencyRatio)!
                     counter += 1
                 }
+                //Updating tracker to refelect the new starting point for the next km
                 tracker = (GlobalTripDataInstance.globalTrip?.tripLocationData.count)!
+                //Getting the avg and applying to vehicleActual to get a value to display
                 effTemp = ((effTemp / (counter+1)) * (GlobalTripDataInstance.globalTrip?.vehicleActual)!)
                 self.efficiency.append(String(effTemp))
                 
+                //Inserting latest value on to the bar chart in the correct location.
                 if Int(counter2-2) < 10 {
                     kilometers.insert(String(effTemp), at: Int(counter2-2))
                 } else {
                     kilometers.remove(at: 0)
                     kilometers.insert(String(effTemp), at: 9)
                 }
-                
+                //Reseting for the next bar
                 counter = 0.0
                 effTemp = 0.0
                 
@@ -65,6 +75,7 @@ class GraphTwoViewController: UIViewController, ChartViewDelegate {
         }
     }
     
+    //Displays the current chart
     func setChart(dataPoints: [String], values: [String]) {
         barChartView.noDataText = "You need to provide data for the chart."
         
@@ -115,13 +126,6 @@ class GraphTwoViewController: UIViewController, ChartViewDelegate {
         chartDataSet.valueTextColor = .clear
         chartDataSet.setColor(.white, alpha: 0.8)
         chartDataSet.highlightEnabled = false
-    }
-    
-    func generateRandomNumbers() -> String {
-        let rand = Double(arc4random_uniform(UInt32(28.0)))
-        let randStr = "\(rand)"
-        
-        return randStr
     }
     
     func setBackground() {

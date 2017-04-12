@@ -17,6 +17,7 @@ class AnalyticsViewController: UIViewController {
     @IBOutlet weak var barChartView: BarChartView!
     @IBOutlet weak var lineChartView: LineChartView!
     
+    //Setting up some working vars for tracking stuff
     var kilometers: [String]!
     var time: [String]!
     var efficiency1: [String]!
@@ -25,27 +26,25 @@ class AnalyticsViewController: UIViewController {
     var trips: TripData?
     
     override func viewWillAppear(_ animated: Bool) {
-//        super.viewDidLoad()
+        //filling working vars
         time = ["0"]
         kilometers = ["0"]
-
         efficiency1 = ["0"]
         efficiency2 = ["0"]
         
+        //Drawing all the charts
         setBackground()
         updatePieChartData()
         updateBarChartData()
         updateLineChartData()
-
-        //setChart(dataPoints: kilometers, values: efficiency)
     }
     
     // MARK: Navigation
     
     @IBAction func unwindToAnalytics(sender: UIStoryboardSegue) {
         if let sourceViewController = sender.source as? DetailedMapViewController, let trip = sourceViewController.sendTrip {
-            print("***********************************************************************************HOLAHOLAHOLAHOLAADIOS")
-            print(trip)
+
+            //Grabbing the passed TripData entity
             trips = trip
         }
     }
@@ -57,16 +56,16 @@ class AnalyticsViewController: UIViewController {
     
     // MARK: Functions
     
+    //Piechart is all the different effRatios readings split into categories
     func updatePieChartData()  {
         
-        //let chart = PieChartView(frame: self.view.frame)
         var low = 0
         var good = 0
         var avg = 0
         var bad = 0
         let track = ["Low", "Good", "Average", "Bad"]
- //       let money = [10, 20, 22, 12]
-    
+
+        //Tallying up all the readings into different categories. This guy is fuzzy, would need more tinkering to get better readings
         for trip in (trips?.tripLocationData)! {
             if trip.efficiencyRatio < (trips?.vehicleMaxAccel)!*0.25 {
                 low += 1
@@ -81,10 +80,10 @@ class AnalyticsViewController: UIViewController {
                 bad += 1
             }
         }
-
+        //Fills the piechart array with the values
         let money = [low, good, avg, bad]
         
-        
+        //displaying the chart
         var entries = [PieChartDataEntry]()
         for (index, value) in money.enumerated() {
             let entry = PieChartDataEntry()
@@ -134,40 +133,42 @@ class AnalyticsViewController: UIViewController {
         // user interaction
         pieChartCiew.isUserInteractionEnabled = false
         
-        //let description = Description()
-        //description.text = "iOSCharts.io"
-        //pieChartCiew.chartDescription = description
         pieChartCiew.centerText = "Total Trip Time"
         pieChartCiew.holeRadiusPercent = 0.7
         pieChartCiew.transparentCircleColor = UIColor.clear
-        //self.view.addSubview(pieChartCiew)
-        
     }
     
-    
+    //Bar chart for eff over time
     func updateBarChartData() {
     
         barChartView.noDataText = "You need to provide data for the chart."
         
+        //Splitting it into 10 segments
         let segments = (trips?.tripLocationData.count)! / 10
         var tracker = 0
         
+        //Counting through the 10 segments
         for i in 0...9 {
             
             var counter = 0.0
             var effTemp = 0.0
 
+            //Counting through each segment step
             for location in tracker..<(segments+tracker) {
+                //Tallying up all the effratio for a segment
                 effTemp += (trips?.tripLocationData[location].efficiencyRatio)!
                 counter += 1
             }
             
+            //Grabbing the L/100km
             effTemp = ((effTemp / (counter+1)) * (trips?.vehicleActual)!)
+            //Inserting the effTemp into the chart in spot i
             self.efficiency1?.append(String(effTemp))
             time.insert(String(effTemp), at: i)
             tracker += segments
         }
         
+        //Filling the chart and dispalying values, the first spot is always blank, unsure why and don't have the time to fix it.
         var dataEntries: [BarChartDataEntry] = []
         
         for (i, j) in efficiency1.enumerated() {
@@ -232,32 +233,41 @@ class AnalyticsViewController: UIViewController {
         self.view.layer.insertSublayer(gradientLayer, at: 0)
     }
     
+    //Line graph for charting eff over distance
     func updateLineChartData() {
         lineChartView.noDataText = "You need to provide data for the chart."
         
+        //Breaking the trip total distance into 10 segments
         let segments = (trips?.tripDistance)! / 10.0
         
         var distance = 0.0
         var effTemp = 0.0
         var counter2 = 0
+            //Walks through all the trip locations
             for location in (trips?.tripLocationData)! {
                 
+                //Cuts the trip into segments by checking the distance travelled in a segment,
+                //Once distance is >= the value of segments we are going to cut it into a info point on the chart and reset our working vars
                 if (distance >= segments) {
+                    //Grabbing the avg for the segment
                     effTemp = ((effTemp / (counter+1)) * (trips?.vehicleActual)!)
+                    //Adding the point to the chart
                     self.efficiency2?.append(String(effTemp))
                     kilometers.insert(String(effTemp), at: counter2)
+                    //reseting to continue counting
                     effTemp = 0
                     distance = 0
                     counter = 0
                     counter2 += 1
                 }
-                
+                //Adding the effTemp and distance to a working var
                 effTemp += (location.efficiencyRatio)
                 distance += (location.distance)
                 counter += 1
                 
             }
         
+        //Displaying the charts
         var dataEntries: [BarChartDataEntry] = []
         
         for (i, j) in efficiency2.enumerated() {

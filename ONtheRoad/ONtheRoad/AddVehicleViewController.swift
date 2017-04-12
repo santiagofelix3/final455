@@ -148,8 +148,6 @@ class AddVehicleViewController: UIViewController, UITextFieldDelegate, UIImagePi
         
         VehicleProfile.totalNumberOfVehicles += 1
         vehicles?.saveVehicle(numberOfVehicle: VehicleProfile.totalNumberOfVehicles)
-        print("It saves and comes back to add vehicle")
-        
     }
     
     // MARK: Actions
@@ -488,26 +486,16 @@ class AddVehicleViewController: UIViewController, UITextFieldDelegate, UIImagePi
                             // Convert String to Int and convert mpg to km/L
                             if let valueNumber = Double(value) {
                                 valueKM = 235 / valueNumber
-                                print(valueNumber)
-                                print(value)
-                                print("This L/100km")
-                                print(valueKM)
                             }
                         } else {
                             
                             // If the information in the API is missing these values for the car we give them average values
                             valueKM = 235 / 26.4
-                            print("This L/100km for the average value 26.4")
-                            print(valueKM)
-                            
                         }
                         
                         let kmLabel = "L/100km"
                         let finalEfficiency = valueKM
                         let formattedEfficiency = String(format: "%.2f", finalEfficiency)
-                        
-                        print("This is the final efficiency")
-                        print(formattedEfficiency)
                         
                         efficiencyLabel.text = formattedEfficiency + kmLabel
                         
@@ -516,18 +504,12 @@ class AddVehicleViewController: UIViewController, UITextFieldDelegate, UIImagePi
                         
                         if name == "Manufacturer 0 60mph Acceleration Time (seconds)" {
                             let value = aryValues["value"] as! String
-                            
-                            print("This is time from 0-60 mph")
-                            print("value")
-                            
+
                             // Convert String to Int and convert mpg to km/L
                             if let accelerationTime = Double(value) {
                                 maxAccelerationTime = ((96.56 * 0.278) / accelerationTime)
-                                print("This is the max acceleration time")
-                                print(maxAccelerationTime)
                             }
                         } else {
-                            print("This is maxacceleration for the average car")
                             maxAccelerationTime = 3.36
                         }
                         updateSaveButtonState()
@@ -554,12 +536,6 @@ class AddVehicleViewController: UIViewController, UITextFieldDelegate, UIImagePi
                             gasLabel.text = type
                             
                             loopFlag = 1
-                            
-                            print(cylinder)
-                            print(size)
-                            print(horsepower)
-                            print(torque)
-                            print(type)
                         }
                     }
                 }
