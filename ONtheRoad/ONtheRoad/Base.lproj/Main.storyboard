@@ -1347,7 +1347,11 @@
                                 <action selector="cancel:" destination="g5v-XL-LL1" id="Mtz-1U-OuC"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="UBJ-N5-y9K"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="UBJ-N5-y9K">
+                            <connections>
+                                <segue destination="Waa-yA-x0Z" kind="unwind" unwindAction="unwindToTripLogListWithSender:" id="QgS-QJ-ue6"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="cancelButton" destination="KOk-nL-uR5" id="To1-dW-d9P"/>
@@ -1673,16 +1677,24 @@
                             <constraint firstItem="N3O-JA-1b7" firstAttribute="top" secondItem="igU-bl-3bA" secondAttribute="bottom" id="oUd-VD-m5V"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="Se8-ZZ-3MR"/>
+                    <navigationItem key="navigationItem" id="Se8-ZZ-3MR">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="BmV-7r-ZmG">
+                            <connections>
+                                <segue destination="4i7-Tc-3fy" kind="unwind" unwindAction="unwindToDetailedMapViewWithSender:" id="ZnN-wd-RDX"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="1050"/>
                     <connections>
+                        <outlet property="backButton" destination="BmV-7r-ZmG" id="9Si-Eo-eKw"/>
                         <outlet property="barChartView" destination="tZu-Hv-lww" id="sWI-bm-Tno"/>
                         <outlet property="lineChartView" destination="D76-cG-DvN" id="qoK-g5-Xmz"/>
                         <outlet property="pieChartCiew" destination="6Vo-lU-M2C" id="PZ2-LG-k7Z"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="csX-Yi-PGA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="4i7-Tc-3fy" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1729" y="1162"/>
         </scene>

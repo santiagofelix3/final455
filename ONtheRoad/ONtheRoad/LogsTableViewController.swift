@@ -21,7 +21,6 @@ class LogsTableViewController: UITableViewController {
         loadTripFromArray()
         
         navigationItem.leftBarButtonItem = editButtonItem
-        
     }
     
    // override func viewWillAppear(_ animated: Bool) {
@@ -75,7 +74,50 @@ class LogsTableViewController: UITableViewController {
         return cell!
     }
     
-    // MARK: - Navigation
+    // MARK: Actions
+    
+    @IBAction func unwindToTripLogList(sender: UIStoryboardSegue) {
+        if let sourceViewController = sender.source as? DetailedMapViewController, let trip = sourceViewController.trips {
+            
+            if let selectedIndexPath = tableView.indexPathForSelectedRow {
+                print("This should print when editing a trip")
+                
+                // Update an existing trip.
+                tripLog[selectedIndexPath.row] = trip
+                tableView.reloadData()
+                //deleteWithInsert(numberOfVehicle: rowNum + 1, totalNumberOfVehicles: VehicleProfile.totalNumberOfVehicles)
+            }
+            else {
+                // Add new trip
+                tripLog.append(trip)
+                tableView.reloadData()
+            }
+        }
+    }
+
+    // Override to support conditional editing of the table view.
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        // Return false if you do not want the specified item to be editable.
+        return true
+    }
+    
+    // Override to support editing the table view.
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if editingStyle == .delete {
+            // Delete the row from the data source
+            let rowNum = indexPath.row
+            
+            tripLog.remove(at: indexPath.row)
+            trips.deleteTrip(numberOfTrip: rowNum + 1, trips.totalNumberOfTrips)
+            //trips.deleteVehicle(numberOfVehicle: rowNum + 1, totalNumberOfVehicles: VehicleProfile.totalNumberOfVehicles)
+            
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        } else if editingStyle == .insert {
+        }
+    }
+    
+    // MARK: Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
@@ -99,34 +141,12 @@ class LogsTableViewController: UITableViewController {
             fatalError("Unexpected Segue Identifier; \(segue.identifier)")
         }
     }
-
-    @IBAction func unwindToTripLogList(sender: UIStoryboardSegue) {
-        if let sourceViewController = sender.source as? DetailedMapViewController, let trip = sourceViewController.trips {
-            
-            if let selectedIndexPath = tableView.indexPathForSelectedRow {
-                print("This should print when editing a trip")
-                
-                // Update an existing trip.
-                
-                tripLog[selectedIndexPath.row] = trip
-
-                tableView.reloadData()
-                
-                //trips.
-                //deleteWithInsert(numberOfVehicle: rowNum + 1, totalNumberOfVehicles: VehicleProfile.totalNumberOfVehicles)
-            }
-            else {
-                tableView.reloadData()
-            }
-        }
-    }
-
     
     // MARK: Functions
 
     func loadTripFromArray() {
         var count = 1
-        
+        trips.totalNumberOfTrips = 0
         //ONTINEUSGH is a boolean to control loop
         //Variable name represents success after long periods of failure
         var ONTINEUSGH = true
@@ -139,6 +159,7 @@ class LogsTableViewController: UITableViewController {
 
                 print(tripLog)
                 count += 1
+                trips.totalNumberOfTrips += 1
             }
             else{
                 ONTINEUSGH = false

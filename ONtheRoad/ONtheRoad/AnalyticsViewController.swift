@@ -11,6 +11,8 @@ import Charts
 
 class AnalyticsViewController: UIViewController {
     
+    @IBOutlet weak var backButton: UIBarButtonItem!
+    
     @IBOutlet weak var pieChartCiew: PieChartView!
     @IBOutlet weak var barChartView: BarChartView!
     @IBOutlet weak var lineChartView: LineChartView!
@@ -24,14 +26,14 @@ class AnalyticsViewController: UIViewController {
         super.viewDidLoad()
         
         kilometers = ["0"]
-        times = ["0"]
-        efficiency1 = ["0"]
+        //times = ["0"]
+        //efficiency1 = ["0"]
         efficiency2 = ["0"]
         
-        setBackground()
-        updatePieChartData()
-        updateBarChartData()
-        updateLineChartData(dataPoints: times, values: efficiency2)
+        //setBackground()
+        //updatePieChartData()
+        //updateBarChartData()
+        //updateLineChartData(dataPoints: times, values: efficiency2)
 
         //setChart(dataPoints: kilometers, values: efficiency)
     }
@@ -40,15 +42,20 @@ class AnalyticsViewController: UIViewController {
     
     @IBAction func unwindToAnalytics(sender: UIStoryboardSegue) {
         if let sourceViewController = sender.source as? DetailedMapViewController, let trip = sourceViewController.sendTrip {
-            print("***********************************************************************************HOLAHOLAHOLAHOLA")
+            print("***********************************************************************************HOLAHOLAHOLAHOLAADIOS")
             print(trip)
-            trips = trip
+            //trips = trip
         }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let backItem = backButton
+        navigationItem.backBarButtonItem = backItem // This will show in the next view controller being pushed
     }
     
     // MARK: Functions
     
-    func updatePieChartData()  {
+    /*func updatePieChartData()  {
         
         //let chart = PieChartView(frame: self.view.frame)
         var low = 0
@@ -149,7 +156,7 @@ class AnalyticsViewController: UIViewController {
             
             var counter = 0.0
             var effTemp = 0.0
-            for location in tracker ..<(trips.tripLocationData[segments+tracker]) {
+            for location in tracker..<(trips.tripLocationData[segments+tracker]) {
                 effTemp += (trips?.tripLocationData[location].efficiencyRatio)!
                 counter += 1
             }
@@ -288,6 +295,6 @@ class AnalyticsViewController: UIViewController {
         let gradient = CGGradient.init(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: gradientColors, locations: colorLocations) // Gradient Object
         lineChartDataSet.fill = Fill.fillWithLinearGradient(gradient!, angle: 90.0) // Set the Gradient
         lineChartDataSet.drawFilledEnabled = true
-    }
+    }*/
 
 }

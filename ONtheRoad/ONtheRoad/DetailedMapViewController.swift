@@ -58,6 +58,9 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate {
         sendTrip = selectedTrip
     }
     
+    @IBAction func unwindToDetailedMapView(sender: UIStoryboardSegue) {
+    }
+    
     // MARK: Functions
     
     @IBAction func cancel(_ sender: Any) {

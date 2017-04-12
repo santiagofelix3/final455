@@ -16,6 +16,8 @@
 		063CE4731E8F14A30020DCCA /* YearTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063CE46B1E8F14A30020DCCA /* YearTableViewCell.swift */; };
 		063CE4741E8F14A30020DCCA /* YearTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063CE46C1E8F14A30020DCCA /* YearTableViewController.swift */; };
 		063CE4761E8F16EA0020DCCA /* KDCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063CE4751E8F16EA0020DCCA /* KDCircularProgress.swift */; };
+		06441EBA1E9DC7F40047119C /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06B20D7E1E96B26800BCA61D /* Charts.framework */; };
+		06441EBC1E9DC7FA0047119C /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 06B20D7E1E96B26800BCA61D /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0646DEE51E90311A00951E39 /* GarageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0646DEE41E90311A00951E39 /* GarageTableViewCell.swift */; };
 		0646DEE71E9036CA00951E39 /* GarageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0646DEE61E9036CA00951E39 /* GarageTableViewController.swift */; };
 		066DACC11E8A41B6002B62E8 /* GraphTwoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066DACC01E8A41B6002B62E8 /* GraphTwoViewController.swift */; };
@@ -38,8 +40,6 @@
 		B115BA701E90B6E50027803C /* TripData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B115BA6F1E90B6E50027803C /* TripData.swift */; };
 		B1C143801E9D8DFA007B9E99 /* DetailedMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C1437F1E9D8DFA007B9E99 /* DetailedMapViewController.swift */; };
 		B1C143861E9D8EA8007B9E99 /* MulticolorPolylineSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C143851E9D8EA8007B9E99 /* MulticolorPolylineSegment.swift */; };
-		B1C143871E9D8ED4007B9E99 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B10933A21E95D13200EF289B /* Charts.framework */; };
-		B1C143881E9D8ED4007B9E99 /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B10933A21E95D13200EF289B /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,13 +53,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		B1C143891E9D8ED4007B9E99 /* Embed Frameworks */ = {
+		06441EBD1E9DC7FA0047119C /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				B1C143881E9D8ED4007B9E99 /* Charts.framework in Embed Frameworks */,
+				06441EBC1E9DC7FA0047119C /* Charts.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -116,8 +116,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				06441EBA1E9DC7F40047119C /* Charts.framework in Frameworks */,
 				B037DDFFED8D704FFF8A87DB /* Pods_ONtheRoad.framework in Frameworks */,
-				B1C143871E9D8ED4007B9E99 /* Charts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -221,10 +221,10 @@
 		06F1E7181E9CBB8B00DC8D16 /* Trip Log */ = {
 			isa = PBXGroup;
 			children = (
-				B1C1437F1E9D8DFA007B9E99 /* DetailedMapViewController.swift */,
-				B1C143851E9D8EA8007B9E99 /* MulticolorPolylineSegment.swift */,
 				0699441B1E95E04800A72B8D /* LogsTableViewController.swift */,
 				0699441D1E95E08B00A72B8D /* LogsTableViewCell.swift */,
+				B1C1437F1E9D8DFA007B9E99 /* DetailedMapViewController.swift */,
+				B1C143851E9D8EA8007B9E99 /* MulticolorPolylineSegment.swift */,
 			);
 			name = "Trip Log";
 			sourceTree = "<group>";
@@ -272,7 +272,7 @@
 				06C2D21E1E89BD000066AE3C /* Resources */,
 				02FE5E10D5DAAF1BB9C82488 /* [CP] Embed Pods Frameworks */,
 				801C68C0D1A93E426320E8B0 /* [CP] Copy Pods Resources */,
-				B1C143891E9D8ED4007B9E99 /* Embed Frameworks */,
+				06441EBD1E9DC7FA0047119C /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

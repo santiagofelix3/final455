@@ -18,6 +18,7 @@ class AddVehicleViewController: UIViewController, UITextFieldDelegate, UIImagePi
     var valueKM: Double = 0.0
     var maxAccelerationTime: Double = 0.0
     var loopFlag = 0
+    var imagePicker: UIImagePickerController!
     
     @IBOutlet weak var vehicleImage: UIImageView!
     @IBOutlet weak var vehicleName: UITextField!
@@ -427,27 +428,20 @@ class AddVehicleViewController: UIViewController, UITextFieldDelegate, UIImagePi
             "The camera is not available", preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
         
-        let src = UIImagePickerControllerSourceType.camera
-        
-        // Check if camera is available
-        guard UIImagePickerController.isSourceTypeAvailable(src)
-            else {
-                self.present(alertController, animated: true, completion: nil)
-                return
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = UIImagePickerControllerSourceType.camera;
+            imagePicker.allowsEditing = true
+            self.present(imagePicker, animated: true, completion: nil)
         }
-        
-        guard let arr = UIImagePickerController.availableMediaTypes(for: src)
-            else {
-                return
+    }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let selectedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
+            imagePicker.dismiss(animated: true, completion: nil)
+            vehicleImage.image = selectedImage
         }
-        
-        let imagePicker = UIImagePickerController()
-        
-        imagePicker.sourceType = src
-        imagePicker.mediaTypes = arr
-        imagePicker.delegate = self
-        present(imagePicker, animated: true, completion: nil)
-        
     }
     
     func openPhotoLibrary() {
