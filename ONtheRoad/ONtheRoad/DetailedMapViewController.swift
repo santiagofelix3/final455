@@ -11,6 +11,8 @@ import MapKit
 import HealthKit
 
 class DetailedMapViewController: UIViewController, MKMapViewDelegate {
+
+    var mapOverlay: MKTileOverlay!
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var saveButton: UIBarButtonItem!
@@ -19,7 +21,7 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate {
     
     var trips: TripData?
     var selectTrip = TripData()
-    var mapOverlay: MKTileOverlay!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +42,6 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate {
                 tripTime.text = String(format: "%.0d", m) + " min"
             }
         }
-        
         configureView()
     }
     
@@ -126,7 +127,7 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate {
         if (trips?.tripLocationData.count)! > 0 {
             mapView.isHidden = false
             //Call to a map
-            let template = "https://api.mapbox.com/styles/v1/spitfire4466/citl7jqwe00002hmwrvffpbzt/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic3BpdGZpcmU0NDY2IiwiYSI6Im9jX0JHQUUifQ.2QarbK_LccnrvDg7FobGjA"
+            let template = "http://mt0.google.com/vt/x={x}&y={y}&z={z}" //"https://api.mapbox.com/styles/v1/spitfire4466/citl7jqwe00002hmwrvffpbzt/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic3BpdGZpcmU0NDY2IiwiYSI6Im9jX0JHQUUifQ.2QarbK_LccnrvDg7FobGjA"
             
             mapOverlay = MKTileOverlay(urlTemplate: template)
             mapOverlay.canReplaceMapContent = true

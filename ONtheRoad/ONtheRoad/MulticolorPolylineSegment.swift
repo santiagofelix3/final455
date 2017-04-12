@@ -76,7 +76,6 @@ class MulticolorPolylineSegment: MKPolyline {
             segment.color = color
             colorSegments.append(segment)
         }
-        
         return colorSegments
     }
 }
