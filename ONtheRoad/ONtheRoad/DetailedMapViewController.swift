@@ -47,6 +47,15 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate {
     
     // MARK: Functions
     
+    @IBAction func cancel(_ sender: Any) {
+        if let owningNavigationController = navigationController {
+            owningNavigationController.popViewController(animated: true)
+        }
+        else {
+            fatalError("The AddVehicleNavigation is not inside a navigation controller.")
+        }
+    }
+    
     func secondsToHoursMinutes (seconds : Int) -> (Int, Int) {
         return (seconds / 3600, (seconds % 3600) / 60)
     }

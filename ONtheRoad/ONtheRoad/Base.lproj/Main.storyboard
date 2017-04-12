@@ -1331,7 +1331,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Trip Details" id="yb3-AJ-fVz">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="KOk-nL-uR5"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="KOk-nL-uR5">
+                            <connections>
+                                <action selector="cancel:" destination="g5v-XL-LL1" id="Mtz-1U-OuC"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="UBJ-N5-y9K"/>
                     </navigationItem>
                     <connections>

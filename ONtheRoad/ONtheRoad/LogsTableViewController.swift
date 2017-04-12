@@ -18,13 +18,15 @@ class LogsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        loadTripFromArray()
+        
         navigationItem.leftBarButtonItem = editButtonItem
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        loadTripFromArray()
-    }
+   // override func viewWillAppear(_ animated: Bool) {
+    //    loadTripFromArray()
+   // }
 
     // MARK: - Table view data source
 
@@ -98,6 +100,29 @@ class LogsTableViewController: UITableViewController {
         }
     }
 
+    @IBAction func unwindToTripLogList(sender: UIStoryboardSegue) {
+        if let sourceViewController = sender.source as? DetailedMapViewController, let trip = sourceViewController.trips {
+            
+            if let selectedIndexPath = tableView.indexPathForSelectedRow {
+                print("This should print when editing a trip")
+                
+                // Update an existing trip.
+                
+                tripLog[selectedIndexPath.row] = trip
+
+                tableView.reloadData()
+                
+                //trips.
+                //deleteWithInsert(numberOfVehicle: rowNum + 1, totalNumberOfVehicles: VehicleProfile.totalNumberOfVehicles)
+            }
+            else {
+                tableView.reloadData()
+            }
+        }
+    }
+
+    
+    // MARK: Functions
 
     func loadTripFromArray() {
         var count = 1
