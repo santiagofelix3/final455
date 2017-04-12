@@ -30,6 +30,8 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
     
     lazy var locations = [CLLocation]()
     
+    static var totalNumberOfTrips: Int = 0
+
     init?(vehiclePhoto: UIImage, name: String, odometerStart: Int, vehicleMaxAccel: Double, vehicleActual: Double){
         self.startTime = Date.init()
         self.vehiclePhoto = vehiclePhoto
@@ -214,6 +216,7 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
     //saveTrip saves the trip to desired location
     private func saveTrip() {
         print("Step 5: Inside saving trip")
+        TripData.totalNumberOfTrips += 1
         let currentArchiveURL = VehicleProfile.DocumentsDirectory.appendingPathComponent("Trip1")
         if NSKeyedArchiver.archiveRootObject(self, toFile: currentArchiveURL.path){
             print("Trip Saved at:" + currentArchiveURL.path)
@@ -272,9 +275,10 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
         print("Step 4: This is the end of shifting trips")
     }
     
-    func deleteTrip(numberOfTrip: Int) {
+    func deleteTrip(numberOfTrip: Int, totalTrips: Int) {
         var tripCount = numberOfTrip
-        while let tempTrip = loadTrip(numberOfTrip: tripCount + 1) {
+        while
+            let tempTrip = loadTrip(numberOfTrip: tripCount + 1) {
             tempTrip.saveTrip()
             tripCount += 1
         }
