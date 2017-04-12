@@ -16,19 +16,21 @@ class AnalyticsViewController: UIViewController {
     @IBOutlet weak var lineChartView: LineChartView!
     
     var kilometers: [String]!
+    var efficiency2: [String]!
     var counter = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let kilometers1 = ["20", "13", "12", "8", "10", "7", "12", "11", "15", "7"]
-        let kilometers2 = ["9", "8", "10", "7", "10", "12", "12", "11", "7", "10", "9", "8", "3", "2", "3", "4", "5", "4", "6", "6"]
-        let efficiency = ["1", "1", "1", "1", "1", "1", "1", "1", "1", "1"]
+        kilometers = ["0"]
+        times = ["0"]
+        efficiency1 = ["0"]
+        efficiency2 = ["0"]
         
         setBackground()
         updatePieChartData()
-        updateBarChartData(dataPoints: kilometers1, values: efficiency)
-        updateLineChartData(dataPoints: kilometers2, values: efficiency)
+        updateBarChartData()
+        updateLineChartData(dataPoints: times, values: efficiency2)
 
         //setChart(dataPoints: kilometers, values: efficiency)
     }
@@ -38,9 +40,30 @@ class AnalyticsViewController: UIViewController {
     func updatePieChartData()  {
         
         //let chart = PieChartView(frame: self.view.frame)
-        
+        var low = 0
+        var good = 0
+        var avg = 0
+        var bad = 0
         let track = ["Low", "Good", "Average", "Bad"]
-        let money = [10, 20, 22, 12]
+ //       let money = [10, 20, 22, 12]
+        
+        for trip in trips.tripLocationData! {
+            if trip.efficiencyRatio < trip.VehicleActual*0.5 {
+                low += 1
+            }
+            else if trip.efficiencyRatio < trip.VehicleActual {
+                good += 1
+            }
+            else if trip.efficiencyRatio < trip.VehicleActual*1.25 {
+                avg += 1
+            }
+            else {
+                bad += 1
+            }
+        }
+        
+        let money = [low, good, avg, bad]
+        
         
         var entries = [PieChartDataEntry]()
         for (index, value) in money.enumerated() {
@@ -102,13 +125,33 @@ class AnalyticsViewController: UIViewController {
     }
     
     
-    func updateBarChartData(dataPoints: [String], values: [String]) {
+    func updateBarChartData() {
+        
+        var efficiency1: [String]!
         
         barChartView.noDataText = "You need to provide data for the chart."
         
+        let segments = (trips?.tripLocationData.count)! / 10.0
+        var tracker = 0.0
+        
+        for i in 0...9 {
+            
+            var counter = 0.0
+            var effTemp = 0.0
+            for location in tracker ..<(trips.tripLocationData[segments+tracker]) {
+                effTemp += (trips?.tripLocationData[location].efficiencyRatio)!
+                counter += 1
+            }
+            
+            effTemp = ((effTemp / (counter+1)) * (trips?.vehicleActual)!)
+            
+            efficiency1.append(String(effTemp))
+            tracker += segments
+        }
+        
         var dataEntries: [BarChartDataEntry] = []
         
-        for (i, j) in dataPoints.enumerated() {
+        for (i, j) in efficiency1.enumerated() {
             let dataEntry = BarChartDataEntry()
             dataEntry.x = Double(i)
             dataEntry.y = Double(j)!
@@ -118,7 +161,7 @@ class AnalyticsViewController: UIViewController {
         
         let chartDataSet = BarChartDataSet(values: dataEntries, label: "Efficiency")
         let chartData = BarChartData(dataSet: chartDataSet)
-        let targetLine = ChartLimitLine(limit: 8.0, label: "Ideal")
+        let targetLine = ChartLimitLine(limit: trips?.vehicleActual, label: "Ideal")
         
         targetLine.lineWidth = 1
         targetLine.valueTextColor = UIColor.white

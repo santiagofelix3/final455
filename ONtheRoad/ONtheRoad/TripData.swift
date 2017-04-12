@@ -30,13 +30,13 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
     
     lazy var locations = [CLLocation]()
     
-    init?(vehiclePhoto: UIImage, name: String, odometerStart: Int, vehicleMaxAccel: Double){
+    init?(vehiclePhoto: UIImage, name: String, odometerStart: Int, vehicleMaxAccel: Double, vehicleActual: Double){
         self.startTime = Date.init()
         self.vehiclePhoto = vehiclePhoto
         self.name = name
         self.odometerStart = odometerStart
         self.vehicleMaxAccel = vehicleMaxAccel
-        self.vehicleActual = 6.8
+        self.vehicleActual = vehicleActual
     }
     
     override init() {
@@ -376,6 +376,6 @@ class Location: NSObject, NSCoding {
 struct GlobalTripDataInstance {
     static var globalTrip: TripData?
     init (){
-        GlobalTripDataInstance.globalTrip = TripData.init(vehiclePhoto: #imageLiteral(resourceName: "defaultPhoto"), name: "", odometerStart: 0, vehicleMaxAccel: 4.8)
+        GlobalTripDataInstance.globalTrip = TripData.init(vehiclePhoto: #imageLiteral(resourceName: "defaultPhoto"), name: "", odometerStart: 0, vehicleMaxAccel: 4.8, vehicleActual: 6.8)
     }
 }
