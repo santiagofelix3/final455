@@ -38,26 +38,21 @@ class MulticolorPolylineSegment: MKPolyline {
             coords.append(CLLocationCoordinate2D(latitude: l1.latitude, longitude: l1.longitude))
             coords.append(CLLocationCoordinate2D(latitude: l2.latitude, longitude: l2.longitude))
             
-            print ("*********")
             //test printing the variables
-            let distance = l1.distance
-            print ("d:", distance)
-            let time = l1.timeStamp
-            print ("t: ", time)
+            //let distance = l1.distance
+            //let time = l1.timeStamp
+            
             //Creating an array of speeds
             let speed = l1.instSpeed
-            print ("s: ", speed)
             speeds.append(speed)
             //Creating an array of accel
             let accel = l1.instAccel
-            print ("a: ", accel)
             accels.append(accel)
-            print ("*********")
             
             let ratio = l1.efficiencyRatio
             var color = UIColor.black
             
-            if (abs(accel) > ratio) { // Between Red & Yellow
+            if (abs(accel) > ratio/2.5) { // Between Red & Yellow
                 let r = CGFloat(red.r + ratio * (yellow.r - red.r))
                 let g = CGFloat(red.g + ratio * (yellow.g - red.g))
                 let b = CGFloat(red.b + ratio * (yellow.b - red.b))

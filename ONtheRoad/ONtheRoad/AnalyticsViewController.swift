@@ -16,22 +16,23 @@ class AnalyticsViewController: UIViewController {
     @IBOutlet weak var lineChartView: LineChartView!
     
     var kilometers: [String]!
+    var time: [String]!
+    var efficiency1: [String]!
     var efficiency2: [String]!
-    var counter = 0
+    var counter = 0.0
     var trips: TripData?
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    override func viewWillAppear(_ animated: Bool) {
+//        super.viewDidLoad()
+        time = ["0"]
         kilometers = ["0"]
-        times = ["0"]
         efficiency1 = ["0"]
         efficiency2 = ["0"]
         
         setBackground()
         updatePieChartData()
         updateBarChartData()
-        updateLineChartData(dataPoints: times, values: efficiency2)
+        updateLineChartData()
 
         //setChart(dataPoints: kilometers, values: efficiency)
     }
@@ -57,22 +58,22 @@ class AnalyticsViewController: UIViewController {
         var bad = 0
         let track = ["Low", "Good", "Average", "Bad"]
  //       let money = [10, 20, 22, 12]
-        
-        for trip in trips.tripLocationData! {
-            if trip.efficiencyRatio < trip.VehicleActual*0.5 {
+    
+        for trip in (trips?.tripLocationData)! {
+            if trip.efficiencyRatio < (trips?.vehicleMaxAccel)!*0.25 {
                 low += 1
             }
-            else if trip.efficiencyRatio < trip.VehicleActual {
+            else if trip.efficiencyRatio < (trips?.vehicleMaxAccel)!*0.5 {
                 good += 1
             }
-            else if trip.efficiencyRatio < trip.VehicleActual*1.25 {
+            else if trip.efficiencyRatio < (trips?.vehicleMaxAccel)!*0.75 {
                 avg += 1
             }
             else {
                 bad += 1
             }
         }
-        
+
         let money = [low, good, avg, bad]
         
         
@@ -137,26 +138,24 @@ class AnalyticsViewController: UIViewController {
     
     
     func updateBarChartData() {
-        
-        var efficiency1: [String]!
-        
+    
         barChartView.noDataText = "You need to provide data for the chart."
         
-        let segments = (trips?.tripLocationData.count)! / 10.0
-        var tracker = 0.0
+        let segments = (trips?.tripLocationData.count)! / 10
+        var tracker = 0
         
         for i in 0...9 {
             
             var counter = 0.0
             var effTemp = 0.0
-            for location in tracker ..<(trips.tripLocationData[segments+tracker]) {
+            for location in tracker..<(segments+tracker) {
                 effTemp += (trips?.tripLocationData[location].efficiencyRatio)!
                 counter += 1
             }
             
             effTemp = ((effTemp / (counter+1)) * (trips?.vehicleActual)!)
-            
-            efficiency1.append(String(effTemp))
+            self.efficiency1?.append(String(effTemp))
+            time.insert(String(effTemp), at: i)
             tracker += segments
         }
         
@@ -172,7 +171,7 @@ class AnalyticsViewController: UIViewController {
         
         let chartDataSet = BarChartDataSet(values: dataEntries, label: "Efficiency")
         let chartData = BarChartData(dataSet: chartDataSet)
-        let targetLine = ChartLimitLine(limit: trips?.vehicleActual, label: "Ideal")
+        let targetLine = ChartLimitLine(limit: (trips?.vehicleActual)!, label: "Ideal")
         
         targetLine.lineWidth = 1
         targetLine.valueTextColor = UIColor.white
@@ -191,7 +190,7 @@ class AnalyticsViewController: UIViewController {
         barChartView.xAxis.drawGridLinesEnabled = false
         
         barChartView.leftAxis.addLimitLine(targetLine)
-        barChartView.leftAxis.axisMaximum = 30.0
+        barChartView.leftAxis.axisMaximum = (trips?.vehicleActual)!*2.5
         barChartView.rightAxis.axisMinimum = 0.0
         barChartView.rightAxis.axisMaximum = 30.0
         barChartView.leftAxis.axisMinimum = 0.0
@@ -224,12 +223,35 @@ class AnalyticsViewController: UIViewController {
         self.view.layer.insertSublayer(gradientLayer, at: 0)
     }
     
-    func updateLineChartData(dataPoints: [String], values: [String]) {
+    func updateLineChartData() {
         lineChartView.noDataText = "You need to provide data for the chart."
+        
+        let segments = (trips?.tripDistance)! / 10.0
+        
+        var distance = 0.0
+        var effTemp = 0.0
+        var counter2 = 0
+            for location in (trips?.tripLocationData)! {
+                
+                if (distance >= segments) {
+                    effTemp = ((effTemp / (counter+1)) * (trips?.vehicleActual)!)
+                    self.efficiency2?.append(String(effTemp))
+                    kilometers.insert(String(effTemp), at: counter2)
+                    effTemp = 0
+                    distance = 0
+                    counter = 0
+                    counter2 += 1
+                }
+                
+                effTemp += (location.efficiencyRatio)
+                distance += (location.distance)
+                counter += 1
+                
+            }
         
         var dataEntries: [BarChartDataEntry] = []
         
-        for (i, j) in dataPoints.enumerated() {
+        for (i, j) in efficiency2.enumerated() {
             let dataEntry = BarChartDataEntry()
             dataEntry.x = Double(i)
             dataEntry.y = Double(j)!
@@ -237,7 +259,7 @@ class AnalyticsViewController: UIViewController {
             dataEntries.append(dataEntry)
         }
         
-        let targetLine = ChartLimitLine(limit: 8.0, label: "Ideal")
+        let targetLine = ChartLimitLine(limit: (trips?.vehicleActual)!, label: "Ideal")
         
         targetLine.lineWidth = 1
         targetLine.valueTextColor = UIColor.white
@@ -261,7 +283,7 @@ class AnalyticsViewController: UIViewController {
         lineChartView.xAxis.drawGridLinesEnabled = false
         
         lineChartView.leftAxis.addLimitLine(targetLine)
-        lineChartView.leftAxis.axisMaximum = 30.0
+        lineChartView.leftAxis.axisMaximum = (trips?.vehicleActual)!*2.5
         lineChartView.rightAxis.axisMinimum = 0.0
         lineChartView.rightAxis.axisMaximum = 30.0
         lineChartView.leftAxis.axisMinimum = 0.0
