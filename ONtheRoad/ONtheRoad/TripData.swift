@@ -320,6 +320,7 @@ class Location: NSObject, NSCoding {
 //Creating a global default item for priming gps and filling in some blanks
 struct GlobalTripDataInstance {
     static var globalTrip: TripData?
+    static var shortcutFlag = 0
     init (){
         GlobalTripDataInstance.globalTrip = TripData.init(vehiclePhoto: #imageLiteral(resourceName: "defaultPhoto"), name: "", odometerStart: 0, vehicleMaxAccel: 4.8, vehicleActual: 6.8)
     }

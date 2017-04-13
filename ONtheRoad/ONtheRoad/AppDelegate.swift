@@ -74,18 +74,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             root?.present(startTripVC, animated: false, completion: { () -> Void in
                 completionHandler(true)
             })
-            
-            let sb1 = UIStoryboard(name: "Main", bundle: nil)
-            let startTripVC1 = sb1.instantiateViewController(withIdentifier: "DashboardVC")
-            let root1 = UIApplication.shared.keyWindow?.rootViewController
-            
-            root1?.present(startTripVC1, animated: false, completion: { () -> Void in
-                completionHandler(true)
-            })
 
-            let vc = DashboardViewController()
             print("Inside appDelegate about to call startStopEverything")
-            vc.startStopEverything()
+            GlobalTripDataInstance.shortcutFlag = 1
         }
     }
 }

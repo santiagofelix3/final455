@@ -40,6 +40,10 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
             vehicles = tempVehicle
             setupVehicle()
         }
+        if GlobalTripDataInstance.shortcutFlag == 1 {
+            startStopEverything()
+            GlobalTripDataInstance.shortcutFlag = 0
+        }
         
         setupView()
     }
