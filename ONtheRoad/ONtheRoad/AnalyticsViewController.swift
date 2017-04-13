@@ -69,29 +69,29 @@ class AnalyticsViewController: UIViewController {
     //Piechart is all the different effRatios readings split into categories
     func updatePieChartData()  {
         
-        var low = 0
         var good = 0
         var avg = 0
+        var poor = 0
         var bad = 0
-        let track = ["Low", "Good", "Average", "Bad"]
+        let track = ["Good", "Average", "Poor", "Bad"]
 
         //Tallying up all the readings into different categories. This guy is fuzzy, would need more tinkering to get better readings
         for trip in (trips?.tripLocationData)! {
             if trip.efficiencyRatio < (trips?.vehicleMaxAccel)!*0.25 {
-                low += 1
-            }
-            else if trip.efficiencyRatio < (trips?.vehicleMaxAccel)!*0.5 {
                 good += 1
             }
-            else if trip.efficiencyRatio < (trips?.vehicleMaxAccel)!*0.75 {
+            else if trip.efficiencyRatio < (trips?.vehicleMaxAccel)!*0.5 {
                 avg += 1
+            }
+            else if trip.efficiencyRatio < (trips?.vehicleMaxAccel)!*0.75 {
+                poor += 1
             }
             else {
                 bad += 1
             }
         }
         //Fills the piechart array with the values
-        let money = [low, good, avg, bad]
+        let money = [good, avg, poor, bad]
         
         //displaying the chart
         var entries = [PieChartDataEntry]()
