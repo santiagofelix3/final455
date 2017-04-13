@@ -185,11 +185,12 @@ class AnalyticsViewController: UIViewController {
         var dataEntries: [BarChartDataEntry] = []
         
         for (i, j) in efficiency1.enumerated() {
-            let dataEntry = BarChartDataEntry()
-            dataEntry.x = Double(i)
-            dataEntry.y = Double(j)!
-            
-            dataEntries.append(dataEntry)
+            if (i > 0) {
+                let dataEntry = BarChartDataEntry()
+                dataEntry.x = Double(i)
+                dataEntry.y = Double(j)!
+                dataEntries.append(dataEntry)
+            }
         }
         
         let chartDataSet = BarChartDataSet(values: dataEntries, label: "Efficiency")
@@ -279,16 +280,22 @@ class AnalyticsViewController: UIViewController {
                 counter += 1
                 
             }
+        //adding the last segment, this guy might not be a full segment so it could be slightly skewed
+        effTemp = ((effTemp / (counter+1)) * (trips?.vehicleActual)!)
+        //Adding the point to the chart
+        self.efficiency2?.append(String(effTemp))
+        kilometers.insert(String(effTemp), at: counter2)
         
         //Displaying the charts
         var dataEntries: [BarChartDataEntry] = []
         
         for (i, j) in efficiency2.enumerated() {
-            let dataEntry = BarChartDataEntry()
-            dataEntry.x = Double(i)
-            dataEntry.y = Double(j)!
-            
-            dataEntries.append(dataEntry)
+            if (i > 0) {
+                let dataEntry = BarChartDataEntry()
+                dataEntry.x = Double(i)
+                dataEntry.y = Double(j)!
+                dataEntries.append(dataEntry)
+            }
         }
         
         let targetLine = ChartLimitLine(limit: (trips?.vehicleActual)!, label: "Ideal")
