@@ -111,7 +111,7 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
         tempLocation.instSpeed = (tempLocation.distance)
         //Getting the accel
         if tripLocationData.count > 1 {
-            tempLocation.instAccel = tempLocation.instSpeed - self.tripLocationData[tripLocationData.count-1].instSpeed
+            tempLocation.instAccel = (tempLocation.instSpeed - self.tripLocationData[tripLocationData.count-1].instSpeed) / timeSinceLast
         }
         //Getting the effRatio, this guy is just a rough metric we've come up with through a bit of reading.
         tempLocation.efficiencyRatio = abs(tempLocation.instAccel/(vehicleMaxAccel))+1
