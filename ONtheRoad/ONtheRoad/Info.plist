@@ -2,33 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIApplicationShortcutItems</key>
-	<array>
-		<dict>
-			<key>UIApplicationShortcutItemIconFile</key>
-			<string>quickActionStart</string>
-			<key>UIApplicationShortcutItemTitle</key>
-			<string>Start Trip</string>
-			<key>UIApplicationShortcutItemType</key>
-			<string>com.example.ONtheRoad.Start</string>
-		</dict>
-		<dict>
-			<key>UIApplicationShortcutItemIconFile</key>
-			<string>quickActionTrip</string>
-			<key>UIApplicationShortcutItemTitle</key>
-			<string>Trip Log</string>
-			<key>UIApplicationShortcutItemType</key>
-			<string>com.example.ONtheRoad.Log</string>
-		</dict>
-		<dict>
-			<key>UIApplicationShortcutItemIconFile</key>
-			<string>quickActionAddV</string>
-			<key>UIApplicationShortcutItemTitle</key>
-			<string>Add Vehicle</string>
-			<key>UIApplicationShortcutItemType</key>
-			<string>com.example.ONtheRoad.Add</string>
-		</dict>
-	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -63,6 +36,33 @@
 	<string>ONtheRoad tracks your location to know where you are all the time.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string></string>
+	<key>UIApplicationShortcutItems</key>
+	<array>
+		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>quickActionStart</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Start Trip</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>com.example.ONtheRoad.Start</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>quickActionTrip</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Trip Log</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>com.example.ONtheRoad.Log</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>quickActionAddV</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Add Vehicle</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>com.example.ONtheRoad.Add</string>
+		</dict>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>
@@ -88,8 +88,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>

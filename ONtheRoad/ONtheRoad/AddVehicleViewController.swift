@@ -458,7 +458,7 @@ class AddVehicleViewController: UIViewController, UITextFieldDelegate, UIImagePi
     
     func getVehicleSpecifications(styleID: String) {
         
-        let selectedStyleID = "101353967"//"101172638"//"101353967"//styleID
+        let selectedStyleID = styleID //"101172638"//"101353967"//styleID
         
         let urlBase = "https://api.edmunds.com/api/vehicle/v2/styles/"
         let urlExtra = "/equipment?fmt=json&api_key=8zc8djuwwteevqe9nea3cejq" //b3aa4xkn4mc964zcpnzm3pmv, 8zc8djuwwteevqe9nea3cejq, gjppwybke2wgy6ndafz23cyr

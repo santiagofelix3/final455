@@ -13,10 +13,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         //Creating a global instance that starts the GPS running on launch, this allows us to start getting accurate on the user before they start the trip.
         GlobalTripDataInstance.globalTrip?.startTrip()
+        
         return true
     }
 
@@ -56,25 +56,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         if shortcutItem.type == "com.example.ONtheRoad.Log" {
-            let sb = UIStoryboard(name: "Main", bundle: nil)
-            let addVehicleVC = sb.instantiateViewController(withIdentifier: "TripLogNavigationVC") as! UINavigationController
-            let root = UIApplication.shared.keyWindow?.rootViewController
             
-            root?.present(addVehicleVC, animated: false, completion: { () -> Void in
-                completionHandler(true)
+            let sb = UIStoryboard(name: "Main", bundle: nil)
+            let tripLogVC = sb.instantiateViewController(withIdentifier: "TripLogNavigationVC") as! UINavigationController
+            let root = UIApplication.shared.keyWindow?.rootViewController
+             
+            root?.present(tripLogVC, animated: false, completion: { () -> Void in
+            completionHandler(true)
             })
         }
         
         if shortcutItem.type == "com.example.ONtheRoad.Start" {
             let sb = UIStoryboard(name: "Main", bundle: nil)
-            let addVehicleVC = sb.instantiateViewController(withIdentifier: "DashboardVC") as! UINavigationController
+            let startTripVC = sb.instantiateViewController(withIdentifier: "MainVC")
             let root = UIApplication.shared.keyWindow?.rootViewController
             
-            root?.present(addVehicleVC, animated: false, completion: { () -> Void in
+            root?.present(startTripVC, animated: false, completion: { () -> Void in
                 completionHandler(true)
             })
             
-            // Code to select first vehicle and start trip
+            let sb1 = UIStoryboard(name: "Main", bundle: nil)
+            let startTripVC1 = sb1.instantiateViewController(withIdentifier: "DashboardVC")
+            let root1 = UIApplication.shared.keyWindow?.rootViewController
+            
+            root1?.present(startTripVC1, animated: false, completion: { () -> Void in
+                completionHandler(true)
+            })
+
+            let vc = DashboardViewController()
+            print("Inside appDelegate about to call startStopEverything")
+            vc.startStopEverything()
         }
     }
 }

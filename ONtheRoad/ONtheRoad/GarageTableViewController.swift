@@ -39,7 +39,7 @@ class GarageTableViewController: UITableViewController {
         }
     }
     
-    // MARK: - Table view data source
+    // MARK: Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -98,51 +98,8 @@ class GarageTableViewController: UITableViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    // MARK: Private Methods
-    
-    //Sample data set
-    private func loadSampleData() {
-        
-        let photo1 = UIImage(named: "photo1")
-        let photo2 = UIImage(named: "photo2")
-        
-        guard let vehicle1 = VehicleProfile(photo: photo1!, name: "Mom's Van", make: "Dodge", model: "Caravan", year: "2012", trim: "SXT", type: "Personal", id: "123456", maxAcceleration: 5.0, efficiency: 17.6, cylinder: "8", size: "3.5", horsepower: "355", torque: "400", gas: "Gas") else {
-            fatalError("Unable to instantiate vehicle1")
-        }
-        
-        guard let vehicle2 = VehicleProfile(photo: photo2!, name: "Truck", make: "Gmc", model: "Sierra", year: "2014", trim: "SLE", type: "Work", id: "123456", maxAcceleration: 4.0, efficiency: 14.2, cylinder: "6", size: "2.6", horsepower: "250", torque: "300", gas: "Gas") else {
-            fatalError("Unable to instantiate vehicle2")
-        }
-        
-        garage += [vehicle1, vehicle2]
-        
-        loadVehicleFromArray()
-    }
-    
-    //Loads the vehicles
-    func loadVehicleFromArray() {
-        var count = 1
-        VehicleProfile.totalNumberOfVehicles = 0
-        
-        //ONTINEUSGH is a boolean to control loop
-        //Variable name represents success after long periods of failure
-        var ONTINEUSGH = true
-        while(ONTINEUSGH) {
-            //Walks through the list and loads as long as there are still vehicles
-            if let savedVehicles = self.vehicles.loadVehicle(numberOfVehicle: count) {
-                self.garage.append(savedVehicles)
-                count += 1
-                VehicleProfile.totalNumberOfVehicles += 1
-            }
-            else {
-                ONTINEUSGH = false
-            }
-        }
-    }
-    
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
         return true
     }
     
@@ -152,11 +109,12 @@ class GarageTableViewController: UITableViewController {
         if editingStyle == .delete {
             // Delete the row from the data source
             let rowNum = indexPath.row
+            
             garage.remove(at: indexPath.row)
             vehicles.deleteVehicle(numberOfVehicle: rowNum + 1, totalNumberOfVehicles: VehicleProfile.totalNumberOfVehicles)
+            
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
     }
     
@@ -202,6 +160,29 @@ class GarageTableViewController: UITableViewController {
                 
             default:
                 fatalError("Unexpected Segue Identifier; \(String(describing: segue.identifier))")
+            }
+        }
+    }
+    
+    //MARK: Functios
+    //Loads the vehicles
+    
+    func loadVehicleFromArray() {
+        var count = 1
+        VehicleProfile.totalNumberOfVehicles = 0
+        
+        //ONTINEUSGH is a boolean to control loop
+        //Variable name represents success after long periods of failure
+        var ONTINEUSGH = true
+        while(ONTINEUSGH) {
+            //Walks through the list and loads as long as there are still vehicles
+            if let savedVehicles = self.vehicles.loadVehicle(numberOfVehicle: count) {
+                self.garage.append(savedVehicles)
+                count += 1
+                VehicleProfile.totalNumberOfVehicles += 1
+            }
+            else {
+                ONTINEUSGH = false
             }
         }
     }

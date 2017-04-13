@@ -22,7 +22,7 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var selectVehicleImage: UIImageView!
     @IBOutlet weak var selectVehicleName: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    
+
     var vehicles: VehicleProfile?
     lazy var stopWatch = Timer()
     var startTime = TimeInterval()
@@ -33,6 +33,14 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
     //Creating the UI
+        let vehicles2 = VehicleProfile.init()
+        if let tempVehicle = vehicles2.loadVehicle(numberOfVehicle: 1) {
+            print(tempVehicle.make)
+            print("Setting up default vehicle")
+            vehicles = tempVehicle
+            setupVehicle()
+        }
+        
         setupView()
     }
     
@@ -63,9 +71,9 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
     }
     
     // MARK: Actions
-    
-    @IBAction func startStopButton(_ sender: UIButton) {
-     //Start/Stop Button controls
+    func startStopEverything() {
+        print("Inside startStopEverything")
+        //Start/Stop Button controls
         //Start Case
         if startStopButton.currentTitle == "Start" {
             //Making sure user has an active vehicle, if they do not they get a prompt to select one and the trip does not start
@@ -88,18 +96,24 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
                 stopWatch = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(DashboardViewController.updateTime(_stopWatch:)), userInfo: nil, repeats: true)
                 startTime = Date.timeIntervalSinceReferenceDate
             }
-
-        //Stop case
+            
+            //Stop case
         } else {
             startStopButton.setTitle("Start", for: .normal)
             GlobalTripDataInstance.globalTrip?.endTrip()
             seconds = 0
-            timeLabel.text = "00 :00"
+            timeLabel.text = "00:00"
             distanceLabel.text = "--"
             velocityLabel.text = "--"
             stopWatch.invalidate()
             transitionAnimationHide()
         }
+
+    }
+    
+    @IBAction func startStopButton(_ sender: UIButton) {
+        print("inside startStopButton")
+        startStopEverything()
     }
     
     @IBAction func selectVehicleAction(_ sender: UITapGestureRecognizer) {
@@ -183,6 +197,7 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
     
     //Storing the active vehicle's stats
     func setupVehicle() {
+        print("Setting up vehicle")
         selectVehicleImage.image = vehicles?.photo
         selectVehicleName.text = vehicles?.name
         if selectVehicleImage.image == vehicles?.photo {

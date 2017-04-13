@@ -20,11 +20,12 @@
 		0646DEE71E9036CA00951E39 /* GarageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0646DEE61E9036CA00951E39 /* GarageTableViewController.swift */; };
 		066DACC11E8A41B6002B62E8 /* GraphTwoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066DACC01E8A41B6002B62E8 /* GraphTwoViewController.swift */; };
 		066DACC81E8A4964002B62E8 /* GraphThreeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066DACC71E8A4964002B62E8 /* GraphThreeViewController.swift */; };
+		067FA3181E9FFA69003175BA /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 067FA3171E9FFA69003175BA /* Charts.framework */; };
+		067FA31A1E9FFA6D003175BA /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 067FA3171E9FFA69003175BA /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0696516E1E8C294A00349A49 /* AddVehicleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0696516D1E8C294A00349A49 /* AddVehicleViewController.swift */; };
 		0699441C1E95E04800A72B8D /* LogsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0699441B1E95E04800A72B8D /* LogsTableViewController.swift */; };
 		0699441E1E95E08B00A72B8D /* LogsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0699441D1E95E08B00A72B8D /* LogsTableViewCell.swift */; };
 		069B33921E8CE5B100760F3A /* VehicleProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069B33911E8CE5B100760F3A /* VehicleProfile.swift */; };
-		069B33941E8CE5DC00760F3A /* VehicleProfileData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069B33931E8CE5DC00760F3A /* VehicleProfileData.swift */; };
 		06C2D2241E89BD000066AE3C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C2D2231E89BD000066AE3C /* AppDelegate.swift */; };
 		06C2D2261E89BD000066AE3C /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C2D2251E89BD000066AE3C /* DashboardViewController.swift */; };
 		06C2D22B1E89BD000066AE3C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 06C2D2291E89BD000066AE3C /* Main.storyboard */; };
@@ -37,8 +38,6 @@
 		B115BA701E90B6E50027803C /* TripData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B115BA6F1E90B6E50027803C /* TripData.swift */; };
 		B1C143801E9D8DFA007B9E99 /* DetailedMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C1437F1E9D8DFA007B9E99 /* DetailedMapViewController.swift */; };
 		B1C143861E9D8EA8007B9E99 /* MulticolorPolylineSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C143851E9D8EA8007B9E99 /* MulticolorPolylineSegment.swift */; };
-		DEDBC8571E9F42C600BEF0A7 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEDBC8561E9F42C600BEF0A7 /* Charts.framework */; };
-		DEDBC8591E9F42CB00BEF0A7 /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DEDBC8561E9F42C600BEF0A7 /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,13 +51,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		DEDBC85A1E9F42CB00BEF0A7 /* Embed Frameworks */ = {
+		067FA31B1E9FFA6D003175BA /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				DEDBC8591E9F42CB00BEF0A7 /* Charts.framework in Embed Frameworks */,
+				067FA31A1E9FFA6D003175BA /* Charts.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -79,11 +78,11 @@
 		0646DEE61E9036CA00951E39 /* GarageTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GarageTableViewController.swift; sourceTree = "<group>"; };
 		066DACC01E8A41B6002B62E8 /* GraphTwoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphTwoViewController.swift; sourceTree = "<group>"; };
 		066DACC71E8A4964002B62E8 /* GraphThreeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphThreeViewController.swift; sourceTree = "<group>"; };
+		067FA3171E9FFA69003175BA /* Charts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Charts.framework; path = "../../../Library/Developer/Xcode/DerivedData/ONtheRoad-fjrpyqdrmviafpacdsfijorhjewi/Build/Products/Debug-iphoneos/Charts/Charts.framework"; sourceTree = "<group>"; };
 		0696516D1E8C294A00349A49 /* AddVehicleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddVehicleViewController.swift; sourceTree = "<group>"; };
 		0699441B1E95E04800A72B8D /* LogsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogsTableViewController.swift; sourceTree = "<group>"; };
 		0699441D1E95E08B00A72B8D /* LogsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogsTableViewCell.swift; sourceTree = "<group>"; };
 		069B33911E8CE5B100760F3A /* VehicleProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VehicleProfile.swift; sourceTree = "<group>"; };
-		069B33931E8CE5DC00760F3A /* VehicleProfileData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VehicleProfileData.swift; sourceTree = "<group>"; };
 		06C2D2201E89BD000066AE3C /* ONtheRoad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ONtheRoad.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		06C2D2231E89BD000066AE3C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		06C2D2251E89BD000066AE3C /* DashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
@@ -111,7 +110,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DEDBC8571E9F42C600BEF0A7 /* Charts.framework in Frameworks */,
+				067FA3181E9FFA69003175BA /* Charts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -189,7 +188,6 @@
 			children = (
 				06C2D2291E89BD000066AE3C /* Main.storyboard */,
 				06C2D2231E89BD000066AE3C /* AppDelegate.swift */,
-				069B33931E8CE5DC00760F3A /* VehicleProfileData.swift */,
 				069B33911E8CE5B100760F3A /* VehicleProfile.swift */,
 				B115BA6F1E90B6E50027803C /* TripData.swift */,
 				069B338E1E8CD1FF00760F3A /* Dashboard */,
@@ -243,6 +241,7 @@
 		51861189C707F7A46085F8AA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				067FA3171E9FFA69003175BA /* Charts.framework */,
 				DEDBC8561E9F42C600BEF0A7 /* Charts.framework */,
 				B10CE9C31E9321A80082FB06 /* Charts.framework */,
 			);
@@ -262,7 +261,7 @@
 				06C2D21E1E89BD000066AE3C /* Resources */,
 				02FE5E10D5DAAF1BB9C82488 /* [CP] Embed Pods Frameworks */,
 				801C68C0D1A93E426320E8B0 /* [CP] Copy Pods Resources */,
-				DEDBC85A1E9F42CB00BEF0A7 /* Embed Frameworks */,
+				067FA31B1E9FFA6D003175BA /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -406,7 +405,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				069B33941E8CE5DC00760F3A /* VehicleProfileData.swift in Sources */,
 				063CE46D1E8F14A30020DCCA /* MakeTableViewCell.swift in Sources */,
 				063CE4721E8F14A30020DCCA /* TrimTableViewController.swift in Sources */,
 				06C2D2561E8A0E480066AE3C /* HomeGraphsViewController.swift in Sources */,

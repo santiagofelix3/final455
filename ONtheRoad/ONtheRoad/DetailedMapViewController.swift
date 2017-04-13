@@ -24,7 +24,6 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var tripTime: UILabel!
     @IBOutlet weak var tripDist: UILabel!
 
-    var trips: TripData?
     var selectTrip = TripData()
     var sendTrip: TripData?
     var tripLog = [TripData]()
@@ -45,8 +44,7 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate {
         guard segue.destination is AnalyticsViewController else {
             fatalError("Unexpected destination: \(segue.destination)")
         }
-        let selectedTrip = trips
-        sendTrip = selectedTrip
+         sendTrip = selectTrip
     }
     
     @IBAction func unwindToDetailedMapView(sender: UIStoryboardSegue) {
@@ -74,29 +72,29 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate {
     
     //Focusing the map on the mid point of the trip
     func mapRegion() -> MKCoordinateRegion {
-        let initialLoc = trips?.tripLocationData[0]
+        let initialLoc = selectTrip.tripLocationData[0]
         
-        var minLat = initialLoc?.latitude
-        var minLng = initialLoc?.longitude
+        var minLat = initialLoc.latitude
+        var minLng = initialLoc.longitude
         var maxLat = minLat
         var maxLng = minLng
         
-        let locations = trips?.tripLocationData
+        let locations = selectTrip.tripLocationData
         
-        for location in locations! {
-            minLat = min(minLat!, location.latitude)
-            minLng = min(minLng!, location.longitude)
-            maxLat = max(maxLat!, location.latitude)
-            maxLng = max(maxLng!, location.longitude)
+        for location in locations {
+            minLat = min(minLat, location.latitude)
+            minLng = min(minLng, location.longitude)
+            maxLat = max(maxLat, location.latitude)
+            maxLng = max(maxLng, location.longitude)
         }
 
         //Grabbing the max and min lat and long and finding the middle point of it.
         //Focusing on the mid of these co-ords.
         return MKCoordinateRegion(
-            center: CLLocationCoordinate2D(latitude: (minLat! + maxLat!)/2,
-                                           longitude: (minLng! + maxLng!)/2),
-            span: MKCoordinateSpan(latitudeDelta: (maxLat! - minLat!)*2,
-                                   longitudeDelta: (maxLng! - minLng!)*2))
+            center: CLLocationCoordinate2D(latitude: (minLat + maxLat)/2,
+                                           longitude: (minLng + maxLng)/2),
+            span: MKCoordinateSpan(latitudeDelta: (maxLat - minLat)*2,
+                                   longitudeDelta: (maxLng - minLng)*2))
     }
     
     //Displaying the map
@@ -126,18 +124,18 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate {
         var coords = [CLLocationCoordinate2D]()
         
         //Doing it segment by segment
-        let locations = trips?.tripLocationData
-        for location in locations! {
+        let locations = selectTrip.tripLocationData
+        for location in locations {
             coords.append(CLLocationCoordinate2D(latitude: location.latitude,
                                                  longitude: location.longitude))
         }
         
-        return MKPolyline(coordinates: &coords, count: (trips?.tripLocationData.count)!)
+        return MKPolyline(coordinates: &coords, count: (selectTrip.tripLocationData.count))
     }
     
     //Loading in the map
     func loadMap() {
-        if (trips?.tripLocationData.count)! > 0 {
+        if (selectTrip.tripLocationData.count) > 0 {
             mapView.isHidden = false
             //Call to a map api
             let template = "http://mt0.google.com/vt/x={x}&y={y}&z={z}" //"https://api.mapbox.com/styles/v1/spitfire4466/citl7jqwe00002hmwrvffpbzt/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic3BpdGZpcmU0NDY2IiwiYSI6Im9jX0JHQUUifQ.2QarbK_LccnrvDg7FobGjA"
@@ -151,7 +149,7 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate {
             mapView.region = mapRegion()
             
             // Make the line(s!) on the map
-            let colorSegments = MulticolorPolylineSegment.colorSegments(forLocations: (trips?.tripLocationData)!)
+            let colorSegments = MulticolorPolylineSegment.colorSegments(forLocations: (selectTrip.tripLocationData))
             mapView.addOverlays(colorSegments)
         } else {
             // No locations were found!
@@ -167,7 +165,7 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate {
     }
     
     func loadTripInfo() {
-        if let trips = trips {
+        let trips = selectTrip
             // Trip Title
             navigationItem.title = trips.name
             
@@ -206,7 +204,6 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate {
             // Trip Distance
             let tripDistance = trips.tripDistance / 1000
             tripDist.text = String(format: "%.2f", tripDistance) + " km"
-        }
     }
 }
 

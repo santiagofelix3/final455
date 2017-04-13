@@ -201,7 +201,7 @@ class VehicleProfile: NSObject, NSCoding {
         let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(self, toFile: currentArchiveURL.path)
         
         if isSuccessfulSave {
-            os_log("Vehicle successfully saved. Did it really save?????", log: OSLog.default, type: .debug)
+            os_log("Vehicle successfully saved.", log: OSLog.default, type: .debug)
         } else {
             os_log("Failed to save vehicle...", log: OSLog.default, type: .error)
         }

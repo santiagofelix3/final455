@@ -13,7 +13,6 @@ class LogsTableViewController: UITableViewController {
     
     var tripLog = [TripData]()
     var trips = TripData()
-    var activeFlag = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +20,11 @@ class LogsTableViewController: UITableViewController {
         //Loads the trip log
         loadTripFromArray()
         navigationItem.leftBarButtonItem = editButtonItem
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        loadTripFromArray()
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source
@@ -37,7 +41,7 @@ class LogsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "logTableCell", for: indexPath) as? LogsTableViewCell
         
-        let trips = tripLog[indexPath.row]
+        let trips = tripLog[tripLog.count - (indexPath.row + 1)]
         
         cell?.vehicleImage.image = trips.vehiclePhoto
         cell?.vehicleName.text = trips.name
@@ -69,25 +73,6 @@ class LogsTableViewController: UITableViewController {
         
         return cell!
     }
-    
-    // MARK: Actions
-    
-    @IBAction func unwindToTripLogList(sender: UIStoryboardSegue) {
-        if let sourceViewController = sender.source as? DetailedMapViewController, let trip = sourceViewController.trips {
-            
-            if let selectedIndexPath = tableView.indexPathForSelectedRow {
-                
-                // Update an existing trip.
-                tripLog[selectedIndexPath.row] = trip
-                tableView.reloadData()
-            }
-            else {
-                // Add new trip
-                tripLog.append(trip)
-                tableView.reloadData()
-            }
-        }
-    }
 
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -103,7 +88,7 @@ class LogsTableViewController: UITableViewController {
             let rowNum = indexPath.row
             
             tripLog.remove(at: indexPath.row)
-            trips.deleteTrip(numberOfTrip: rowNum + 1)
+            trips.deleteTrip(numberOfTrip: (tripLog.count + 1) - (rowNum))
             
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
@@ -127,8 +112,8 @@ class LogsTableViewController: UITableViewController {
             guard let indexPath = tableView.indexPath(for: selectedTripCell) else {
                 fatalError("The selected cell is not being displayed by the table")
             }
-            let selectedTrip = tripLog[indexPath.row]
-            tripDetailViewController.trips = selectedTrip
+            let selectedTrip = tripLog[tripLog.count - (indexPath.row + 1)]
+            tripDetailViewController.selectTrip = selectedTrip
             
         default:
             fatalError("Unexpected Segue Identifier; \(String(describing: segue.identifier))")
@@ -139,7 +124,8 @@ class LogsTableViewController: UITableViewController {
 
     func loadTripFromArray() {
         var count = 1
-        TripData.totalNumberOfTrips = 0
+
+        self.tripLog = []
 
         //ONTINEUSGH is a boolean to control loop
         //Variable name represents success after long periods of failure
@@ -149,7 +135,6 @@ class LogsTableViewController: UITableViewController {
             if let trips = self.trips.loadTrip(numberOfTrip: count) {
                 self.tripLog.append(trips)
                 count += 1
-                TripData.totalNumberOfTrips += 1
             }
             else{
                 ONTINEUSGH = false
@@ -159,5 +144,9 @@ class LogsTableViewController: UITableViewController {
     
     func secondsToHoursMinutes (seconds : Int) -> (Int, Int) {
         return (seconds / 3600, (seconds % 3600) / 60)
+    }
+    
+    func openShortcut() {
+        
     }
 }
