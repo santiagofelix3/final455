@@ -171,7 +171,7 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate {
             
             // Trip Date Formatter
             let tripStart = trips.startTime
-            let tripEnd = trips.endTime
+            let tripEnd = tripStart + trips.tripLength
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
             navigationItem.title = trips.name

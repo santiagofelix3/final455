@@ -82,7 +82,10 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
             if self.locations.count > 1 {
                 let distanceSinceLast = location.distance(from: self.locations.last!)
                 let timeSinceLast = Double(location.timestamp.timeIntervalSince(self.locations.last!.timestamp))
-                addCLLocation(location: location, distanceSinceLast: distanceSinceLast, timeSinceLast: timeSinceLast)
+                //Doing a check against the users distance traveled, if it is a huge number we assume there was a blip of GPS accuracy and we are not saving that reading
+                if (distanceSinceLast < 45.0) {
+                    addCLLocation(location: location, distanceSinceLast: distanceSinceLast, timeSinceLast: timeSinceLast)
+                }
             }
             self.locations.append(location)
         }
@@ -108,7 +111,7 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
         tempLocation.instSpeed = (tempLocation.distance)
         //Getting the accel
         if tripLocationData.count > 1 {
-            tempLocation.instAccel = tempLocation.instSpeed - self.tripLocationData[tripLocationData.count-1].instSpeed
+            tempLocation.instAccel = (tempLocation.instSpeed - self.tripLocationData[tripLocationData.count-1].instSpeed) / timeSinceLast
         }
         //Getting the effRatio, this guy is just a rough metric we've come up with through a bit of reading.
         tempLocation.efficiencyRatio = abs(tempLocation.instAccel/(vehicleMaxAccel))+1
