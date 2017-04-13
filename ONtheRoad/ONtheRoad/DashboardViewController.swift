@@ -111,6 +111,20 @@ class DashboardViewController: UIViewController, UIScrollViewDelegate {
     // MARK: Functions
     
     func setupView() {
+        let topColor = UIColor(red: 99/255.0, green: 175/255.0, blue: 213/255.0, alpha: 1.0)
+        let bottomColor = UIColor(red: 51/255.0, green: 123/255.0, blue: 177/255.0, alpha: 1.0)
+        
+        let gradientColors: [CGColor] = [topColor.cgColor, bottomColor.cgColor]
+        let gradientLocations: [Float] = [0.0, 1.0]
+        
+        let gradientLayer: CAGradientLayer = CAGradientLayer()
+        gradientLayer.colors = gradientColors
+        gradientLayer.locations = gradientLocations as [NSNumber]?
+        
+        gradientLayer.frame = self.selectVehicleView.bounds
+        self.selectVehicleView.layer.insertSublayer(gradientLayer, at: 0)
+        
+        
         // Round corners for profile image
         self.selectVehicleImage.layer.cornerRadius = self.selectVehicleImage.frame.size.height / 2
         self.selectVehicleImage.clipsToBounds = true

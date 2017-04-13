@@ -26,8 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        self.window?.rootViewController?.dismiss(animated: false, completion: nil)
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
@@ -42,26 +41,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
+    
     // MARK: Shortcut Handler Methods
     
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
         if shortcutItem.type == "com.example.ONtheRoad.Add" {
             let sb = UIStoryboard(name: "Main", bundle: nil)
-            let addVehicleVC = sb.instantiateViewController(withIdentifier: "AddVehicleVC") as! AddVehicleViewController
+            let addVehicleVC = sb.instantiateViewController(withIdentifier: "AddVehicleNavigationVC") as! UINavigationController
             let root = UIApplication.shared.keyWindow?.rootViewController
             
             root?.present(addVehicleVC, animated: false, completion: { () -> Void in
                 completionHandler(true)
             })
         }
+        
         if shortcutItem.type == "com.example.ONtheRoad.Log" {
             let sb = UIStoryboard(name: "Main", bundle: nil)
-            let addVehicleVC = sb.instantiateViewController(withIdentifier: "TripLogNavigationVC") as! LogsTableViewController
+            let addVehicleVC = sb.instantiateViewController(withIdentifier: "TripLogNavigationVC") as! UINavigationController
             let root = UIApplication.shared.keyWindow?.rootViewController
             
             root?.present(addVehicleVC, animated: false, completion: { () -> Void in
                 completionHandler(true)
             })
+        }
+        
+        if shortcutItem.type == "com.example.ONtheRoad.Start" {
+            let sb = UIStoryboard(name: "Main", bundle: nil)
+            let addVehicleVC = sb.instantiateViewController(withIdentifier: "DashboardVC") as! UINavigationController
+            let root = UIApplication.shared.keyWindow?.rootViewController
+            
+            root?.present(addVehicleVC, animated: false, completion: { () -> Void in
+                completionHandler(true)
+            })
+            
+            // Code to select first vehicle and start trip
         }
     }
 }

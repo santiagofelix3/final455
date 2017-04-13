@@ -37,8 +37,8 @@
 		B115BA701E90B6E50027803C /* TripData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B115BA6F1E90B6E50027803C /* TripData.swift */; };
 		B1C143801E9D8DFA007B9E99 /* DetailedMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C1437F1E9D8DFA007B9E99 /* DetailedMapViewController.swift */; };
 		B1C143861E9D8EA8007B9E99 /* MulticolorPolylineSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C143851E9D8EA8007B9E99 /* MulticolorPolylineSegment.swift */; };
-		B1EF88161E9EC53600C3275F /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B10CE9C31E9321A80082FB06 /* Charts.framework */; };
-		B1EF88171E9EC53600C3275F /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B10CE9C31E9321A80082FB06 /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DEDBC8571E9F42C600BEF0A7 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEDBC8561E9F42C600BEF0A7 /* Charts.framework */; };
+		DEDBC8591E9F42CB00BEF0A7 /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DEDBC8561E9F42C600BEF0A7 /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,13 +52,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		B1EF88181E9EC53600C3275F /* Embed Frameworks */ = {
+		DEDBC85A1E9F42CB00BEF0A7 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				B1EF88171E9EC53600C3275F /* Charts.framework in Embed Frameworks */,
+				DEDBC8591E9F42CB00BEF0A7 /* Charts.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -102,6 +102,7 @@
 		B115BA6F1E90B6E50027803C /* TripData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripData.swift; sourceTree = "<group>"; };
 		B1C1437F1E9D8DFA007B9E99 /* DetailedMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailedMapViewController.swift; sourceTree = "<group>"; };
 		B1C143851E9D8EA8007B9E99 /* MulticolorPolylineSegment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MulticolorPolylineSegment.swift; sourceTree = "<group>"; };
+		DEDBC8561E9F42C600BEF0A7 /* Charts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Charts.framework; path = "../../../Library/Developer/Xcode/DerivedData/ONtheRoad-acmjurrmvfgxmleqxebhwvpkiajn/Build/Products/Debug-iphonesimulator/Charts/Charts.framework"; sourceTree = "<group>"; };
 		F5E4F1DF2FAE4CB2725C2367 /* Pods-ONtheRoad.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ONtheRoad.release.xcconfig"; path = "Pods/Target Support Files/Pods-ONtheRoad/Pods-ONtheRoad.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -110,7 +111,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B1EF88161E9EC53600C3275F /* Charts.framework in Frameworks */,
+				DEDBC8571E9F42C600BEF0A7 /* Charts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,6 +243,7 @@
 		51861189C707F7A46085F8AA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DEDBC8561E9F42C600BEF0A7 /* Charts.framework */,
 				B10CE9C31E9321A80082FB06 /* Charts.framework */,
 			);
 			name = Frameworks;
@@ -260,7 +262,7 @@
 				06C2D21E1E89BD000066AE3C /* Resources */,
 				02FE5E10D5DAAF1BB9C82488 /* [CP] Embed Pods Frameworks */,
 				801C68C0D1A93E426320E8B0 /* [CP] Copy Pods Resources */,
-				B1EF88181E9EC53600C3275F /* Embed Frameworks */,
+				DEDBC85A1E9F42CB00BEF0A7 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

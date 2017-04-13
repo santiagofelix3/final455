@@ -12,10 +12,11 @@ import Charts
 class AnalyticsViewController: UIViewController {
     
     @IBOutlet weak var backButton: UIBarButtonItem!
-    
     @IBOutlet weak var pieChartCiew: PieChartView!
     @IBOutlet weak var barChartView: BarChartView!
     @IBOutlet weak var lineChartView: LineChartView!
+    @IBOutlet weak var noTripLabel: UILabel!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     //Setting up some working vars for tracking stuff
     var kilometers: [String]!
@@ -24,19 +25,28 @@ class AnalyticsViewController: UIViewController {
     var efficiency2: [String]!
     var counter = 0.0
     var trips: TripData?
+    var trips2 = TripData()
     
     override func viewWillAppear(_ animated: Bool) {
         //filling working vars
-        time = ["0"]
-        kilometers = ["0"]
-        efficiency1 = ["0"]
-        efficiency2 = ["0"]
         
-        //Drawing all the charts
-        setBackground()
-        updatePieChartData()
-        updateBarChartData()
-        updateLineChartData()
+        if trips == nil {
+            scrollView.isHidden = true
+        } else {
+            scrollView.isHidden = false
+            noTripLabel.isHidden = true
+            
+            time = ["0"]
+            kilometers = ["0"]
+            efficiency1 = ["0"]
+            efficiency2 = ["0"]
+            
+            //Drawing all the charts
+            setBackground()
+            updatePieChartData()
+            updateBarChartData()
+            updateLineChartData()
+        }
     }
     
     // MARK: Navigation
@@ -133,9 +143,12 @@ class AnalyticsViewController: UIViewController {
         // user interaction
         pieChartCiew.isUserInteractionEnabled = false
         
-        pieChartCiew.centerText = "Total Trip Time"
+        pieChartCiew.centerText = ""
+        pieChartCiew.holeColor = UIColor.clear
         pieChartCiew.holeRadiusPercent = 0.7
         pieChartCiew.transparentCircleColor = UIColor.clear
+        pieChartCiew.chartDescription?.text = ""
+        pieChartCiew.drawEntryLabelsEnabled = false
     }
     
     //Bar chart for eff over time
@@ -329,5 +342,9 @@ class AnalyticsViewController: UIViewController {
         let gradient = CGGradient.init(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: gradientColors, locations: colorLocations) // Gradient Object
         lineChartDataSet.fill = Fill.fillWithLinearGradient(gradient!, angle: 90.0) // Set the Gradient
         lineChartDataSet.drawFilledEnabled = true
+    }
+    
+    func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
+        return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
     }
 }

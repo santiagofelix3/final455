@@ -15,10 +15,15 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate {
     var mapOverlay: MKTileOverlay!
     
     @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
+    @IBOutlet weak var tripDate: UILabel!
+    @IBOutlet weak var vehicleName: UILabel!
+    @IBOutlet weak var vehicleType: UILabel!
+    @IBOutlet weak var startTime: UILabel!
+    @IBOutlet weak var endTime: UILabel!
     @IBOutlet weak var tripTime: UILabel!
-    
+    @IBOutlet weak var tripDist: UILabel!
+
     var trips: TripData?
     var selectTrip = TripData()
     var sendTrip: TripData?
@@ -27,24 +32,9 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //Displaying the total trip time in h m s instead of just s
-        if let trips = trips {
-            navigationItem.title = trips.name
-            
-            let tripT = trips.tripLength
-            
-            let (h,m) = secondsToHoursMinutes(seconds: Int(tripT))
-            
-            if tripT >= 3600 {
-                tripTime.text = String(format: "%2d", h) + " hr " + String(format: "%2d", m) + " min"
-            } else if tripT < 60 {
-                tripTime.text = "0" + " min"
-            } else {
-                tripTime.text = String(format: "%.0d", m) + " min"
-            }
-        }
         //loads in the map
         configureView()
+        loadTripInfo()
     }
     
     // MARK: Navigation
@@ -74,8 +64,8 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate {
     }
     
     //converts from seconds to h m s
-    func secondsToHoursMinutes (seconds : Int) -> (Int, Int) {
-        return (seconds / 3600, (seconds % 3600) / 60)
+    func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
+        return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
     }
     
     func configureView() {
@@ -173,6 +163,49 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate {
             alertController.addAction(UIAlertAction(title: "Ok",
                                                     style: UIAlertActionStyle.default,handler: nil))
             self.present(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    func loadTripInfo() {
+        if let trips = trips {
+            // Trip Title
+            navigationItem.title = trips.name
+            
+            // Trip Date Formatter
+            let tripStart = trips.startTime
+            let tripEnd = trips.endTime
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
+            navigationItem.title = trips.name
+
+            // Trip Date, Vehicle Name and Vehicle Type
+            tripDate.text = dateFormatter.string(from: tripStart as Date)
+            vehicleName.text = trips.name
+            vehicleType.text = "Vehicle Type"
+            
+            // Trip Length
+            let tripT = trips.tripLength
+            let (h,m,s) = secondsToHoursMinutesSeconds(seconds: Int(tripT))
+            
+            if tripT >= 3600 {
+                tripTime.text = String(format: "%2d", h) + " hr " + String(format: "%2d", m) + " min " + String(format: "%2d", s) + " sec"
+            } else if tripT < 60 {
+                tripTime.text = String(format: "%2d", s) + " sec"
+            } else {
+                tripTime.text = String(format: "%2d", m) + " min " + String(format: "%2d", s) + " sec"
+            }
+
+            // Trip Start and End Time
+            let timeFormatter = DateFormatter()
+            timeFormatter.dateFormat = "h:mm a"
+            
+            startTime.text = timeFormatter.string(from: tripStart as Date)
+            endTime.text = timeFormatter.string(from: tripEnd as Date)
+
+            
+            // Trip Distance
+            let tripDistance = trips.tripDistance / 1000
+            tripDist.text = String(format: "%.2f", tripDistance) + " km"
         }
     }
 }
