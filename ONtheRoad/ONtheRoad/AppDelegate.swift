@@ -15,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         //Creating a global instance that starts the GPS running on launch, this allows us to start getting accurate on the user before they start the trip.
+        //Ideally, we would delay starting the trip until we get an accurate location, but that was out of scope
         GlobalTripDataInstance.globalTrip?.startTrip()
         
         return true
@@ -43,8 +44,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
     // MARK: Shortcut Handler Methods
-    
+    //This function is for the long-press app launching
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        
+        //This launches the app straight into adding a new vehicle
         if shortcutItem.type == "com.example.ONtheRoad.Add" {
             let sb = UIStoryboard(name: "Main", bundle: nil)
             let addVehicleVC = sb.instantiateViewController(withIdentifier: "AddVehicleNavigationVC") as! UINavigationController
@@ -55,6 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             })
         }
         
+        //This launches the app straight into your trip logs
         if shortcutItem.type == "com.example.ONtheRoad.Log" {
             
             let sb = UIStoryboard(name: "Main", bundle: nil)
@@ -66,6 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             })
         }
         
+        //This launches the app straight into the dashboard view controller and starts a new trip immediately
         if shortcutItem.type == "com.example.ONtheRoad.Start" {
             let sb = UIStoryboard(name: "Main", bundle: nil)
             let startTripVC = sb.instantiateViewController(withIdentifier: "MainVC")

@@ -1,3 +1,7 @@
+//  TripData contains all methods and elements needed for storing and manipulating a trip
+//
+//
+
 import UIKit
 import CoreLocation
 import MapKit
@@ -180,6 +184,10 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
         self.init(startTime: startTime, vehiclePhoto: vehiclePhoto, name: name, odometerStart: odometerStart, vehicleMaxAccel: vehicleMaxAccel, odometerEnd: odometerEnd, endTime: endTime, tripLength: tripLength, tripDistance: tripDistance, tripLocationData: tripLocationData)
     }
     
+    // MARK: Permanent Storage Operations
+    //////////////// 
+
+    
     //saveTrip saves the trip to desired location
     private func saveTrip(numberOfTrip: Int) {
         let currentArchiveURL = VehicleProfile.DocumentsDirectory.appendingPathComponent("Trip" + String(numberOfTrip))
@@ -190,7 +198,7 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
         }
     }
     
-    //saveNewTrip() finds the location to save the trip
+    //saveNewTrip() finds the first empty location to save the trip
     private func saveNewTrip() {
         var count = 1
         while FileManager.default.fileExists(atPath: VehicleProfile.DocumentsDirectory.appendingPathComponent("Trip"+String(count)).path) {
@@ -199,6 +207,7 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
         saveTrip(numberOfTrip: count)
     }
     
+    //loadTrip loads the trip from the specified location and returns it as an object
     func loadTrip(numberOfTrip: Int) -> TripData? {
         let currentArchiveURL = VehicleProfile.DocumentsDirectory.appendingPathComponent("Trip" + String(numberOfTrip))
         let temp = NSKeyedUnarchiver.unarchiveObject(withFile: currentArchiveURL.path) as? TripData
@@ -206,6 +215,7 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
         return temp
     }
     
+    //shiftTripUp moves a trip up one storage location
     private func shiftTripUp(numberOfTrip: Int) {
         let tripCount = numberOfTrip
         let currentArchiveURL = VehicleProfile.DocumentsDirectory.appendingPathComponent("Trip" + String(tripCount))
@@ -216,6 +226,7 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
         }
     }
     
+    //deleteTrip removes the trip and shifts trips up into the newly empty spot
     func deleteTrip(numberOfTrip: Int) {
         var tripCount = numberOfTrip
         while let tempTrip = loadTrip(numberOfTrip: tripCount + 1) {
@@ -231,6 +242,7 @@ class TripData: NSObject, NSCoding, CLLocationManagerDelegate{
     }
 }
 
+//Location calculates and stores all the knowledge needed about an individual location
 class Location: NSObject, NSCoding {
     //Mandatory Variables
     var timeStamp: Date = Date.init()
@@ -320,7 +332,7 @@ class Location: NSObject, NSCoding {
 //Creating a global default item for priming gps and filling in some blanks
 struct GlobalTripDataInstance {
     static var globalTrip: TripData?
-    static var shortcutFlag = 0
+    static var shortcutFlag = 0 //Global variable for allowing a trip to start from icon
     init (){
         GlobalTripDataInstance.globalTrip = TripData.init(vehiclePhoto: #imageLiteral(resourceName: "defaultPhoto"), name: "", odometerStart: 0, vehicleMaxAccel: 4.8, vehicleActual: 6.8)
     }

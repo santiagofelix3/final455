@@ -5,6 +5,7 @@
 //  Created by Santiago Félix Cárdenas on 2017-02-20.
 //  Copyright © 2017 Santiago Félix Cárdenas. All rights reserved.
 //
+//  VehicleProfile contains all methods and elements needed for storing and manipulating a vehicle 
 
 import UIKit
 import os.log
@@ -166,6 +167,7 @@ class VehicleProfile: NSObject, NSCoding {
         
     }
     
+    //deleteWithInsert() is used to delete a car and insert a new car into the same spot (editing the vehicle)
     func deleteWithInsert(numberOfVehicle: Int, totalNumberOfVehicles: Int) {
         // Delete
         let currentArchiveURL = VehicleProfile.DocumentsDirectory.appendingPathComponent(String(numberOfVehicle))
@@ -195,6 +197,7 @@ class VehicleProfile: NSObject, NSCoding {
         }
     }
     
+    //saveVehicle() saves a new vehicle to the designated path
     func saveVehicle(numberOfVehicle: Int) {
         
         let currentArchiveURL = VehicleProfile.DocumentsDirectory.appendingPathComponent(String(numberOfVehicle))
@@ -207,11 +210,13 @@ class VehicleProfile: NSObject, NSCoding {
         }
     }
     
+    //loadVehicle() loads a vehicle and returns it as an object
     func loadVehicle(numberOfVehicle: Int) -> VehicleProfile? {
         let currentArchiveURL = VehicleProfile.DocumentsDirectory.appendingPathComponent(String(numberOfVehicle))
         return NSKeyedUnarchiver.unarchiveObject(withFile: currentArchiveURL.path) as? VehicleProfile
     }
     
+    //deleteVehicle() removes the specified vehicle from permanent storage and shuffles the rest of them into the empty spot
     func deleteVehicle(numberOfVehicle: Int, totalNumberOfVehicles: Int) {
         let currentArchiveURL = VehicleProfile.DocumentsDirectory.appendingPathComponent(String(numberOfVehicle))
         
